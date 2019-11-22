@@ -8,18 +8,20 @@ const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
 var userCart = [];
-var list = fetchData ();
+var list = fetchData();
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
     document.querySelector('.cart-block').classList.toggle('invisible');
 });
+
 //кнопки удаления товара (добавляется один раз)
 document.querySelector('.cart-block').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('del-btn')) {
         removeProduct (evt.target);
     }
 })
+
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
@@ -71,7 +73,7 @@ function renderProducts () {
     for (item of list) {
         arr.push(item.createTemplate())
     }
-    document.querySelector('.products').innerHTML = arr.join();
+    document.querySelector('.products').innerHTML = arr.join('');
 }
 
 renderProducts ();

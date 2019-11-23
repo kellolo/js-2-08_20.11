@@ -61,8 +61,13 @@ class Burger {
       return col;
     }
     //проверка на налачие выбранного размера
-  check() {
+  checkSize() {
     if (this.size.price == undefined) {
+      return true;
+    }
+  }
+  checkFilling() {
+    if (this.filling.length === 0) {
       return true;
     }
   }
@@ -91,7 +96,7 @@ calcBtn.addEventListener("click", () => {
       }
     }
   }
-  if (burger.check()) {
+  if (burger.checkSize()) {
     alert("Вы не выбрали размер бургера!");
     return
   }
@@ -107,6 +112,10 @@ calcBtn.addEventListener("click", () => {
         }
       }
     }
+  }
+  if (burger.checkFilling()) {
+    alert("Вы не выбрали наполнение бургера!");
+    return
   }
   //поиск по id в массиве дополнений
   for (let i = 0; i < addition.children.length; i++) {

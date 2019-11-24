@@ -3,8 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Burger Maker</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <form id="maker" action="#">
+        <fieldset>
+            <caption>
+                <input type="radio" name="size" id="size-small" value="small" checked> Маленький (50 рублей)
+            </caption>
+            <caption>
+                <input type="radio" name="size" id="size-big" value="big"> Большой (100 рублей)
+            </caption>
+        </fieldset>
+        
+        <fieldset>
+            <caption>
+                <input type="radio" name="stuff" id="stuff-cheese" value="cheese" checked> с сыром (+10 рублей)
+            </caption>
+            <caption>
+                <input type="radio" name="stuff" id="stuff-salad" value="salad"> с салатом (+20 рублей)
+            </caption>
+            <caption>
+                <input type="radio" name="stuff" id="stuff-potato" value="potato"> с картофелем (+15 рублей)
+            </caption>
+        </fieldset>
+
+        <fieldset>
+            <caption>
+                <input type="checkbox" name="extra" id="extra-small" value="small"> посыпать приправой (+15 рублей)
+            </caption>
+            <caption>
+                <input type="checkbox" name="extra" id="extra-big" value="big"> полить майонезом (+20 рублей)
+            </caption>
+        </fieldset>
+    </form>
+    <div class="totalPrice"></div>
+    <div class="totalCalories"></div>
+    
     <script src="app.js"></script>
 </body>
 </html>

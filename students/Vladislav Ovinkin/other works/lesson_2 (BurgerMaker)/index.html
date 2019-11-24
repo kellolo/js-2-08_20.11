@@ -6,40 +6,45 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1 class="title">Бургер-конструктор</h1>
     <form id="maker" action="#">
         <fieldset>
-            <caption>
+            <p class="caption">Размер:</p>
+            <label>
                 <input type="radio" name="size" id="size-small" value="small" checked> Маленький (50 рублей)
-            </caption>
-            <caption>
-                <input type="radio" name="size" id="size-big" value="big"> Большой (100 рублей)
-            </caption>
-        </fieldset>
-        
+            </label>
+            <label>
+                <input type="radio" name="size" id="size-big" value="big"> Большой(100 рублей)
+            </label>
+        </fieldset> 
         <fieldset>
-            <caption>
+            <p class="caption">Начинка:</p>
+            <label>
                 <input type="radio" name="stuff" id="stuff-cheese" value="cheese" checked> с сыром (+10 рублей)
-            </caption>
-            <caption>
+            </label>
+            <label>
                 <input type="radio" name="stuff" id="stuff-salad" value="salad"> с салатом (+20 рублей)
-            </caption>
-            <caption>
+            </label>
+            <label>
                 <input type="radio" name="stuff" id="stuff-potato" value="potato"> с картофелем (+15 рублей)
-            </caption>
+            </label>
         </fieldset>
-
         <fieldset>
-            <caption>
-                <input type="checkbox" name="extra" id="extra-small" value="small"> посыпать приправой (+15 рублей)
-            </caption>
-            <caption>
-                <input type="checkbox" name="extra" id="extra-big" value="big"> полить майонезом (+20 рублей)
-            </caption>
+            <p class="caption">Дополнение:</p>
+            <label>
+                <input type="checkbox" name="extra" id="extra-spice" value="spice"> посыпать приправой (+15 рублей)
+            </label>
+            <label>
+                <input type="checkbox" name="extra" id="extra-mayo" value="mayo"> полить майонезом (+20 рублей)
+            </label>
         </fieldset>
     </form>
-    <div class="totalPrice"></div>
-    <div class="totalCalories"></div>
-    
+    <div class='after-form'>
+        <label><input type="checkbox" name="auto" id="auto">Автоподсчёт</label>
+        <button id='go'>Посчитать всё</button>
+        <div class="totalPrice"></div>
+        <div class="totalCalories"></div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>

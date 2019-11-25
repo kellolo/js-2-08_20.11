@@ -68,7 +68,6 @@ class Cart {
         this.products = [];
         this.block = `.${block}`;
     }
-
     addItem (product) {
         const id = +product.dataset['id'];
         const find = this.products.find (element => element.id === id);
@@ -94,6 +93,7 @@ class Cart {
     render () {
         const block = document.querySelector (this.block);
         let code = '';
+        let totalSum = 0;
         this.products.forEach (el => {
             code += `<div class="cart-item" data-id="${el.id}">
                         <div class="product-bio">
@@ -109,7 +109,9 @@ class Cart {
                             <button class="del-btn" data-id="${el.id}">&times;</button>
                         </div>
                     </div>`;
+            totalSum += el.quantity * el.price;
         });
+        (totalSum) ? code += `<div class='cart-total'>Итого: ${totalSum}</div>` : code;
         block.innerHTML = code;
     }
 }

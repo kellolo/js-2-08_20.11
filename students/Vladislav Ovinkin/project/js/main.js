@@ -6,7 +6,7 @@ const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-let userCart = [];
+//let userCart = [];
 let list = fetchData();
 
 class Product {
@@ -90,7 +90,7 @@ class Cart {
         }
         this.render ();
     }
-    
+
     render () {
         const block = document.querySelector (this.block);
         let code = '';

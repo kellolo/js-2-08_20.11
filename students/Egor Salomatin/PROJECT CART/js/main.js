@@ -4,11 +4,70 @@ const cartImage = 'https://placehold.it/100x80';
 const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+let list = fetchData ();
 
+class Product {
+    constructor (product) {
+        this.title = product.title
+        this.id = product.id
+        this.img = product.img
+        this.price = product.price
+    }
+    render () {
+        return `<div class="product-item" data-id="${this.id}">
+                    <img src="${this.img}" alt="Some img">
+                    <div class="desc">
+                        <h3>${this.title}</h3>
+                        <p>${this.price} $</p>
+                        <button class="buy-btn" 
+                        data-id="${this.id}"
+                        data-title="${this.title}"
+                        data-image="${this.img}"
+                        data-price="${this.price}">Купить</button>
+                    </div>
+                </div>`
+    }
+}
 
+class Products {
+    constructor (block) {
+        this.products = []
+        this.block = `.${block}`
+        this._init ()
+    }
+    _init () {
+        //list - глобальный массив с заглушками продуктов
+        list.forEach (item => {
+            this.products.push (new Product (item))
+        })
+        this.render ()
+    }
+    render () {
+        let block = document.querySelector (this.block)
+        let str = ''
+        this.products.forEach (item => {
+            str += item.render ()
+        })
+        block.innerHTML = str
+    }
+}
+
+let catalog = new Products ('products')
+
+class CartItem {
+    constructor () {
+        
+    }
+}
+
+class Cart {
+    constructor () {
+        
+    }
+}
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
 var userCart = [];
-var list = fetchData ();
+
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -40,41 +99,41 @@ function fetchData () {
 function createProduct (i) {
     return {
         id: ids[i],
-        name: items[i],
+        title: items[i],
         price: prices[i],
         img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        },
+        // quantity: 0,
+        // createTemplate: function () {
+        //     return `<div class="product-item" data-id="${this.id}">
+        //                 <img src="${this.img}" alt="Some img">
+        //                 <div class="desc">
+        //                     <h3>${this.name}</h3>
+        //                     <p>${this.price} $</p>
+        //                     <button class="buy-btn" 
+        //                     data-id="${this.id}"
+        //                     data-name="${this.name}"
+        //                     data-image="${this.img}"
+        //                     data-price="${this.price}">Купить</button>
+        //                 </div>
+        //             </div>`
+        // },
 
-        add: function() {
-            this.quantity++
-        }
+        // add: function() {
+        //     this.quantity++
+        // }
     }
 };
 
 //рендер списка товаров (каталога)
-function renderProducts () {
-    let arr = [];
-    for (item of list) {
-        arr.push(item.createTemplate())
-    }
-    document.querySelector('.products').innerHTML = arr.join();
-}
+// function renderProducts () {
+//     let arr = [];
+//     for (item of list) {
+//         arr.push(item.createTemplate())
+//     }
+//     document.querySelector('.products').innerHTML = arr.join();
+// }
 
-renderProducts ();
+// renderProducts ();
 
 //CART
 

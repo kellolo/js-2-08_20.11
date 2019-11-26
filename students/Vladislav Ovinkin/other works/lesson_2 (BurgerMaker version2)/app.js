@@ -6,35 +6,33 @@ const elPrice = document.querySelector ('.totalPrice');
 const elCalories = document.querySelector ('.totalCalories');
 const checkAuto = document.querySelector ('#auto');
 
+// ручная коробка
 btn.addEventListener ('click', () => {
-    myBurger.displayInfo (elPrice, elCalories);
+    myBurger.displayInfo ();
 });
 
-checkAuto.addEventListener ('click', autoCalculateToggle);
-
-function displayInfo () {
-    myBurger.displayInfo (elPrice, elCalories);
-}
-
-/**
- * Функция включает/выключает опцию автоподсчёта
- */
-function autoCalculateToggle () {
+// коробка-автомат
+checkAuto.addEventListener ('click', () => {
     if (checkAuto.checked) {
         btn.classList.add('hide');
-        uForm.addEventListener ('click', displayInfo);
-        displayInfo ();
+        uForm.addEventListener ('click', () => {
+            myBurger.displayInfo ();
+        });
+        myBurger.displayInfo ();
     } else {
         btn.classList.remove('hide');
-        uForm.removeEventListener ('click', displayInfo);
+        uForm.removeEventListener ('click', () => {
+            myBurger.displayInfo ();
+        });
     }
-}
-
+});
 class Burger {
-    constructor (size, stuffing, topping) {
-        this.nameSize = size;
-        this.nameStuffing = stuffing;
-        this.nameTopping = topping;
+    constructor (param) {
+        this.nameSize = param.size;
+        this.nameStuffing = param.stuffing;
+        this.nameTopping = param.topping;
+        this.blockPrice = param.blockPrice;
+        this.blockCalories = param.blockCalories;
     }
     
     // Получить список добавок
@@ -73,24 +71,31 @@ class Burger {
         return totalNrg;
     }
 
-    displayInfo (blockPrice, blockCalories) {
+    // посчитать данные и вызвать методы вывода на экран
+    displayInfo () {
         this.size = this.getSize (this.nameSize);
         this.stuffing = this.getStuffing (this.nameStuffing);
         this.toppings = this.getToppings (this.nameTopping);
         this.totalPrice = this.calculatePrice ();
         this.totalCalories = this.calculateCalories ();
 
-        this.displayPrice (blockPrice);
-        this.displayCalories (blockCalories);
+        this.displayPrice ();
+        this.displayCalories ();
     }
 
-    displayPrice (block) {
-        block.innerText = `Итоговая стоимость гамбургера: ${this.totalPrice} руб.`;
+    // показать стоимость
+    displayPrice () {
+        this.blockPrice.innerText = `Итоговая стоимость гамбургера: ${this.totalPrice} руб.`;
     }
     
-    displayCalories (block) {
-        block.innerText = `Содержание калорий: ${this.totalCalories}.`;
+    // показать количество калорий
+    displayCalories () {
+        this.blockCalories.innerText = `Содержание калорий: ${this.totalCalories}.`;
     }
 }
 
-const myBurger = new Burger ('size', 'stuff', 'extra');
+const myBurger = new Burger   ({size: 'size',
+                                stuffing: 'stuff', 
+                                topping: 'extra',
+                                blockPrice: elPrice,
+                                blockCalories: elCalories});

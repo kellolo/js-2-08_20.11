@@ -55,13 +55,10 @@ class Products {
 
 let catalog = new Products('products');
 
-class CartItem {
-    constructor(id, title, price, img, quantity) {
-        this.id = id,
-        this.title = title,
-        this.price = price,
-        this.img = img,
-        this.quantity = quantity
+class CartItem  extends Product {
+    constructor(prod) {
+        super(prod);
+        this.quantity = prod.quantity;
     }
 
     render() {
@@ -91,13 +88,13 @@ class Cart {
         let productId = +prod.dataset['id'];
         let find = this.products.find(element => element.id === productId);
         if (!find) {
-            this.products.push( new CartItem(
-                productId,
-                prod.dataset['title'],
-                +prod.dataset['price'],
-                prod.dataset['image'],
-                1
-            ));
+            this.products.push(new CartItem({
+                id: productId,
+                title: prod.dataset['title'],
+                price: +prod.dataset['price'],
+                img: prod.dataset['image'],
+                quantity: 1
+            }));
         } else {
             find.quantity++;
         }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Бургерная</title>
+    <link rel="stylesheet" href="style/burger.css">
+</head>
+<body>
+    <main>
+        <h3>Заказывай бургер</h3>
+        <form action="#" id="burger-form">
+            <fieldset>
+                <caption>
+                    <label for="fat-boy">Введите ваше имя</label>
+                    <input type="text" name="fat-boy" id="fat-boy"><br>
+                    <label for="small-burger">Маленький бургер</label>
+                    <input type="radio" id="small-burger" name="burger" data-calories="200" data-price="50"><br>
+                    <label for="huge-burger">Огромный бургер</label>
+                    <input type="radio" id="huge-burger" name="burger" data-calories="400" data-price="100">
+                </caption>
+            </fieldset>
+            <fieldset>
+                <caption>
+                    <h4>Не забывай начинку!</h4>
+                    <label for="filling-cheesse">Добавим сырку</label>
+                    <input type="checkbox" id="filling-cheesse" name="filling" data-calories="100" data-price="20"><br>
+                    <label for="filling-cabbage">Кислой капусты</label>
+                    <input type="checkbox" id="filling-cabbage" name="filling" data-calories="50" data-price="20"><br>
+                    <label for="filling-potato">Пюрешечку не забывай</label>
+                    <input type="checkbox" id="filling-potato" name="filling" data-calories="100" data-price="15">
+                </caption>
+            </fieldset>
+            <fieldset>
+                <caption>
+                    <h4>Подсыпем чего?</h4>
+                    <label for="mayo-extra">Польём майонезиком</label>
+                    <input type="checkbox" id="mayo-extra" name="extra" data-calories="200" data-price="25"><br>
+                    <label for="powder-extra">Подсыпем порошка</label>
+                    <input type="checkbox" id="powder-cabbage" name="extra" data-calories="100" data-price="100"><br>
+                    <label for="nugets-extra">Может нагетсов ещё</label>
+                    <input type="checkbox" id="nugets-extra" name="extra" data-calories="400" data-price="40">
+                </caption>
+            </fieldset>
+        </form>
+        <button id="make-order">Закажем бургер</button>
+        <div id="result"></div>
+    </main>
+    <script src="js/burger.js"></script>
+</body>
+</html>

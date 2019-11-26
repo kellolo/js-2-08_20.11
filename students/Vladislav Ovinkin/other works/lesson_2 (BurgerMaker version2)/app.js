@@ -18,7 +18,7 @@ checkAuto.addEventListener ('click', () => {
         uForm.addEventListener ('click', () => {
             myBurger.displayInfo ();
         });
-        myBurger.displayInfo ();
+        myBurger.displayInfo (); // это если не посчитано в ручную (сразу посде запуска)
     } else {
         btn.classList.remove('hide');
         uForm.removeEventListener ('click', () => {

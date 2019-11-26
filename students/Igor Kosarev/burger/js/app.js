@@ -42,30 +42,31 @@ class Burger {
     //возвращающие значения функции
   getPrice() {
     let price = this.size.price;
-    for (let i = 0; i < this.filling.length; i++) {
-      price += this.filling[i].price;
+    for (let el of this.filling) {
+      price += el.price;
     }
-    for (let i = 0; i < this.addition.length; i++) {
-      price += this.addition[i].price;
+    for (let el of this.addition) {
+      price += el.price;
     }
     return price;
   }
   getCol() {
       let col = this.size.col
-      for (let i = 0; i < this.filling.length; i++) {
-        col += this.filling[i].col;
+      for (let el of this.filling) {
+        col += el.col;
       }
-      for (let i = 0; i < this.addition.length; i++) {
-        col += this.addition[i].col;
+      for (let el of this.addition) {
+        col += el.col;
       }
       return col;
     }
     //проверка на налачие выбранного размера
   checkSize() {
-    if (this.size.price == undefined) {
-      return true;
+      if (this.size.price == undefined) {
+        return true;
+      }
     }
-  }
+    //проверка на наличие выбранного наполнения
   checkFilling() {
     if (this.filling.length === 0) {
       return true;
@@ -83,53 +84,56 @@ let calcBtn = document.querySelector('.calculate');
 //Добавляем слушателя на кнопку
 calcBtn.addEventListener("click", () => {
   let burger = new Burger; //создаём новый бургер
+
   //поиск по id в массиве размеров 
-  for (let i = 0; i < size.children.length; i++) {
-    if (size.children[i].firstChild.checked) {
-      let id = +size.children[i].firstChild.defaultValue;
-      for (let j = 0; j < sizes.length; j++) {
-        if (id === sizes[j].id) {
-          let burgerSize = new Params;
-          burgerSize.setParams(sizes[j].name, sizes[j].price, sizes[j].col);
-          burger.setSize(burgerSize);
+  for (let el of size.children) {
+    if (el.firstChild.checked) {
+      let id = +el.firstChild.defaultValue;
+      for (let em of sizes) {
+        if (id === em.id) {
+          burger.setSize(returnParams(em));
         }
       }
     }
   }
+
+  //проверка на заполненность зармера бургера
   if (burger.checkSize()) {
     alert("Вы не выбрали размер бургера!");
     return
   }
+
   //поиск по id в массиве наполнителей
-  for (let i = 0; i < filling.children.length; i++) {
-    if (filling.children[i].firstChild.checked) {
-      let id = +filling.children[i].firstChild.defaultValue;
-      for (let j = 0; j < fillings.length; j++) {
-        if (id === fillings[j].id) {
-          let burgerFilling = new Params;
-          burgerFilling.setParams(fillings[j].name, fillings[j].price, fillings[j].col);
-          burger.setFilling(burgerFilling);
+  for (let el of filling.children) {
+    if (el.firstChild.checked) {
+      let id = +el.firstChild.defaultValue;
+      for (let em of fillings) {
+        if (id === em.id) {
+          burger.setFilling(returnParams(em));
         }
       }
     }
   }
+
+  //проверка на запоненность наполнения бургера
   if (burger.checkFilling()) {
     alert("Вы не выбрали наполнение бургера!");
     return
   }
+
   //поиск по id в массиве дополнений
-  for (let i = 0; i < addition.children.length; i++) {
-    if (addition.children[i].firstChild.checked) {
-      let id = +addition.children[i].firstChild.defaultValue;
-      for (let j = 0; j < additions.length; j++) {
-        if (id === additions[j].id) {
-          let burgerAdditions = new Params;
-          burgerAdditions.setParams(additions[j].name, additions[j].price, additions[j].col);
-          burger.setAddition(burgerAdditions);
+  for (let el of addition.children) {
+    if (el.firstChild.checked) {
+      let id = +el.firstChild.defaultValue;
+      for (let em of additions) {
+        if (id === em.id) {
+          burger.setAddition(returnParams(em));
         }
       }
     }
   }
+
+  //вывод результата
   result.innerHTML = `
   <p>Итоговая стоимость: ${burger.getPrice()} ${currency}</p>
   <p>Итоговая каллорийность: ${burger.getCol()}</p>
@@ -138,14 +142,14 @@ calcBtn.addEventListener("click", () => {
 
 //Объявляем функцию инициализации (не делал сразу через вёрстку HTML т.к. хочется сделать так, чтобы если в бэке добавили что-то, то автоматически страница бы рендерилась правильно)
 function initEntity(arr, position, type) {
-  for (let i = 0; i < arr.length; i++) {
+  for (let el of arr) {
     let newAdd = document.createElement("input");
     let newP = document.createElement("p");
     let newSpan = document.createElement("span");
     newAdd.type = type;
     newAdd.name = position.className;
-    newAdd.value = arr[i].id;
-    newSpan.innerHTML = addDescription(arr[i].name, arr[i].price, currency, "+", arr[i].col);
+    newAdd.value = el.id;
+    newSpan.innerHTML = addDescription(el.name, el.price, currency, "+", el.col);
     newP.appendChild(newAdd);
     newP.appendChild(newSpan);
     position.appendChild(newP);
@@ -157,8 +161,19 @@ function addDescription(name, price, currency, symbol, col) {
   return `  ${name}<p class="description">Цена: ${symbol}${price} ${currency}</p><p class="description">Калорийность: ${col}</p>`;
 }
 
-//Основное тело программы
-initEntity(sizes, size, "radio");
-initEntity(fillings, filling, "checkbox");
-initEntity(additions, addition, "checkbox");
-result.innerHTML = "Тут будет результат расчёта";
+function returnParams(item) {
+  let params = new Params;
+  params.setParams(item.name, item.price, item.col);
+  return params
+}
+
+//функция инициализации формы
+function init() {
+  initEntity(sizes, size, "radio");
+  initEntity(fillings, filling, "checkbox");
+  initEntity(additions, addition, "checkbox");
+  result.innerHTML = "Тут будет результат расчёта";
+}
+
+//начало работы
+init();

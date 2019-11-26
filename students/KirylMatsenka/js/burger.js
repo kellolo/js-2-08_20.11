@@ -2,18 +2,17 @@ let form = document.getElementById('burger-form')
 let buttonMakeOrder = document.getElementById('make-order')
 let orders = []
 
+// Здесь все по аналогии как у вас, по клику добавляем все в массив orders через makeOrder
 buttonMakeOrder.addEventListener('click', makeOrder)
 
 function makeOrder() {
     let customer = new Customer(document.getElementById('fat-boy').value)
-    let burger = new Burger('burger','filling', 'extra')
-    let count = new CountMoneyAndCalories(burger)
+    let count = new CountMoneyAndCalories(new Burger('burger','filling', 'extra'))
     orders.push (new Order (customer, count))
     customer.showOrder (orders)
 }
 
-
-
+// Объект заказчика который показывает выводит заказ в браузере 
 class Customer {
     constructor(name) {
         this.name = name
@@ -43,7 +42,7 @@ class Customer {
 
 
 
-
+// Это у нас бургер со всеми начинками, все также как вы делали!
 class Burger {
     constructor(burger, filling, extra) {
         this.burger = this._burger(burger)
@@ -68,7 +67,7 @@ class Burger {
 }
 
 
-
+// Подсчитаем каллории и цену  
 class CountMoneyAndCalories {
     constructor (burgerObject) {
         this.burgerObject = burgerObject
@@ -91,6 +90,8 @@ class CountMoneyAndCalories {
     }
 }
 
+// Помогает свойствам объекта Burger сформировать массив из каллорий и цен 
+//начинок которые выбрал наш заказчик 
 class BurgerData {
     constructor (calories, price) {
         this.calories = calories
@@ -98,6 +99,7 @@ class BurgerData {
     }
 }
 
+// Объект для массива orders который содержит заказчика и и общую стоимость того чего он там назаказывал
 class Order {
     constructor (customer, count) {
         this.customer = customer
@@ -105,9 +107,25 @@ class Order {
     }
 }
 
+// Рендерит цены и каллории
+// Тут я просто не подумал о том что можно создать сразу объект с ценами и каллориями
+// Поэтому я собираю цены после и рендерю их в label
+class Helper {
+    constructor () {
+        this._renderPricesCalories ()
+    }
 
+    _renderPricesCalories () {
+        let inputCollection = document.querySelectorAll ('input')
+        inputCollection.forEach (input => this._getInputPriceCalorie(input))
+    }
 
+    _getInputPriceCalorie (input) {
+        if (input.dataset['price']) {
+            let label = document.querySelector(`label[for="${input.id}"]`)
+            label.innerText += `: ${input.dataset['price']}$ каллорий ${input.dataset['calories']}`
+        }
+    }
+}
 
-
-
-
+let addPricesAndCallories = new Helper ()

@@ -1,20 +1,20 @@
 'use strict';
 
-const names = ['small','big','cheese','salad','potato','spice','mayo'];
-const costs = [50, 100, 10, 20, 15, 15, 20];
-const energies = [20, 40, 20, 5, 10, 0, 5]; 
-
-// массив вариантов/компонентов бургера
-const menu = fetchData();
-
 const uForm = document.querySelector ('#maker');
 const btn = document.querySelector ('#go');
 const elPrice = document.querySelector ('.totalPrice');
 const elCalories = document.querySelector ('.totalCalories');
 const checkAuto = document.querySelector ('#auto');
 
-btn.addEventListener ('click', calculateTotal);
+btn.addEventListener ('click', () => {
+    myBurger.displayInfo (elPrice, elCalories);
+});
+
 checkAuto.addEventListener ('click', autoCalculateToggle);
+
+function displayInfo () {
+    myBurger.displayInfo (elPrice, elCalories);
+}
 
 /**
  * Функция включает/выключает опцию автоподсчёта
@@ -22,81 +22,75 @@ checkAuto.addEventListener ('click', autoCalculateToggle);
 function autoCalculateToggle () {
     if (checkAuto.checked) {
         btn.classList.add('hide');
-        uForm.addEventListener ('click', calculateTotal);
-        calculateTotal();
+        uForm.addEventListener ('click', displayInfo);
+        displayInfo ();
     } else {
         btn.classList.remove('hide');
-        uForm.removeEventListener ('click', calculateTotal);
+        uForm.removeEventListener ('click', displayInfo);
     }
 }
 
-/**
- * Функция создаёт новый бургер, вызывает методы 
- * подсчёта его калорий и стоимости
- * и выводит полученные значения в форму
- */
-function calculateTotal () {
-    let newBurger = new Burger ('size', 'stuff', 'extra');
-    elPrice.innerText = `Итоговая стоимость гамбургера: ${newBurger.calculatePrice()} руб.`;
-    elCalories.innerText = `Содержание калорий: ${newBurger.calculateCalories()}.`;
-}
-
-/**
- * Класс Бургер)
- */
 class Burger {
     constructor (size, stuffing, topping) {
-        this.size = this.getSizeOrStuffing (size);
-        this.stuffing = this.getSizeOrStuffing (stuffing);
-        this.toppings = this.getToppings (topping);
+        this.nameSize = size;
+        this.nameStuffing = stuffing;
+        this.nameTopping = topping;
     }
-
-    // Узнать размер гамбургера или начинку гамбургера
-    getSizeOrStuffing (attrName) {
-        let object = uForm.querySelector (`input[name=${attrName}]:checked`);
-        return menu.find (item => item.name == object.value);
-    }
-
+    
     // Получить список добавок
-    getToppings (attrName) {
-        let toppings = [];
-        let arr = [...uForm.querySelectorAll (`input[name=${attrName}]:checked`)]
-        arr.forEach (el => toppings.push ( menu.find (item => item.name == el.value)));
-        return toppings;
+    getToppings (topping) {
+        const arrTops = [...uForm.querySelectorAll (`input[name=${topping}]:checked`)];
+        return arrTops;
     }
 
-    // Рассчитать цену
+    // Узнать размер гамбургера
+    getSize (attrName) {
+        const object = uForm.querySelector (`input[name=${attrName}]:checked`);
+        return object;
+    }
+
+    // Узнать начинку гамбургера
+    getStuffing (attrName) {
+        const object = uForm.querySelector (`input[name=${attrName}]:checked`);
+        return object;
+    }
+
+    // Узнать цену
     calculatePrice () {
-        let sum = this.size.cost + this.stuffing.cost;
-        this.toppings.forEach (el => sum += el.cost);
-        return sum;
+        let totalPrice = +this.size.dataset.price + +this.stuffing.dataset.price;
+        this.toppings.forEach (el => {
+            totalPrice += +el.dataset.price;
+        });
+        return totalPrice;
     }
 
-    // Рассчитать калорийность
+    // Узнать калорийность
     calculateCalories () {
-        let sum = this.size.energy + this.stuffing.energy;
-        this.toppings.forEach (el => sum += el.energy);
-        return sum;
+        let totalNrg = +this.size.dataset.nrg + +this.stuffing.dataset.nrg;
+        this.toppings.forEach (el => {
+            totalNrg += +el.dataset.nrg;
+        });
+        return totalNrg;
+    }
+
+    displayInfo (blockPrice, blockCalories) {
+        this.size = this.getSize (this.nameSize);
+        this.stuffing = this.getStuffing (this.nameStuffing);
+        this.toppings = this.getToppings (this.nameTopping);
+        this.totalPrice = this.calculatePrice ();
+        this.totalCalories = this.calculateCalories ();
+
+        this.displayPrice (blockPrice);
+        this.displayCalories (blockCalories);
+    }
+
+    displayPrice (block) {
+        block.innerText = `Итоговая стоимость гамбургера: ${this.totalPrice} руб.`;
+    }
+    
+    displayCalories (block) {
+        block.innerText = `Содержание калорий: ${this.totalCalories}.`;
     }
 }
 
-// Получение массива вариантов/компонентов бургера
-function fetchData () {
-    const arr = [];
-    for (let i = 0; i < names.length; i++) {
-        arr.push (createMenuItem (i));
-    }
-    return arr;
-}
-
-/**
- * Функция возвращает объект-вариант/компонент бургера
- * @param {number} i 
- */
-function createMenuItem (i) {
-    return {
-        name: names [i],
-        cost: costs [i],
-        energy: energies [i],
-    }
-}
+const myBurger = new Burger ('size', 'stuff', 'extra');

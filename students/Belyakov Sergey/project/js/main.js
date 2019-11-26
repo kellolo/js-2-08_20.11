@@ -6,6 +6,7 @@ const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 let list = fetchData();
 
+//товар
 class Product {
     constructor(product) {
         this.title = product.title;
@@ -30,6 +31,7 @@ class Product {
     }
 }
 
+//список товаров
 class Products {
     constructor(block) {
         this.products = [];
@@ -53,8 +55,10 @@ class Products {
     }
 }
 
+// получение списка товаров
 let catalog = new Products('products');
 
+// товар в корзине
 class CartItem  extends Product {
     constructor(prod) {
         super(prod);
@@ -79,6 +83,7 @@ class CartItem  extends Product {
     }
 }
 
+// корзина
 class Cart {
     constructor() {
         this.products = [];
@@ -137,7 +142,7 @@ class Cart {
     }
 }
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
+// иницализация корзины
 let userCart = new Cart();
 
 

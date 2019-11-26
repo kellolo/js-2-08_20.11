@@ -123,6 +123,7 @@ img {
     display: flex;
 }
 .cart-item img{
+    width: 50%;
     align-self: flex-start;
     margin-right: 15px;
 }
@@ -168,4 +169,9 @@ img {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #fafafa;
+}
+.total-cost {
+    position: absolute;
+    right: 0;
+    line-height: 36px;
 }

@@ -141,6 +141,7 @@ img {
     font-size: 0.75em;
 }
 .right-block{
+    min-width: 200px;
     text-align: right;
 }
 .btn-search {

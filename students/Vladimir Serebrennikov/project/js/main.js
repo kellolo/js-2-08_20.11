@@ -6,7 +6,6 @@ const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-let userCart = [];
 let list = fetchData ();
 
 class Product {
@@ -55,6 +54,7 @@ class Products {
     }
 }
 
+
 class CartItem {
     constructor (target) {
         this.productId = target.dataset.id
@@ -70,32 +70,50 @@ class Cart {
     }
 
     addProduct (target) {
-        let itemProduct = new CartItem (target).itemProduct;
-        let find = this.contentCart.find (el => el.id == itemProduct.id);
+        let itemProduct = new CartItem (target).itemProduct
+        let find = this.contentCart.find (el => el.id == itemProduct.id)
 
         if (!find) {
-            itemProduct.quantity = 0
+            itemProduct.quantity = 1
             this.contentCart.push (itemProduct)
         }  else {
             itemProduct.quantity++
         }
+
         this.render ()
     }
 
-    removeProduct (product) {
-        let productId = +product.dataset['id'];
-        let find = userCart.find (element => element.id === productId);
+    removeProduct (target) {
+
+        let productId = new CartItem (target).productId
+        let find = this.contentCart.find (el => el.id == productId)
+
         if (find.quantity > 1) {
             find.quantity--;
         } else {
-            userCart.splice(userCart.indexOf(find), 1);
+            this.contentCart.splice(this.contentCart.indexOf(find), 1)
             document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
         }
-        renderCart ();
+        
+        this.render ()
+    }
+    
+    getTotoalSumProducts () {
+        let blockSumProducts = document.createElement("div")
+            , sumProducts = 0
+        
+        for (let el of this.contentCart) {
+            sumProducts += el.quantity * el.price 
+        }
+
+        blockSumProducts.innerHTML = 'Total sum: ' + sumProducts + '$'
+
+        return blockSumProducts
     }
 
     render () {
-        let allProducts = '';
+        let allProducts = ''
+
         for (let el of this.contentCart) {
             allProducts += `<div class="cart-item" data-id="${el.id}">
                                 <div class="product-bio">
@@ -113,7 +131,8 @@ class Cart {
                             </div>`
         }
     
-        document.querySelector(`.cart-block`).innerHTML = allProducts;
+        document.querySelector (this.divBlock).innerHTML = allProducts
+        document.querySelector (this.divBlock).appendChild (this.getTotoalSumProducts ())
     }
 }
 
@@ -124,19 +143,20 @@ let cart = new Cart ('cart-block')
 document.querySelector('.btn-cart').addEventListener('click', () => {
     document.querySelector('.cart-block').classList.toggle('invisible');
 });
+
 //кнопки удаления товара (добавляется один раз)
 document.querySelector('.cart-block').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('del-btn')) {
-        removeProduct (evt.target);
+        cart.removeProduct (evt.target);
     }
 })
+
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
         cart.addProduct (evt.target);
     }
 })
-
 
 //создание массива объектов - имитация загрузки данных с сервера
 function fetchData () {

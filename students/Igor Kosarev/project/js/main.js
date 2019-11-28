@@ -1,10 +1,4 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-let list = fetchData();
+let url_productsData = 'https://raw.githubusercontent.com/igorkosarev/geekbrains-js2lv-json/master/productsData.json';
 
 class Product {
   constructor(product) {
@@ -32,16 +26,20 @@ class Product {
 
 class Products {
   constructor(block) {
-    this.products = []
-    this.block = `.${block}`
-    this._init()
-  }
+      this.products = []
+      this.block = `.${block}`
+      this._init()
+    }
+    //инициализация продуктов из репозитория
   _init() {
-    //list - глобальный массив с заглушками продуктов
-    list.forEach(item => {
-      this.products.push(new Product(item))
-    })
-    this.render()
+    fetch(url_productsData)
+      .then(d => d.json())
+      .then(data => {
+        data.forEach(item => {
+          this.products.push(new Product(item))
+        })
+      })
+      .finally(() => this.render())
   }
   render() {
     let block = document.querySelector(this.block)
@@ -117,15 +115,6 @@ document.querySelector('.products').addEventListener('click', (evt) => {
     addProduct(evt.target);
   }
 })
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-  let arr = [];
-  for (let i = 0; i < items.length; i++) {
-    arr.push(createProduct(i));
-  }
-  return arr
-};
 
 //создание товара
 function createProduct(i) {

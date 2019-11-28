@@ -80,7 +80,8 @@ class CartItem {
     }
 }
 
-let userCart = []
+
+let userCart = [];
 
 class Cart {
     constructor(product, block) {
@@ -126,8 +127,10 @@ class Cart {
         block.innerHTML = str
     }
 }
+
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-let fullCart
+
+let fullCart;
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -136,9 +139,11 @@ document.querySelector('.btn-cart').addEventListener('click', () => {
 //кнопки удаления товара (добавляется один раз)
 document.querySelector('.cartBlock').addEventListener('click', (evt) => {
     if (evt.target.classList.contains('del-btn')) {
-        fullCart = new Cart(evt.target, 'cartBlock').removeProduct()
+        fullCart = new Cart(evt.target, 'cartBlock').removeProduct();
     }
 })
+
+
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener('click', (evt) => {
     if (evt.target.classList.contains('buy-btn')) {
@@ -162,42 +167,14 @@ function createProduct(i) {
         title: items[i],
         price: prices[i],
         img: image,
-        // quantity: 0,
-        // createTemplate: function () {
-        //     return `<div class="product-item" data-id="${this.id}">
-        //                 <img src="${this.img}" alt="Some img">
-        //                 <div class="desc">
-        //                     <h3>${this.name}</h3>
-        //                     <p>${this.price} $</p>
-        //                     <button class="buy-btn" 
-        //                     data-id="${this.id}"
-        //                     data-name="${this.name}"
-        //                     data-image="${this.img}"
-        //                     data-price="${this.price}">Купить</button>
-        //                 </div>
-        //             </div>`
-        // },
-
-        // add: function() {
-        //     this.quantity++
-        // }
     }
 };
 
-//рендер списка товаров (каталога)
-// function renderProducts () {
-//     let arr = [];
-//     for (item of list) {
-//         arr.push(item.createTemplate())
-//     }
-//     document.querySelector('.products').innerHTML = arr.join();
-// }
-
-// renderProducts ();
 
 //CART
 
-// Добавление продуктов в корзину
+//Добавление продуктов в корзину
+
 // function addProduct(product) {
 //     let productId = +product.dataset['id'];
 //     let find = userCart.find(element => element.id === productId);

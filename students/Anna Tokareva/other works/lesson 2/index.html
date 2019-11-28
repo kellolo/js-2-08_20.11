@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/style.css">
+	<title>Lesson 2</title>
+</head>
+<body>
+	<h1>Заказать гамбургер</h1>
+	<form action="#">
+		<div class="charact"> Выбери размер:
+			<div class="charact-list">
+				<label>
+					<input type="radio" name="size" value="big" data-price="100" data-calories="40">Большой (100 рублей, 40 калорий)
+				</label>
+				<label>
+					<input type="radio" name="size" value="small" data-price="50" data-calories="20">Маленький (50 рублей, 20 калорий)
+				</label>
+			</div>
+		</div>
+		<div class="charact">Выбери начинку:
+			<div class="charact-list">
+				<label>
+					<input type="radio" name="stuffing" value="cheese" data-price="10" data-calories="20">Сыр (+10 рублей, +20 калорий)
+				</label>
+				<label>
+					<input type="radio" name="stuffing" value="salad" data-price="20" data-calories="5">Салат (+20 рублей, +5 калорий)
+				</label>
+				<label>
+					<input type="radio" name="stuffing" value="potatoes" data-price="15" data-calories="10">Картофель (+15 рублей, +10 калорий)
+				</label>
+			</div>
+		</div>
+		<div class="charact">Добавить еще:
+			<div class="charact-list">
+				<label>
+					<input type="checkbox" name="topping" value="condiment" data-price="15" data-calories="0">Посыпать приправой (+15 рублей, +0 калорий)
+				</label>
+				<label>
+					<input type="checkbox" name="topping" value="mayo" data-price="20" data-calories="5">Полить майонезом (+20 рублей, +5 калорий)
+				</label>
+			</div>
+		</div>
+		<input class="order-btn" type="submit" value="Сделать заказ">
+	</form>	
+	<div class="order"></div>
+	<script src="script/script.js"></script>
+</body>
+</html>

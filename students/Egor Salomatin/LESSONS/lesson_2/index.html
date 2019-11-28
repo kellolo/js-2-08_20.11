@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/main.css">
+    <title>Бургер</title>
+</head>
+
+<body>
+    <h1>Собери свой бургер</h1>
+    <form action="#">
+        <fieldset>
+            <legend>Выбери размер бургера</legend>
+            <label>
+                Маленький (50р) <input type="radio" data-price="50" data-cal="20" name="size" checked>
+            </label>
+            <label>
+                Большой (100р) <input type="radio" data-price="100" data-cal="40" name="size">
+            </label>
+        </fieldset>
+        <fieldset class="fill">
+            <legend>Выбери начинку</legend>
+            <label>
+                Добавить сыр (10р) <input type="checkbox" name="fill" data-price="10" data-cal="20">
+            </label>
+            <label>
+                Добавить салат (20р) <input type="checkbox" name="fill" data-price="20" data-cal="5">
+            </label>
+            <label>
+                Добавить картофель (15р) <input type="checkbox" name="fill" data-price="15" data-cal="10">
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Дополнительно</legend>
+            <label>
+                Добавить приправу (15р) <input type="checkbox" name="add" data-price="15" data-cal="0">
+            </label>
+            <label>
+                Добавить майонез (20р) <input type="checkbox" name="add" data-price="20" data-cal="5">
+            </label>
+        </fieldset>
+        <input type="button" id="btn" value="Посчитать стоимость"> 
+    </form>
+    <p class="result">
+    </p>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

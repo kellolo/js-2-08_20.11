@@ -1,0 +1,39 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100%;
+	padding: 15px;
+}
+
+h1 {
+	padding: 15px 0px;
+}
+
+form {
+	width: 450px;
+	padding: 10px;
+	border: 2px solid black;
+	font-size: 20px;
+}
+
+.charact-list {
+	margin: 0 0 10px 0;
+}
+
+label {
+	display: block;
+}
+
+.order-btn {
+	margin: 5px 0 0 0;
+	padding: 5px;
+	font-size: 20px;
+}
+
+.order {
+	padding: 15px 0px;
+	font-size: 25px;
+}

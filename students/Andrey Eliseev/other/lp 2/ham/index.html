@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ham</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+<h1>Создай свой бургер</h1>
+<form>
+    <fieldset>
+        <legend>размер</legend>
+        <input type="radio" id="contactChoice1" name="size" value="small" data-price="50" data-calories="20" checked>
+        <label for="contactChoice1">Маленький (50 рублей, 20 калорий).</label>
+
+        <input type="radio" id="contactChoice2" name="size" value="big" data-price="100" data-calories="40">
+        <label for="contactChoice2">Большой (100 рублей, 40 калорий).</label>
+    </fieldset>
+
+    <fieldset>
+        <legend>начинка</legend>
+        <input type="radio" id="contactChoice3" name="stuffing" value="cheese" data-price="10" data-calories="20" checked>
+        <label for="contactChoice3">С сыром (+10 рублей, +20 калорий).</label>
+
+        <input type="radio" id="contactChoice4" name="stuffing" value="potato" data-price="15" data-calories="10">
+        <label for="contactChoice4">С картофелем (+15 рублей, +10 калорий).</label>
+
+        <input type="radio" id="contactChoice5" name="stuffing" value="salad" data-price="20" data-calories="5">
+        <label for="contactChoice5">С салатом (+20 рублей, +5 калорий).</label>
+    </fieldset>
+
+    <fieldset>
+        <legend>наполнитель</legend>
+        <input type="checkbox" id="contactChoice6" name="extra" value="addition" data-price="15" data-calories="0">
+        <label for="contactChoice6">лук (+15 рублей, +0 калорий).</label>
+
+        <input type="checkbox" id="contactChoice7" name="extra" value="mayooness" data-price="20" data-calories="5">
+        <label for="contactChoice7">майонез (+20 рублей, +5 калорий).</label>
+    </fieldset>
+</form>
+
+<button id="calculate">Посчитать</button>
+<p>Стоимость: <span id="price">0</span>.</p>
+<p>Количество калорий: <span id="calories">0</span>.</p>
+
+<script src="script.js"></script>
+
+<script>
+   
+</script>
+</body>
+</html>

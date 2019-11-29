@@ -1,39 +1,90 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
-// Добавьте пустые классы для корзины товаров и элемента корзины товаров. 
-// Продумайте, какие методы понадобятся для работы с этими сущностями.
-// Добавьте для GoodsList (у меня это Cart) метод, определяющий суммарную стоимость всех товаров.
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+/*function makeGETRequest(url, callback) {
+    let xhr;
+  
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) { 
+      xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        callback(xhr.responseText);
+      }
+    }
+  
+    xhr.open('GET', url, true);
+    xhr.send();
+  }*/
+
+class GoodsItem {
+    constructor (name, price, id) {
+        this.id = id,
+        this.product_name = name,
+        this.price = price,
+        this.img = image,
+        this.quantity = 0
+    }
+    render() {
+        {
+            return `<div class="product-item" data-id="${this.id}">
+                        <img src="${this.img}" alt="Some img"/>
+                        <div class="desc">
+                            <h3>${this.product_name}</h3>
+                            <p>${this.price} $</p>
+                            <button class="buy-btn" 
+                            data-id="${this.id}"
+                            data-name="${this.product_name}"
+                            data-image="${this.img}"
+                            data-price="${this.price}">Купить</button>
+                        </div>
+                    </div>`
+        }
+    }
+}
 
 class Catalog { // каталог всех товаров
     constructor(container = '.products') {
         this.container = container;
-        this.allProducts = this._fetchData(); // все товары каталога
+        this.goods = []; // все товары каталога
         this.add = this.addItem();
-        this.render();
+        this._init()
     }
-    _fetchData () {
-        let arr = [];
-        for (let i = 0; i < items.length; i++) {
-            let productObj = new GoodsItem(i);
-            arr.push (productObj);
-        }
-        return arr;
-    }
-    render() {
-        let list = this.allProducts;
-        let arr = [];
-        for (let item of list) {
-            arr.push(item.createTemplate())
-        }
-        document.querySelector(this.container).innerHTML = arr.join('');
+    _init() {
+        fetch(`${API_URL}/catalogData.json`)
+          .then(d => d.json())
+          .then(data => {
+            data.forEach(good => {
+              this.goods.push(new GoodsItem(good.product_name, good.price, good.id_product))
+            })
+          })
+          .finally(() => this.render())
+      }
 
-    }
+  /*  fetchGoods (cb) {
+        makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
+            this.goods = JSON.parse(goods);
+            cb();
+          })
+    }*/
+    render() {
+
+        let listHtml = '';
+        this.goods.forEach(good => {  
+          listHtml += good.render();
+        });
+        document.querySelector(this.container).innerHTML = listHtml;
+      }
+        
+
+
     addItem() {
         document.querySelector('.products').addEventListener ('click', (evt) => {
             if (evt.target.classList.contains ('buy-btn')) {
@@ -43,6 +94,7 @@ class Catalog { // каталог всех товаров
         })
     }
 }
+let list = new Catalog();
 
 class Cart {
     constructor(container = '.cart-block') {
@@ -72,7 +124,7 @@ class Cart {
                             </div>`
         }
 
-        document.querySelector(`.cart-block`).innerHTML = (allProducts.length != 0) ? `${allProducts}<div>Total: ${this._calcCart()}</div>` : `no products, sorry`;
+        document.querySelector(`.cart-block`).innerHTML = `${allProducts}<div>Total: ${this._calcCart()}</div>`;
     }
     showCart() { //кнопка скрытия и показа корзины
         document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -133,164 +185,13 @@ class Cart {
     }
 }
 
-class GoodsItem {
-    constructor (i, image = 'https://placehold.it/200x150') {
-        this.id = ids[i],
-        this.name = items[i],
-        this.price = prices[i],
-        this.img = image,
-        this.quantity = 0
-    }
-        createTemplate() {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img"/>
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        }
-
-        add() {
-            this.quantity++
-        }
-    }
-
-let list = new Catalog();
-
 let cart = new Cart;
 
 
+/*list.fetchGoods(() => {
+    list.render();
+  });*/
+  
 
-/*
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
 
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('del-btn')) {
-        removeProduct (evt.target);
-    }
-})
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('buy-btn')) {
-        addProduct (evt.target);
-    }
-})
 
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr;
-};
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        name: items[i],
-        price: prices[i],
-        img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        },
-
-        add: function() {
-            this.quantity++
-        }
-    }
-};
-
-//рендер списка товаров (каталога)
-function renderProducts () {
-    let arr = [];
-    for (item of list) {
-        arr.push(item.createTemplate())
-    }
-    document.querySelector('.products').innerHTML = arr.join();
-}
-
-renderProducts ();
-
-//CART
-
-// Добавление продуктов в корзину
-function addProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (!find) {
-        userCart.push ({
-            name: product.dataset ['name'],
-            id: productId,
-            img: cartImage,
-            price: +product.dataset['price'],
-            quantity: 1
-        })
-    }  else {
-        find.quantity++
-    }
-    renderCart ()
-}
-
-//удаление товаров
-function removeProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (find.quantity > 1) {
-        find.quantity--;
-    } else {
-        userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-    }
-    renderCart ();
-}
-
-//перерендер корзины
-function renderCart () {
-    let allProducts = '';
-    for (el of userCart) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
-                            <div class="product-bio">
-                                <img src="${el.img}" alt="Some image">
-                                <div class="product-desc">
-                                    <p class="product-title">${el.name}</p>
-                                    <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                    <p class="product-single-price">$${el.price} each</p>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">${el.quantity * el.price}</p>
-                                <button class="del-btn" data-id="${el.id}">&times;</button>
-                            </div>
-                        </div>`
-    }
-
-    document.querySelector(`.cart-block`).innerHTML = allProducts;
-}
-*/

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "USB-camera",
+    "price": 18,
+    "img": "https://placehold.it/200x150",
+    "id": 7,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  },
+  {
+    "name": "Gamepad",
+    "price": 24,
+    "img": "https://placehold.it/200x150",
+    "id": 8,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  },
+  {
+    "name": "Mouse",
+    "price": 10,
+    "img": "https://placehold.it/200x150",
+    "id": 4,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  },
+  {
+    "name": "Phones",
+    "price": 25,
+    "img": "https://placehold.it/200x150",
+    "id": 5,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  },
+  {
+    "name": "Router",
+    "price": 30,
+    "img": "https://placehold.it/200x150",
+    "id": 6,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  },
+  {
+    "name": "Notebook",
+    "price": 1000,
+    "img": "https://placehold.it/200x150",
+    "id": 1,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  },
+  {
+    "name": "Display",
+    "price": 200,
+    "img": "https://placehold.it/200x150",
+    "id": 2,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  },
+  {
+    "name": "Keyboard",
+    "price": 20,
+    "img": "https://placehold.it/200x150",
+    "id": 3,
+    "template": "<div class=\"product-item\" data-id=\"${this.id}\">\n                            <img src=\"${this.img}\" alt=\"Some img\">\n                            <div class=\"desc\">\n                                <h3>${this.title}</h3>\n                                <p>${this.price} $</p>\n                                <button class=\"buy-btn\" \n                                data-id=\"${this.id}\"\n                                data-name=\"${this.title}\"\n                                data-image=\"${this.img}\"\n                                data-price=\"${this.price}\">Купить</button>\n                            </div>\n                        </div>"
+  }
+]

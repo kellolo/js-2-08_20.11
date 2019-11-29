@@ -1,16 +1,10 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-let list = fetchData();
 
 class Product {
     constructor(product) {
-        this.title = product.title
+        this.title = product.item
         this.id = product.id
         this.img = product.img
+        this.imgCart = product.imgCart
         this.price = product.price
     }
     render() {
@@ -19,11 +13,7 @@ class Product {
                     <div class="desc">
                         <h3>${this.title}</h3>
                         <p>${this.price} $</p>
-                        <button class="buy-btn" 
-                        data-id="${this.id}"
-                        data-title="${this.title}"
-                        data-image="${this.img}"
-                        data-price="${this.price}">Купить</button>
+                        <button class="buy-btn" data-id="${this.id}">Купить</button>
                     </div>
                 </div>`
     }
@@ -33,13 +23,12 @@ class Products {
     constructor(block) {
         this.products = []
         this.block = `.${block}`
-        this._init()
     }
-    _init() {
-        //list - глобальный массив с заглушками продуктов
-        list.forEach(item => {
-            this.products.push(new Product(item))
-        })
+    init(json) {
+        for (let el of json) {
+            let newProduct = new Product(el);
+            this.products.push(newProduct);
+        }
         this.render()
     }
     render() {
@@ -52,12 +41,19 @@ class Products {
     }
 }
 
+
+
 let catalog = new Products('products')
 
+fetch("https://raw.githubusercontent.com/salegorka/json/master/catalogData.json")
+.then(response => response.json())
+.then(json => catalog.init(json));
+
 class CartItem {
-    constructor(id, img, title, price, quantity) {
+    constructor(id, img, imgCart, title, price, quantity) {
         this.id = id;
         this.img = img;
+        this.imgCart = imgCart;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
@@ -66,7 +62,7 @@ class CartItem {
     render() {
         return `<div class="cart-item" data-id="${this.id}">
                     <div class="product-bio">
-                        <img src="${this.img}" alt="Some image">
+                        <img src="${this.imgCart}" alt="Some image">
                         <div class="product-desc">
                             <p class="product-title">${this.title}</p>
                             <p class="product-quantity">Quantity: ${this.quantity}</p>
@@ -86,12 +82,15 @@ class Cart {
         this.cart = [];
     }
 
-    addItem(target) {
-        let productId = target.dataset.id;
+    addItem(target, catalog) {
+        let productId = +target.dataset.id;
         let find = this.cart.find(elem => elem.id === productId);
         if (!find) {
-            let newItem = new CartItem(target.dataset.id, cartImage, target.dataset.title, target.dataset.price, 1);
-            this.cart.push(newItem);
+            // Убрал дата аттрибуты(кроме id), тут продукт по которому кликнули ищется в обьекте каталог
+            let clickedItem = catalog.products.find(elem => elem.id === productId);
+            console.log(clickedItem, productId)
+            let newCartItem = new CartItem(clickedItem.id, clickedItem.img, clickedItem.imgCart, clickedItem.title, clickedItem.price, 1);
+            this.cart.push(newCartItem);
         } else {
             find.quantity++;
         }
@@ -99,7 +98,7 @@ class Cart {
     }
 
     removeItem(target) {
-        let productId = target.dataset.id;
+        let productId = +target.dataset.id;
         let find = this.cart.find(elem => elem.id === productId);
         if(find.quantity > 1) {
             find.quantity--;
@@ -119,8 +118,6 @@ class Cart {
         document.querySelector(".cart-block").innerHTML = stringHtml;
     }
 }
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-//var userCart = [];
 
 let userCart = new Cart();
 
@@ -137,26 +134,26 @@ document.querySelector('.cart-block').addEventListener('click', (evt) => {
 //кнопки покупки товара (добавляется один раз)
 document.querySelector('.products').addEventListener('click', (evt) => {
     if (evt.target.classList.contains('buy-btn')) {
-        userCart.addItem(evt.target);
+        userCart.addItem(evt.target, catalog);
     }
 })
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData() {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push(createProduct(i));
-    }
-    return arr
-};
+// function fetchData() {
+//     let arr = [];
+//     for (let i = 0; i < items.length; i++) {
+//         arr.push(createProduct(i));
+//     }
+//     return arr
+// };
 
-//создание товара
-function createProduct(i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
+// //создание товара
+// function createProduct(i) {
+//     return {
+//         id: ids[i],
+//         title: items[i],
+//         price: prices[i],
+//         img: image,
         // quantity: 0,
         // createTemplate: function () {
         //     return `<div class="product-item" data-id="${this.id}">
@@ -176,8 +173,8 @@ function createProduct(i) {
         // add: function() {
         //     this.quantity++
         // }
-    }
-};
+//     }
+// };
 
 //рендер списка товаров (каталога)
 // function renderProducts () {

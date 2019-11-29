@@ -1,0 +1,80 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    color: #aaa;
+    background-color: #444;
+}
+
+body {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 28px;
+    color: orange;
+}
+
+fieldset {
+    display: flex;
+    margin: 5px;
+    border: 5px solid #666;
+}
+
+fieldset:hover {
+    border: 5px solid #888;
+}
+
+.caption {
+    text-align: center;
+}
+
+fieldset:hover > .caption {
+    text-shadow: 1px 1px 2px black;
+    color: orange;
+}
+
+label {
+    margin: 10px;
+}
+
+label:hover {
+    text-shadow: 3px 3px 4px black;
+    color: white;
+    cursor: pointer;
+}
+
+.after-form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#go {
+    padding: 10px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+#go:hover {
+    background-color: #afa;
+    color: black;
+    cursor: pointer;
+}
+
+.totalPrice {
+    color: #6a6;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px;
+}
+
+.totalCalories {
+    color: #c66;
+    font-weight: bold;
+}
+
+.hide {
+    display: none;
+}

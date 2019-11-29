@@ -4,11 +4,132 @@ const cartImage = 'https://placehold.it/100x80';
 const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+let list = fetchData ();
+let userCart = [];
+
+class Product {
+    constructor(product) {
+        this.title = product.title
+        this.id = product.id
+        this.img = product.img
+        this.price = product.price
+    }
+    render() {
+         return `<div class="product-item" data-id="${this.id}">
+                 <img src="${this.img}" alt="Some img">
+                    <div class="desc">
+                        <h3>${this.title}</h3>
+                        <p>${this.price} $</p>
+                        <button class="buy-btn" 
+                        data-id="${this.id}"
+                        data-title="${this.title}"
+                        data-image="${this.img}"
+                        data-price="${this.price}">Купить</button>
+                    </div>
+                </div>`
+    }
+}
+
+class Products {
+    constructor(block) {
+        this.products = []
+        this.block = `.${block}`
+        this._init()
+    }
+    _init() {
+        list.forEach(item => {
+            this.products.push(new Product(item))
+        })
+        this.render()
+    }
+    render() {
+        let block = document.querySelector(this.block)
+        let str = ''
+        this.products.forEach(item => {
+            str += item.render()
+        })
+        block.innerHTML = str
+    }
+}
+let catalog = new Products('products')
+
+class Cart {
+    constructor(dataset) {
+       this.title = dataset.title
+       this.id = dataset.id
+       this.img = dataset.img
+       this.price = dataset.price
+       this.quantity = dataset.quantity
+    }
+    renderCart() {
+        return `<div class="cart-item" data-id="${this.id}">
+                                <div class="product-bio">
+                                    <img src="${this.img}" alt="Some image">
+                                    <div class="product-desc">
+                                        <p class="product-title">${this.title}</p>
+                                        <p class="product-quantity">Quantity: ${this.quantity}</p>
+                                        <p class="product-single-price">$${this.price} each</p>
+                                    </div>
+                                </div>
+                                <div class="right-block">
+                                    <p class="product-price">$${this.quantity * this.price}</p>
+                                    <button class="del-btn" data-id="${this.id}">&times;</button>
+                                </div>
+                            </div>`
+    }
+}
+
+class CartItem {
+    constructor(block) {
+        this.dataset = []
+        this.productId = +product.dataset['id'];
+        this.block = `.${block}`
+        // this.addProduct()
+    }
+    addProduct (product) {
+        let find = userCart.find (element => element.id === this.productId);
+        if (!find) {
+            userCart.push ({
+                title: product.dataset['title'],
+                id: this.productId,
+                img: cartImage,
+                price: +product.dataset['price'],
+                quantity: 1
+            }).forEach(item => {
+                this.dataset.push(new Cart(item))
+            })
+
+        }  else {
+            find.quantity++
+        }
+        this.renderCart()
+    }
+    renderCart() {
+     let block = document.querySelector(this.block)
+     let str = ''
+     this.dataset.forEach(item => {
+         str +=item.renderCart()
+     })
+      block.innerHTML = str
+    }
+    removeProduct (product) {
+        let productId = +product.dataset['id'];
+        let find = userCart.find (element => element.id === productId);
+        if (find.quantity > 1) {
+            find.quantity--;
+        } else {
+            userCart.splice(userCart.indexOf(find), 1);
+            document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+        }
+        renderCart ();
+    }
+}
+
 
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-var list = fetchData ();
+
+
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -40,41 +161,41 @@ function fetchData () {
 function createProduct (i) {
     return {
         id: ids[i],
-        name: items[i],
+        title: items[i],
         price: prices[i],
         img: image,
-        quantity: 0,
-        createTemplate: function () {
-            return `<div class="product-item" data-id="${this.id}">
-                        <img src="${this.img}" alt="Some img">
-                        <div class="desc">
-                            <h3>${this.name}</h3>
-                            <p>${this.price} $</p>
-                            <button class="buy-btn" 
-                            data-id="${this.id}"
-                            data-name="${this.name}"
-                            data-image="${this.img}"
-                            data-price="${this.price}">Купить</button>
-                        </div>
-                    </div>`
-        },
+        // quantity: 0,
+        // createTemplate: function () {
+        //     return `<div class="product-item" data-id="${this.id}">
+        //                 <img src="${this.img}" alt="Some img">
+        //                 <div class="desc">
+        //                     <h3>${this.name}</h3>
+        //                     <p>${this.price} $</p>
+        //                     <button class="buy-btn" 
+        //                     data-id="${this.id}"
+        //                     data-name="${this.name}"
+        //                     data-image="${this.img}"
+        //                     data-price="${this.price}">Купить</button>
+        //                 </div>
+        //             </div>`
+        // },
 
-        add: function() {
-            this.quantity++
-        }
+        // add: function() {
+        //     this.quantity++
+        // }
     }
 };
 
 //рендер списка товаров (каталога)
-function renderProducts () {
-    let arr = [];
-    for (item of list) {
-        arr.push(item.createTemplate())
-    }
-    document.querySelector('.products').innerHTML = arr.join();
-}
+// function renderProducts () {
+//     let arr = [];
+//     for (item of list) {
+//         arr.push(item.createTemplate())
+//     }
+//     document.querySelector('.products').innerHTML = arr.join();
+// }
 
-renderProducts ();
+// renderProducts ();
 
 //CART
 
@@ -84,7 +205,7 @@ function addProduct (product) {
     let find = userCart.find (element => element.id === productId);
     if (!find) {
         userCart.push ({
-            name: product.dataset ['name'],
+            title: product.dataset ['title'],
             id: productId,
             img: cartImage,
             price: +product.dataset['price'],
@@ -95,6 +216,7 @@ function addProduct (product) {
     }
     renderCart ()
 }
+
 
 //удаление товаров
 function removeProduct (product) {
@@ -117,13 +239,13 @@ function renderCart () {
                             <div class="product-bio">
                                 <img src="${el.img}" alt="Some image">
                                 <div class="product-desc">
-                                    <p class="product-title">${el.name}</p>
+                                    <p class="product-title">${el.title}</p>
                                     <p class="product-quantity">Quantity: ${el.quantity}</p>
                                     <p class="product-single-price">$${el.price} each</p>
                                 </div>
                             </div>
                             <div class="right-block">
-                                <p class="product-price">${el.quantity * el.price}</p>
+                                <p class="product-price">$${el.quantity * el.price}</p>
                                 <button class="del-btn" data-id="${el.id}">&times;</button>
                             </div>
                         </div>`

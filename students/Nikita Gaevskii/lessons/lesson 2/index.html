@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id="userform">
+        <fieldset>
+            <caption>
+                <input type="radio" name="size" id="hamburg_size" value="small"> Small Gamburger
+            </caption>
+            
+                <input type="radio" name="size" id="hamburg_size" value="big"> Big gamburger
+                <caption>
+                <fieldset>
+                    <caption>
+                        <input type="checkbox" name="components" value="ski"> Лыжи
+                    </caption>
+                    <caption>
+                        <input type="checkbox" name="components" value="read"> Чтение
+                    </caption>
+                    <caption>
+                        <input type="checkbox" name="components" value="pc"> Компьютер/Интернет
+                    </caption>
+                    <caption>
+                        <input type="checkbox" name="components" value="js"> Веб-разработка
+                    </caption>
+                </fieldset> 
+            </caption>
+        </fieldset>
+        
+    </form>
+    <button id="ok">Добавить пользователя</button>
+
+    <script>
+        let uForm = document.querySelector ('#userform')
+        let btn = document.querySelector ('#ok')
+        let users = []
+
+        btn.addEventListener ('click', addUser)
+
+        function addUser () {
+            let newUser = new User ('Name', 'Age', 'Gender', 'Hobbie')
+            users.push (newUser)
+        }
+
+        class User {
+            constructor (name, age, gender, hobbies) {
+                this.Name = this._input(name)
+                this.Age = this._input(age)
+                this.Gender = this._check (gender)
+                this.Hobbies = this._getHobbies (hobbies)
+            }
+            _input (attrName) {
+                let object = document.querySelector (`input[name=${attrName}]`)
+                return object.value
+            }
+            _check (attrName) {
+                let object = document.querySelector (`input[name=${attrName}]:checked`)
+                return object.value
+            }
+            _getHobbies (attrName) {
+                let hobs = []
+                let arr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                arr.forEach (el => hobs.push (el.value))
+                return hobs
+            }
+        }
+
+        // class Parameter {
+        //     constructor (el) {
+
+        //     }
+        // }
+        // class Human {
+        //     constructor (name, gender) {
+        //         this.Name = name
+        //         this.Gender = this._returnGender (gender)
+        //         this.Married = false
+        //         this.Partner = null
+        //     }
+        //     greet () {
+        //         this.Name ? console.log ('Hi! I am ' + this.Name + '.') : console.log ('Error')
+        //     }
+        //     getMarried (pers) {
+        //         if (!this.Married) {
+        //             this.Married = true
+        //             this.Partner = pers.Name
+        //             pers.getMarried (this)
+        //         } else {
+        //             console.log (`${this.Name} already married with ${this.Partner}`)
+        //         }
+        //     }
+        //     _returnGender (g) {
+        //         return g ? 'male' : 'female'
+        //     }
+        // }
+
+        // let olya = new Human ('Olga', 0)
+        // let kolya = new Human ('Nikolay', 1)
+
+    </script>
+</body>
+</html>

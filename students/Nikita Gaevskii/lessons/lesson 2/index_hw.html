@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+     <form action="#" id="hamburger_form">
+                <fieldset>
+                    <caption>
+                        <input type="radio" name="size" data-price="50" data-calories="20" value="small"> Маленький гамбургер (50 рублей, 20 калорий)
+                    </caption>
+                    <br>
+                    <caption>
+                        <input type="radio" name="size" data-price="100" data-calories="40" value="big"> Большой гамбургер (100 рублей, 40 калорий)
+                    </caption>
+                        <br>
+                        <br>
+                       <caption>
+                            <fieldset>
+                            <caption>
+                                <input type="checkbox" name="components" data-price="10" data-calories="20" value="chees"> добавить сыр (10 рублей, 20 калорий)
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" data-price="20" data-calories="5" value="salat"> добавить салат (20 рублей, 5калорий)
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" data-price="15" data-calories="10" value="potatoe"> добавить картофель (15 рублей, 10 калорий)
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" data-price="15" data-calories="0" value="spices"> добавить специи (15 рублей, 0 калорий)
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" data-price="20" data-calories="0" value="mayo"> полить майонезом (20 рублей, 5 калорий)
+                            </caption>
+                            </fieldset> 
+                       </caption>
+                    
+                </fieldset>
+                
+     </form>
+    <button id="ok">добавить гамбургер</button>
+    <br>
+     
+    <span>Общая стоимость: <span id="allprice"></span> </span>
+    <br>
+    <span>Общая сумма каллорий: <span id="allcalories"></span></span>
+
+    <script>
+        let uForm = document.querySelector ('#hamburger_form')
+        let btn = document.querySelector ('#ok')
+        btn.addEventListener ('click', addhamburger)
+        let allPriceNode = document.querySelector ('#allprice')
+        let allCaloriesNode = document.querySelector ('#allcalories')
+        let hamburger = []
+
+        btn.addEventListener ('click', addhamburger)
+        
+        function addhamburger () {
+            let hamburger = new Hamburger ('size', 'components')
+            hamburger.showResult ()
+        }
+        
+        class Hamburger {
+            constructor (size, components) {
+                this.size = this._check (size)
+                this.components = this._getcomponents(components)
+            }
+            _check (attrName) {
+                let object = document.querySelector (`input[name=${attrName}]:checked`)
+                return {
+                    price: +object.dataset.price,
+                    calories: +object.dataset.calories
+                }
+            }
+            _getcomponents (attrName) {
+                let componentsArrey = []
+                let arr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                arr.forEach (el => componentsArrey.push (
+                    {
+                        price: +el.dataset.price,
+                        calories: +el.dataset.calories
+                    }
+                ))
+                return componentsArrey
+            }
+            _getprice () {
+               let allprice = 0
+               allprice += this.size.price
+               this.components.forEach (el => allprice += el.price)
+               return allprice
+
+            }
+            _getcalories () {
+                let allcalories = 0
+                allcalories += this.size.calories
+                this.components.forEach (el => allcalories += el.calories)
+                return allcalories
+            }
+            showResult() {
+                 allprice.innerHTML = this._getprice()
+                 allcalories.innerHTML = this._getcalories()
+    }
+        }
+
+     </script>
+
+</body>
+
+</html>

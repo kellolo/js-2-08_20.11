@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+     <form action="#" id="hamburger_form">
+                <fieldset>
+                    <caption>
+                        <input type="radio" name="size" id="hamburg_size" value="small"> Small Gamburger
+                    </caption>
+                    <br>
+                    <caption>
+                        <input type="radio" name="size" id="hamburg_size" value="big"> Big Hamburger
+                    </caption>
+                        <br>
+                        <br>
+                       <caption>
+                            <fieldset>
+                            <caption>
+                                <input type="checkbox" name="components" value="chees"> добавить сыр
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" value="salat"> добавить салат
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" value="potatoe"> добавить картофель
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" value="spices"> добавить специи
+                            </caption>
+                            <br>
+                            <caption>
+                                <input type="checkbox" name="components" value="mayo"> полить майонезом
+                            </caption>
+                            </fieldset> 
+                       </caption>
+                    
+                </fieldset>
+                
+     </form>
+    <button id="ok">добавить гамбургер</button>
+
+    <script>
+        let uForm = document.querySelector ('#hamburger_form')
+        let btn = document.querySelector ('#ok')
+        let hamburger = []
+
+        btn.addEventListener ('click', addhamburger)
+        
+        function addhamburger () {
+            let hamburger = new Hamburger ('size', 'components')
+        }
+        
+        class Hamburger {
+            constructor (size, components) {
+                this.size = this._check (size)
+                this.components = this._getcomponents(components)
+            }
+            _check (attrName) {
+                let object = document.querySelector (`input[name=${attrName}]:checked`)
+                return object.valu
+            }
+            _getcomponents (attrName) {
+                let comps = []
+                let arr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                arr.forEach (el => comps.push (el.value))
+                return comps
+            }
+            _getprice (attrName) {
+                let price = []
+                let arr1 = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                
+                arr1.forEach (el => price.push (el.value))
+                return price
+            }
+        }
+
+     </script>
+
+</body>
+
+</html>

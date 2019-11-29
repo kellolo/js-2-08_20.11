@@ -1,0 +1,15 @@
+body{
+    text-align: center;
+}
+
+button{
+    margin-top: 20px;
+}
+
+.hamburger-fieldset-inside{
+    display: flex;
+}
+
+input{
+    margin-left: 800px;
+}

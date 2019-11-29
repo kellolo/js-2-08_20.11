@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form name="" action="" id="form">
+       <fieldset>
+           <legend>
+Бургерная
+</legend>
+    <p>Составь свой бургер</p>
+        <fieldset> 
+           <p><b>Выберите размер бургера</b></p>
+            <caption>
+                <input type="radio" name="size" id="large" value="large"> <label for="large">Большой (100 рублей, 40 калорий)</label>
+            </caption><br/>
+            <caption>
+                <input type="radio" name="size" id="small" value="small"> <label for="small">Маленький (50 рублей, 20 калорий)</label>
+            </caption>
+        </fieldset>
+
+        <fieldset>
+             <p><b>Выберите начинку бургера</b></p>
+            <caption>
+                <input type="checkbox" name="add" id="cheese" value="cheese"> <label for="cheese">Сыр (+10 рублей, +20 калорий)</label>
+            </caption><br/>
+            <caption>
+                <input type="checkbox" name="add" id="salad" value="salad"> <label for="salad">Салат (+20 рублей, +5 калорий)</label>
+            </caption><br/>
+            <caption>
+                <input type="checkbox" name="add" id="potato" value="potato"> <label for="potato">Картофель (+15 рублей, +10 калорий)</label>
+            </caption>
+        </fieldset>
+
+        <fieldset>
+            <caption>
+                <input type="checkbox" name="add" id="flavoring" value="flavoring"> <label for="flavoring">Посыпать приправой (+15 рублей, +0 калорий)</label>
+            </caption><br/>
+            <caption>
+                <input type="checkbox" name="add" id="mayonnaise" value="mayonnaise"> <label for="mayonnaise">Полить майонезом (+20 рублей, +5 калорий)</label>
+            </caption>
+        </fieldset>
+        
+        <button style="margin-top: 10px;" type="submit" value="Make Order">Собрать бургер</button>
+    <p>Итоговая стоимость: <span id="price">0</span> руб.</p>
+    <p>Количество калорий:  <span id="calories">0</span> ккал</p>
+        </fieldset>
+    
+    </form>
+    
+
+    <script>
+        let Hamburger = {
+	
+	price: 0,
+	calories: 0,
+
+	small: {
+		price: 50,
+		calories: 20
+	},
+
+	large: {
+		price: 100,
+		calories: 40
+	},
+
+	cheese: {
+		price: 10,
+		calories: 20
+	},
+
+	salad: {
+		price: 20,
+		calories: 5
+	},
+
+	potato: {
+		price: 15,
+		calories: 10
+	},
+
+	flavoring: {
+		price: 15,
+		calories: 0
+	},
+
+	mayonnaise: {
+		price: 20,
+		calories: 5
+	},
+	
+	calc: function(size){
+		this.price += Hamburger[size].price;
+		this.calories += Hamburger[size].calories;
+		
+		var checkedBoxes = document.querySelectorAll('input[name=add]:checked');
+		for(var i = 0; i < checkedBoxes.length; i++){
+				var add = checkedBoxes[i].id;
+			  this.price += Hamburger[add].price;
+				this.calories += Hamburger[add].calories;
+		}
+		
+		Hamburger.result(this.price, this.calories);
+	},	
+	
+	result: function(price, calories){
+		document.getElementById('price').innerHTML = price;
+		document.getElementById('calories').innerHTML = calories;
+	},
+	
+	resetData: function(){
+		this.price = 0;
+		this.calories = 0;
+		Hamburger.result(this.price, this.calories);
+	}	
+}
+
+document.getElementById('form').addEventListener('submit', function(e){
+	Hamburger.resetData();
+	Hamburger.calc(document.querySelector('input[name="size"]:checked').value);
+	e.preventDefault();
+});
+    </script>
+</body>
+</html>

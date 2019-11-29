@@ -1,25 +1,17 @@
-const ID = ['1', '2', '3', '4', '5', '6', '7', '8']
-const NAME = ['Mortal Kombat 11', 'Cyberpunk 2077', 'Death Stranding', 'Stalker 2', ' Metro: Exodus', 'Devil May Cry 5', ' Sekiro', 'Half-life 3']
-const PRICE = ['1400', '2000', '2500', '100000', '1400', '1000', '1500', '100000000']
-
 let doc = document
 
 class fillProduct {
     constructor() {
+        this.url = 'https://raw.githubusercontent.com/VladimirKul/online-store-api/master/responses/catalogData.json'
         this.product = []
-        this._init()
-        this._renderCatalog(this.product)
+        this.getRequest(this.url)
     }
 
-    _init() {
-        let i = 0
-        for (i in ID) {
-            this.product.push(new fillProductItem(ID[i], NAME[i], PRICE[i]))
-        }
-    }
-
-    _renderCatalog(product) {
-        new renderCatalog(product)
+    getRequest(url) {
+        fetch(url).then(data => data.json()).then(data => {
+            this.product = data
+            new renderCatalog(this.product)
+        })
     }
 
     filterProduct(evt) {
@@ -50,6 +42,7 @@ class fillProduct {
             new renderCatalog(filtered)
         }
     }
+
 }
 
 class renderCatalog {
@@ -96,7 +89,7 @@ class fillCart {
                 cart.arrCart.push(new fillProductItem(target.dataset.id, target.dataset.name, target.dataset.price))
             }
             cart.sumCart += +target.dataset.price
-            doc.querySelector('.wrap-cart').innerHTML = `<input type="button" value="X" class="close-cart">` + cart.renderCart(cart.arrCart) + `<h2 class="amount">Total amount: ${cart.sumCart}&#36; </h2> `
+            doc.querySelector('.wrap-cart').innerHTML = `<input type="button" value="X" class="close-cart">` + new RenderCart(cart.arrCart).str + `<h2 class="amount">Total amount: ${cart.sumCart}&#36; </h2> `
         }
     }
 
@@ -116,36 +109,9 @@ class fillCart {
                 cart.arrCart.splice(cart.arrCart.indexOf(find_el), 1)
             }
             cart.sumCart -= +target.dataset.price
-            doc.querySelector('.wrap-cart').innerHTML = `<input type="button" value="X" class="close-cart">` + cart.renderCart(cart.arrCart) + `<h2>Total amount: ${cart.sumCart}&#36; </h2> `
+            doc.querySelector('.wrap-cart').innerHTML = `<input type="button" value="X" class="close-cart">` + new RenderCart(cart.arrCart).str + `<h2>Total amount: ${cart.sumCart}&#36; </h2> `
 
         }
-    }
-
-    renderCart(cart) {
-        let str = ''
-        cart.forEach((el) => {
-            str += `
-        <div class="cartt">
-        <div class="wrap-item-cart">
-            <div class="wrap-desc">
-                <img src="http://placehold.it/75x75" alt="img">
-                <p class="cart-name-product">${el.name}</p>
-                <p class="cart-price-prduct">${el.price} &#36;</p>
-            </div>
-            <div class="wrap-calc">
-                <p class="cart-count-prduct">count: ${el.count}</p>
-                <p class="cart-sum-product">amount: ${el.price*el.count}</p>
-                <input type="button" value="+" class="btn-product-item"
-                    data-id="${el.id}" data-name="${el.name}" data-price="${el.price}">
-                <input type="button" value="-" class="btn-delete-product"
-                    data-id="${el.id}" data-name="${el.name}" data-price="${el.price}">
-            </div> 
-        </div>
-        
-        </div>
-        `
-        })
-        return str
     }
 
     visibilityCart() {
@@ -160,6 +126,38 @@ class fillCart {
         }
     }
 
+}
+
+class RenderCart {
+    constructor(arr) {
+        this.str = this._render(arr)
+    }
+    _render(cart) {
+        let str = ''
+        cart.forEach((el) => {
+            str += `
+            <div class="cartt">
+            <div class="wrap-item-cart">
+                <div class="wrap-desc">
+                    <img src="http://placehold.it/75x75" alt="img">
+                    <p class="cart-name-product">${el.name}</p>
+                    <p class="cart-price-prduct">${el.price} &#36;</p>
+                </div>
+                <div class="wrap-calc">
+                    <p class="cart-count-prduct">count: ${el.count}</p>
+                    <p class="cart-sum-product">amount: ${el.price*el.count}</p>
+                    <input type="button" value="+" class="btn-product-item"
+                        data-id="${el.id}" data-name="${el.name}" data-price="${el.price}">
+                    <input type="button" value="-" class="btn-delete-product"
+                        data-id="${el.id}" data-name="${el.name}" data-price="${el.price}">
+                </div> 
+            </div>
+            
+            </div>
+            `
+        })
+        return str
+    }
 }
 
 class fillProductItem {

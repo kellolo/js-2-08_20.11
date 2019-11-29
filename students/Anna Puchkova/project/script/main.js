@@ -2,8 +2,8 @@
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 
-
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+//const API_URL = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/master/students/Anna%20Puchkova/other%20works/lesson3';
 
 /*function makeGETRequest(url, callback) {
     let xhr;

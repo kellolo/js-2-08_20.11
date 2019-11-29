@@ -8,32 +8,32 @@
     "id_product": 002,
     "product_name": "Display",
     "price": 2000
-  }
+  },
   {
     "id_product": 003,
     "product_name": "Keyboard",
     "price": 3000
-  }
+  },
   {
     "id_product": 004,
     "product_name": "Mouse",
     "price": 4000
-  }
+  },
   {
     "id_product": 004,
     "product_name": "Phones",
     "price": 5000
-  }
+  },
   {
     "id_product": 006,
     "product_name": "Router",
     "price": 6000
-  }
+  },
   {
     "id_product": 007,
     "product_name": "USB-camera",
     "price": 7000
-  }
+  },
   {
     "id_product": 008,
     "product_name": "Gamepad",

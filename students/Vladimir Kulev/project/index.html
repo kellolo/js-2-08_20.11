@@ -2,30 +2,43 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
-    <title>JS Bin</title>
+    <title>Document</title>
 </head>
 
 <body>
-    <div class="main_wrap">
-        <div class="wrap">
-            <h2>Размер бургера</h2>
-            <p><input type="radio" value="большой" name="rad_b"> Большой бургер</p>
-            <p><input type="radio" value="маленький" name="rad_b"> Маленький бургер</p>
-            <h2>Начинка бургера (обязательно)</h2>
-            <p><input type="radio" name="rad_f" value="сыр"> сыр</p>
-            <p><input type="radio" name="rad_f" value="салат"> салат</p>
-            <p><input type="radio" name="rad_f" value="картофель"> картофель</p>
-            <h2>Топпинг</h2>
-            <p><input type="checkbox" value="приправа" name="check_f"> приправа</p>
-            <p><input type="checkbox" value="майонез" name="check_f"> майонез</p>
-            <button class="btn">ГОУ!</button>
-        </div>
-        <div class="output">
+    <div class="container">
+        <header class="main-head">
+            <a href="" class="logo">LOGO</a>
+            <nav class="site-nav">
+                <ul class="header-list">
+                    <li class="header-list-item"><a href="#" class="header-link-item">Main</a></li>
+                    <li class="header-list-item"><a href="#" class="header-link-item">About</a></li>
+                    <li class="header-list-item"><a href="#" class="header-link-item">Contacts</a></li>
+                </ul>
+            </nav>
+            <input type="button" value="Cart" class="btn-cart">
+            <div class="wrap-cart">
 
-        </div>
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="filter">
+                from <input type="text" placeholder="1000" class="inp-filter"> - <input type="text" placeholder="100000000000" class="inp-filter">
+                <button class="btn-filter">Go!</button>
+            </div>
+            <div class="sort">
+                <p><input type="radio" name="radio-sort" class="radio-sort" checked> in ascending order</p>
+                <p><input type="radio" name="radio-sort" class="radio-sort"> in descending order</p>
+            </div>
+            <div class="wrap-product">
+
+            </div>
+        </main>
+        <footer class="main footer"></footer>
     </div>
-    <script src="js/burger.js"></script>
+    <script src="js/cart.js"></script>
 </body>
+
+</html>

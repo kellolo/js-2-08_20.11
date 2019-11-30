@@ -1,0 +1,50 @@
+[
+     {
+      "id": 123,
+      "title": "Ноутбук",
+      "price": 45000,
+      "img":"https://placehold.it/200x150"
+     },
+     {
+        "id": 124,
+        "title": "Монитор",
+        "price": 17000,
+        "img":"https://placehold.it/200x150"
+     },
+     {
+        "id": 125,
+        "title": "Клавиатура",
+        "price": 850,
+        "img":"https://placehold.it/200x150"
+     },
+     {
+        "id": 126,
+        "title": "Мышка",
+        "price": 600,
+        "img":"https://placehold.it/200x150"
+      },
+      {
+        "id": 127,
+        "title": "Телефон",
+        "price": 7000,
+        "img":"https://placehold.it/200x150"
+      },
+      {
+        "id": 128,
+        "title": "Роутер",
+        "price": 1500,
+        "img":"https://placehold.it/200x150"
+      },
+      {
+        "id": 129,
+        "title": "Камера",
+        "price": 2000,
+        "img":"https://placehold.it/200x150"
+      },
+      {
+        "id": 130,
+        "title": "Геймпад",
+        "price": 1100,
+        "img":"https://placehold.it/200x150"
+      }
+  ]

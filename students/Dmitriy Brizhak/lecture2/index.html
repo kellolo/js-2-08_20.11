@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id="userform">
+        <fieldset>
+            <caption>
+                <input type="radio" name="Size" id="sizeSmall" checked data-price="50" data-kal="20"> Маленький
+            </caption>
+            <caption>
+                <input type="radio" name="Size" id="sizeBig" data-price="100" data-kal="40"> Большой
+            </caption>
+        </fieldset>
+        <fieldset>
+            <caption>
+                <input type="radio" name="Filling" id="filling1" checked data-price="10" data-kal="20"> С сыром
+            </caption>
+            <caption>
+                <input type="radio" name="Filling" id="filling2" data-price="20" data-kal="5"> С салатом
+            </caption>
+            <caption>
+                <input type="radio" name="Filling" id="filling3" data-price="15" data-kal="10"> С картофелем
+            </caption>
+        </fieldset>
+        <fieldset>
+            <caption>
+                <input type="checkbox" name="Flavoring" checked data-price="15" data-kal="0">  Посыпать приправой
+            </caption>
+            <caption>
+                <input type="checkbox" name="Flavoring" checked data-price="20" data-kal="5"> Майонез
+            </caption>
+        </fieldset> 
+        <button id="ok">Рассчитать цену</button>
+    </form>
+    <p class="price">Цена бургера: 0</p>
+    <p class="kal">Каллорийность: 0</p>
+
+    <script>
+        //let uForm = document.querySelector ('#userform')
+        const btn = document.querySelector ('#ok')
+        btn.addEventListener ('click', e => price.calculation(e))
+
+        class Price {
+            constructor () {
+
+            }
+            calculation(e) {
+                e.preventDefault() 
+                //debugger
+                this.size = this._check('Size')
+                this.filling = this._check('Filling')
+                this.flavoring = this._check('Flavoring', 0)
+                this.mayo = this._check('Flavoring', 1)
+                this.price = this._dataset('price', this.size, this.filling, this.flavoring,  this.mayo).reduce((sum,item) => sum+item)
+                this.kal = this._dataset('kal', this.size, this.filling, this.flavoring,  this.mayo).reduce((sum,item) => sum+item)  
+                document.querySelector('.price').innerHTML = `Цена бургера: ${this.price}`
+                document.querySelector('.kal').innerHTML = `Каллорийность: ${this.kal}`  
+            }          
+            _dataset(set) {
+                return [...arguments].filter((el,i) => (i > 0 && el)).map(el => +el.dataset[set])
+            }
+
+            _check (attrName, index = 0) {
+                const object = document.querySelectorAll (`input[name=${attrName}]:checked`)
+                //debugger
+                return object[index]
+            }
+        }
+        const price = new Price() 
+    </script>
+</body>
+</html>

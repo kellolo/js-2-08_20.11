@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // Асинхронные запросы
+        //      Способы передачи данных    
+                // 1) цифровой способ (биты/байты)  - 0/1
+                // 2) HTML                          - xml
+                // 3) String                        - JSON
+        
+        // JSON
+        // let obj = {
+        //     a: 100,
+        //     b: 'some string',
+        //     c: true,
+        //     d: null,
+        //     e: undefined
+        // }
+
+        // let objJSON = JSON.stringify (obj)
+        //JSON.parse (objJSON) // вернет спарсенный с джейсона объект
+
+
+        // Async
+
+        // 1) Функции обр. вызова
+        // 2) Промисы
+        // 3) Fetch
+        // 4) Async ... await
+
+        //1) XML HTTP REQUEST
+        
+        function getDTO () {
+            setTimeout (() => {
+                transferedData = '{"a": 100500}'
+            }, 0)
+        }
+
+        let transferedData
+
+        //async
+        //getDTO () //DTO - data transfer object
+        //...
+        //...
+        //PROFIT
+        //console.log (transferedData) //undefined
+        
+
+        // function getDTOCB (cb) {
+        //     setTimeout (() => {
+        //         transferedData = '{"a": 100500}'
+        //         cb ()
+        //     }, 0)
+        // }
+
+        // getDTOCB (() => {
+        //     console.log (transferedData)
+        // }) //not undefined
+        
+        // function makeGETRequest(url) {
+        //     let xhr = new XMLHttpRequest()
+        //     xhr.onreadystatechange = function () {
+        //         if (xhr.readyState === 4) {
+        //             if (xhr.status == 200) {
+        //                 return xhr.responseText
+        //             } else {
+        //                 console.log ('Server error')
+        //             }
+        //             //callback(xhr.responseText);
+        //         }
+        //     }
+        //     xhr.open('GET', url, true);
+        //     xhr.send();
+        // }
+
+        let url_users = 'https://jsonplaceholder.typicode.com/users'
+        
+        let users
+
+        // function makeGETRequest(url, callback) {
+        //     let xhr = new XMLHttpRequest()
+        //     xhr.onreadystatechange = function () {
+        //         if (xhr.readyState === 4) {
+        //             if (xhr.status == 200) {
+        //                 callback(xhr.responseText)
+        //             } else {
+        //                 console.log ('Server error')
+        //             }
+        //         }
+        //     }
+        //     xhr.open('GET', url, true);
+        //     xhr.send();
+        // }
+
+        //makeGETRequest (url_users)
+        // function parseData (jsonAsyncData) {
+        //     users = JSON.parse(jsonAsyncData)
+        //     console.log (users)
+        // }
+        // makeGETRequest (url_users, parseData)
+
+        
+        // Promise
+
+        // function promiseReq (a) {
+        //     return new Promise ((res, rej) => { //RESolve / REJect
+        //         if (a) {
+        //             console.log ('ok')
+        //             res ('we got ' + a)
+        //         } else {
+        //             console.log ('not ok')
+        //             rej ('Some error tralala')
+        //         }
+        //     })
+        // }
+
+        // promiseReq (1000)
+        //     .then(resolvedData => { //promise Value on resolved status
+        //         console.log (resolvedData)
+        //     })
+        //     .catch(rejectedData => { //promise Value on rejected status
+        //         console.log (rejectedData)
+        //     })
+        //     .finally(() => {
+        //         console.log ('Promise ended')
+        //     })
+
+
+        // ========================================
+
+        // function makeGETRequestPromise(url) {
+        //     return new Promise ((res, rej) => {
+        //         let xhr = new XMLHttpRequest()
+        //         xhr.onreadystatechange = function () {
+        //             if (xhr.readyState === 4) {
+        //                 if (xhr.status == 200) {
+        //                     res (xhr.responseText)
+        //                 } else {
+        //                     rej ('server err')
+        //                 }
+        //             }
+        //         }
+        //         xhr.open('GET', url, true);
+        //         xhr.send();
+        //     }) 
+        // }
+
+        // makeGETRequestPromise (url_users)
+        //     .then (dataJSON => JSON.parse (dataJSON))
+        //     .then (dataNotJSON => {
+        //         console.log (dataNotJSON)
+        //     })
+        //     .catch (err => {
+        //         console.log (err)
+        //     })
+
+        // FETCH
+
+        // let us
+        // fetch (url_users)
+        //     .then (d => d.json())
+        //     .then (data => {us = data})
+        //     .finally (() => console.log (us))
+        
+        
+        // Async ... await
+
+        async function makeAsyncReq (url) {
+            let us
+            try {
+                us = await fetch(url).then(d => d.json())
+            }
+            catch (e) {
+                //
+            }
+            finally {
+                if (us) console.log (us)
+            }
+        }
+
+        makeAsyncReq (url_users)
+    </script> 
+</body>
+</html>

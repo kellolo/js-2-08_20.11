@@ -79,7 +79,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    /* width: 300px; */
 }
 
 .invisible{
@@ -141,6 +141,7 @@ img {
     font-size: 0.75em;
 }
 .right-block{
+    min-width: 200px;
     text-align: right;
 }
 .btn-search {

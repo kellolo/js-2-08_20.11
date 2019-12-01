@@ -1,0 +1,46 @@
+<title>Form example</title>
+<script type="text/javascript">
+  function getFormInfo() {
+    var info;
+
+    // Get a reference using the forms collection
+    var f = document.forms["formA"];
+    info = "f.elements: " + f.elements + "\n"
+         + "f.length: " + f.length + "\n"
+         + "f.name: " + f.name + "\n"
+         + "f.acceptCharset: " + f.acceptCharset + "\n"
+         + "f.action: " + f.action + "\n"
+         + "f.enctype: " + f.enctype + "\n"
+         + "f.encoding: " + f.encoding + "\n"
+         + "f.method: " + f.method + "\n"
+         + "f.target: " + f.target;
+    document.forms["formA"].elements['tex'].value = info;
+  }
+
+  // A reference to the form is passed from the
+  // button's onclick attribute using 'this.form'
+  function setFormInfo(f) {
+    f.method = "GET";
+    f.action = "/cgi-bin/evil_executable.cgi";
+    f.name   = "totally_new";
+  }
+</script>
+
+<h1>Form  example</h1>
+
+<form name="formA" id="formA"
+ action="/cgi-bin/test" method="POST">
+ <p>Click "Info" to see information about the form.
+    Click set to change settings, then info again
+    to see their effect</p>
+ <p>
+  <input type="button" value="info"
+   onclick="getFormInfo();">
+  <input type="button" value="set"
+   onclick="setFormInfo(this.form);">
+  <input type="reset" value="reset">
+  <br>
+  <textarea id="tex" style="height:15em; width:20em">
+  </textarea>
+ </p>
+</form>

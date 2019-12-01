@@ -1,0 +1,19 @@
+div {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 10px;
+  }
+  
+  .calculate {
+    background: red;
+    color: white;
+    font-weight: bold;
+    height: 40px;
+    border-radius: 5px;
+    border-color: gray;
+  }
+  
+  .description {
+    margin: 2px 0 0 0;
+    font-size: 80%;
+  } 

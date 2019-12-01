@@ -146,25 +146,6 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
     }
 })
 
-function makeGETRequest (url) {
-    let xhr;
-
-    xhr = new XMLHttpRequest ();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status == 200) {
-                return xhr.responseText;
-            }
-            else {
-                console.log ('Server error!');
-            }
-        }
-    }
-
-    xhr.open ('GET', url, true);
-    xhr.send ();
-}
-
 function makeGETRequestPromise (url) {
     return new Promise ((res, rej) => {
         let xhr = new XMLHttpRequest ();
@@ -182,7 +163,3 @@ function makeGETRequestPromise (url) {
         xhr.send ();
     })
 }
-
-// makeGETRequestPromise (`${API_URL}/e-shop_items.json`)
-//     .then (data => JSON.parse (data))
-//     .then (a => console.log (a));

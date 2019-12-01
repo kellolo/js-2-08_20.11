@@ -12,7 +12,6 @@ button:focus{
     outline: none;
 }
 .logo{
-
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -125,6 +124,12 @@ img {
 .cart-item img{
     align-self: flex-start;
     margin-right: 15px;
+}
+.cart-total {
+    border-top: 2px solid black;
+    margin: 0 10px;
+    padding-top: 10px;
+    text-align: right;
 }
 .product-single-price{
     color: #474747;

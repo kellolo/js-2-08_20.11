@@ -2,9 +2,154 @@
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 
-//const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const API_URL = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/master/students/Anna%20Puchkova/other%20works/lesson3';
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const FAKEAPI = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/master/students/Anna%20Puchkova/other%20works/lesson3';
 
+class List { //спиток
+    // суперкласс для каталога и корзины
+    constructor(url, container) {
+        this.container = container;
+        this.url = url;
+        //общее
+        this.items = []; //массив хранения активных объектов
+        this.DTOarr = []; //массив для получения данных
+        this.filteredGoods = []; //массив для хранения фильтрованных данных
+        this._init();
+    }
+    _init() {
+        return false;
+    }
+    getJSON(url) {
+       return  fetch(url)
+           .then(d => d.json())
+    }
+    render() {
+        const block = document.querySelector(this.container);
+        this.DTOarr.forEach(el => {
+            let item = new lists[this.constructor.name](el);
+            this.items.push(item);
+            block.insertAdjacentHTML ('beforeend', item.render ());
+        })
+    }
+    filter(value) {// тут будет фильтрация
+        const regexp = new RegExp(value, 'i');
+        this.filteredGoods = this.items.filter(good => regexp.test(good.product_name));
+        this.render();
+    }
+}
+
+class ListItem { // элемент списка
+//суперкласс для ProductItem and CartItem
+    constructor(el, img = image) {
+        this.product_name = el.product_name;
+        this.price = el.price;
+        this.id_product = el.id_product;
+        this.img = img;
+        this.quantity = product.quantity || 1;
+    }
+    render() {
+        return `<div class="product-item" data-id="${this.id_product}">
+                        <img src="${this.img}" alt="Some img"/>
+                        <div class="desc">
+                            <h3>${this.product_name}</h3>
+                            <p>${this.price} $</p>
+                            <button class="buy-btn" 
+                            data-id="${this.id_product}"
+                            data-name="${this.product_name}"
+                            data-image="${this.img}"
+                            data-price="${this.price}">Купить</button>
+                        </div>
+                    </div>`
+    }
+}
+
+class ProductsList extends List{
+    constructor(cart, url = '/catalogData.json', container = '.products') {
+        super (url, container);
+        this.cart = cart;
+    }
+    _init () {
+        this.getJSON (FAKEAPI + this.url)
+            .then (data => {this.DTOarr = data})
+            .finally (() => {
+                this.render ()
+            })
+    }
+}
+
+class CartList extends List{
+    constructor(url = '/getBasket.json', container = '.cart-block') {
+        super (url, container);
+        this.amount = 0;
+    }
+    _init() {
+       this.getJSON(API_URL + this.url)
+       .then(data => {
+           this.DTOarr = data.contents;
+           this.amount += data.amount;
+        })
+        .finally(() => {
+            this.render();
+        })
+
+    }
+}
+
+let cart = new CartList();
+let products = new ProductsList(cart);
+
+class ProductItem extends ListItem {
+
+}
+class CartItem extends ListItem {
+    constructor(el, img = cartImage) {
+        super (el, img);
+        this.quantity = el.quantity;
+    }
+    render() {
+       return `<div class="cart-item" data-id="${this.id_product}">
+                                <div class="product-bio">
+                                    <img src="${this.img}" alt="Some image">
+                                    <div class="product-desc">
+                                        <p class="product-title">${this.product_name}</p>
+                                        <p class="product-quantity">Quantity: ${this.quantity}</p>
+                                        <p class="product-single-price">$${this.price} each</p>
+                                    </div>
+                                </div>
+                                <div class="right-block">
+                                    <p class="product-price">${this.quantity * this.price}</p>
+                                    <button class="del-btn" data-id="${this.id_product}">&times;</button>
+                                </div>
+                            </div>`
+    }
+}
+
+const lists = {
+    ProductsList: ProductItem,
+    CartList: CartItem
+}
+
+//кнопка скрытия и показа корзины
+document.querySelector('.btn-cart').addEventListener('click', () => {
+    document.querySelector('.cart-block').classList.toggle('invisible');
+});
+//кнопки удаления товара (добавляется один раз)
+document.querySelector('.cart-block').addEventListener ('click', (evt) => {
+    if (evt.target.classList.contains ('del-btn')) {
+        removeProduct (evt.target);
+    }
+})
+//кнопки покупки товара (добавляется один раз)
+document.querySelector('.products').addEventListener ('click', (evt) => {
+    if (evt.target.classList.contains ('buy-btn')) {
+        addProduct (evt.target);
+    }
+})
+// поле поиска
+document.querySelector('.btn-search').addEventListener('click', (e) => {
+    const value = searchInput.value;
+    list.filter(value);
+  });
 /*function makeGETRequest(url, callback) {
     let xhr;
   
@@ -22,8 +167,7 @@ const API_URL = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/ma
   
     xhr.open('GET', url, true);
     xhr.send();
-  }*/
-
+  }
 class GoodsItem {
     constructor (name, price, id) {
         this.id = id,
@@ -68,13 +212,13 @@ class Catalog { // каталог всех товаров
           .finally(() => this.render())
       }
 
-  /*  fetchGoods (cb) {
+   fetchGoods (cb) {
         makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
             this.goods = JSON.parse(goods);
             cb();
           })
-    }*/
-    render() {
+    }
+  render() {
 
         let listHtml = '';
         this.goods.forEach(good => {  
@@ -187,11 +331,7 @@ class Cart {
 
 let cart = new Cart;
 
-
-/*list.fetchGoods(() => {
+ist.fetchGoods(() => {
     list.render();
   });*/
   
-
-
-

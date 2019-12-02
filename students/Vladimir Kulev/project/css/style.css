@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.main_wrap {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+.btn {
+    margin-top: 20px
+}

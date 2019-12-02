@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Создай свой бургер</h1>
+    <form class="burger">
+        <fieldset class="burger_size">
+                <legend class="burger_size-title">Выбери размер</legend>
+            <ul>
+                <li class="burger_size-item">
+                    <label for="burger-big">
+                        <input type="radio" name="burger-size" id="burger-big" checked>
+                        <p>Большой</p>
+                        <div class="burger_cost"><span>100</span> рублей</div>
+                        <div class="burger_calorie"><span>40</span> калорий</div>
+                    </label>
+                <li class="burger_size-item">
+                    <label for="burger-small">
+                        <input type="radio" name="burger-size" id="burger-small">
+                        <p>Маленький</p>
+                        <div class="burger_cost"><span>50</span> рублей</div>
+                        <div class="burger_calorie"><span>20</span> калорий</div>
+                    </label>
+                </li>
+            </ul>
+        </fieldset>
+
+
+        <fieldset class="burger_topping">
+                <legend class="burger_size-title">Выбери начинку</legend>
+            <ul>
+                <li class="burger_topping-item">
+                    <label for="burger-cheese">
+                        <input type="checkbox" name="burger-size" id="burger-cheese" checked>
+                        <p>Сыр</p>
+                        <div class="burger_cost"><span>10</span> рублей</div>
+                        <div class="burger_calorie"><span>20</span> калорий</div>
+                    </label>
+                <li class="burger_topping-item">
+                    <label for="burger-lettuce">
+                        <input type="checkbox" name="burger-size" id="burger-lettuce">
+                        <p>Салат</p>
+                        <div class="burger_cost"><span>22</span> рублей</div>
+                        <div class="burger_calorie"><span>5</span> калорий</div>
+                    </label>
+                </li>
+                <li class="burger_topping-item">
+                    <label for="burger-potato">
+                        <input type="checkbox" name="burger-size" id="burger-potato">
+                        <p>Картофель</p>
+                        <div class="burger_cost"><span>15</span> рублей</div>
+                        <div class="burger_calorie"><span>10</span> калорий</div>
+                    </label>
+                </li>
+            </ul>
+        </fieldset>
+        <fieldset class="burger_extra">
+                <legend class="burger_size-title">Выбери начинку</legend>
+            <ul>
+                <li class="burger_extra-item">
+                    <label for="burger_spice">
+                        <input type="checkbox" name="burger_spice" id="burger-cheese">
+                        <p>Посыпать приправой</p>
+                        <div class="burger_cost"><span>18</span> рублей</div>
+                        <div class="burger_calorie"><span>0</span> калорий</div>
+                    </label>
+                <li class="burger_extra-item">
+                    <label for="burger-mayonnaise">
+
+                        <input type="checkbox" name="burger-mayonnaise" id="burger-lettuce" checked>
+                        <p>Полить майонезом</p>
+                        <div class="burger_cost"><span>24</span> рублей</div>
+                        <div class="burger_calorie"><span>5</span> калорий</div>
+                    </label>
+                </li>
+            </ul>
+        </fieldset>
+
+        <div class="finalCost">Стоимость: <span>0</span></div>
+        <div class="finalCalories">Количество калорий: <span>0</span></div>
+    </form>
+    <button tupe="button" class="btn-primary">Собрать бургер</button>
+    <script src="my.js"></script>
+</body>
+
+</html>

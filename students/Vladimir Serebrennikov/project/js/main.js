@@ -4,6 +4,7 @@ const cartImage = 'https://placehold.it/100x80';
 const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
 
 //глобальные сущности каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
 let list = fetchData ();
@@ -178,20 +179,34 @@ function createProduct (i) {
     }
 };
 
-function makeGETRequest(url, callback) {
-    let xhr;
 
-    if (window.XMLHttpRequest) {
-        xhr = new XMLHttpRequest();
-    } else if (window.ActiveXObject) {
-        xhr = new ActiveXObject("Microsoft.XMLHTTP");
-    }
 
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-            callback(xhr.responseText);
+
+function makeGETRequest(url) {
+    return new Promise ((resolve, reject) => {
+        let xhr;
+    
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
         }
-    }
-    xhr.open('GET', url, true);
-    xhr.send();
+    
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                resolve(xhr.responseText);
+            } else {
+                reject(xhr.responseText);
+            }
+        }
+        xhr.open('GET', API_URL + url, true);
+        xhr.send();
+    });
 }
+
+
+makeGETRequest('catalogData.json')
+.then((data) => {
+    // console.log(data)
+});
+

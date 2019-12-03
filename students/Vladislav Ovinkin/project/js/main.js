@@ -72,10 +72,10 @@ class CartItem {
 
 class Cart {
     constructor (block) {
+        this._addEventsListeners ();
         this.products = [];
         this.block = `.${block}`;
         this._init ();
-        // this.totalSum = 0;
     }
     _init () {
         this._fetchGoods()
@@ -91,6 +91,19 @@ class Cart {
         arr.forEach (item => {
             this.products.push (new CartItem (item)); 
         });
+    }
+    _addEventsListeners () {
+        document.querySelector('.cart-block').addEventListener ('click', (evt) => {
+            if (evt.target.classList.contains ('del-btn')) {
+                this.removeItem (evt.target);
+            }
+        })
+        
+        document.querySelector('.products').addEventListener ('click', (evt) => {
+            if (evt.target.classList.contains ('buy-btn')) {
+                this.addItem (evt.target);
+            }
+        })
     }
     addItem (product) {
         const id = +product.dataset['product_id'];
@@ -148,20 +161,6 @@ let basket = new Cart ('cart-block');
 document.querySelector('.btn-cart').addEventListener('click', () => {
     document.querySelector('.cart-block').classList.toggle('invisible');
 });
-
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('del-btn')) {
-        basket.removeItem (evt.target);
-    }
-})
-
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('buy-btn')) {
-        basket.addItem (evt.target);
-    }
-})
 
 function makeGETRequestPromise (url) {
     return new Promise ((res, rej) => {

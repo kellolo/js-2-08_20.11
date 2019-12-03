@@ -1,21 +1,15 @@
 'use strict';
 
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-let list = fetchData ();
+//ссылка ра json-файл массива с продуктами (каталога).
+let urlListProducts = 'https://raw.githubusercontent.com/AnnaTokareva55/js-2-08_20.11/master/students/Anna%20Tokareva/project/products.json';
 
 //класс продукта
 class Product {
     constructor (product) {
         this.title = product.title;
         this.id = product.id;
-        this.img = product.img;
+        this.img = product.image;
+        this.imgCart = product.cartImage;
         this.price = product.price;
     }
     render () {
@@ -28,6 +22,7 @@ class Product {
                             data-id="${this.id}"
                             data-title="${this.title}"
                             data-image="${this.img}"
+                            data-imagecart="${this.imgCart}"
                             data-price="${this.price}">Купить</button>
                         </div>
                     </div>`;
@@ -36,13 +31,17 @@ class Product {
 
 //класс списка продуктов (каталога)
 class Products {
-    constructor (block) {
+    constructor (block, url) {
         this.products = [];
         this.block = `.${block}`;
-        this._init();
+        this._makeRequest(url);
     }
-    _init () {
-        //lis - глобальный массив с заглушками продуктов (генерируется функцией fetchData)
+    _makeRequest (url) {
+        fetch (url)
+            .then(data => data.json())
+            .then(data => this._init(data));
+    }
+    _init (list) {
         list.forEach (item => {
             this.products.push(new Product(item));
         });
@@ -58,7 +57,7 @@ class Products {
     }
 }
 
-let catalog = new Products('products');
+let catalog = new Products('products', urlListProducts);
 
 //класс продукта в корзине
 class CartItem {
@@ -108,7 +107,7 @@ class Cart {
             let addproduct = {
                 title: product.dataset['title'],
                 id: productId,
-                img: cartImage,
+                img: product.dataset['imagecart'],
                 price: +product.dataset['price'],
             }
             this.cart.push(new CartItem(addproduct));
@@ -150,22 +149,3 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
         cart.addProduct (evt.target);
     }
 });
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-}
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-}

@@ -1,16 +1,11 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-let list = fetchData ();
+let url = "https://raw.githubusercontent.com/povell/dataJson/master/products.json"
 
 class Product {
     constructor (product) {
         this.title = product.title
         this.id = product.id
         this.img = product.img
+        this.cartImg = product.cartImg
         this.price = product.price
     }
     render () {
@@ -23,6 +18,7 @@ class Product {
                         data-id="${this.id}"
                         data-title="${this.title}"
                         data-image="${this.img}"
+                        data-cartimage="${this.cartImg}"
                         data-price="${this.price}">Купить</button>
                     </div>
                 </div>`
@@ -36,17 +32,21 @@ class Products {
         this._init ()
     }
     _init () {
-        //list - глобальный массив с заглушками продуктов
-        list.forEach (item => {
-            this.products.push (new Product (item))
+        fetch(url)
+        .then(jsonData => jsonData.json())
+        .then(data => {
+            data.forEach(product => {
+                this.products.push(new Product(product))
+            })
         })
-        this.render ()
+        .then(() => this.render())
+        .catch((e) => console.log('Error ' + e.message))
     }
     render () {
         let block = document.querySelector (this.block)
         let str = ''
-        this.products.forEach (item => {
-            str += item.render ()
+        this.products.forEach (product => {
+            str += product.render ()
         })
         block.innerHTML = str
     }
@@ -58,7 +58,7 @@ class CartItem {
     constructor (productNode) {
         this.title = productNode.dataset['title']
         this.id = +productNode.dataset['id']
-        this.img = cartImage
+        this.img = productNode.dataset['cartimage']
         this.price = +productNode.dataset['price']
         this.quantity = 1
     }
@@ -153,22 +153,3 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
         cart.addCartItem(evt.target);
     }
 })
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-    }
-};

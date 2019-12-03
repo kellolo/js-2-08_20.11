@@ -62,9 +62,9 @@ class Products {
 }
 class CartItem {
     constructor (product) {
-        this.product_id = +product.dataset ['product_id'];
-        this.product_name = product.dataset ['product_name'];
-        this.price = +product.dataset['price'];
+        this.product_id = product.product_id;
+        this.product_name = product.product_name;
+        this.price = product.price;
         this.img = cartImage;
         this.quantity = 1;
     }
@@ -74,19 +74,37 @@ class Cart {
     constructor (block) {
         this.products = [];
         this.block = `.${block}`;
-        this.totalSum = 0;
+        this._init ();
+        // this.totalSum = 0;
+    }
+    _init () {
+        this._fetchGoods()
+            .then (data => {this._fillProducts(data)})
+            .then (() => this.render ());
+    }
+    _fetchGoods () {
+        return makeGETRequestPromise (`${API_URL}/getBasket.json`);
+    }
+    _fillProducts (data) {
+        let dataArr = JSON.parse (data);
+        let arr = dataArr.contents;
+        arr.forEach (item => {
+            this.products.push (new CartItem (item)); 
+        });
     }
     addItem (product) {
         const id = +product.dataset['product_id'];
         const find = this.products.find (element => element.product_id === id);
         if (!find) {
+            product.product_id = id;
+            product.product_name = product.dataset['product_name'];
+            product.price = +product.dataset['price'];
             this.products.push (new CartItem (product));
         } else {
             find.quantity++;
         }
         this.render ();
     }
-
     removeItem (product) {
         const id = +product.dataset['product_id'];
         const find = this.products.find (element => element.product_id === id);
@@ -97,7 +115,6 @@ class Cart {
         }
         this.render ();
     }
-
     render () {
         this.totalSum = 0;
         const block = document.querySelector (this.block);
@@ -155,7 +172,7 @@ function makeGETRequestPromise (url) {
                     res (xhr.responseText);
                 }
                 else {
-                    rej ('Server error!');
+                    rej (new Error(`Get data ERROR! Data file: ${url}`));
                 }
             }
         }

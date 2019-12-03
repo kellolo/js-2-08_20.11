@@ -1,28 +1,24 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-let list = fetchData ();
+const urlProducts = 'https://raw.githubusercontent.com/netproblemmm/js-2-08_20.11/master/students/Yurii%20Yastrebov/project/products.json'
 
 class Product {
     constructor (product) {
         this.title = product.title
         this.id = product.id
-        this.img = product.img
+        this.image = product.image
+        this.cartImage = product.cartImage
         this.price = product.price
     }
     render () {
         return `<div class="product-item" data-id="${this.id}">
-                    <img src="${this.img}" alt="Some img">
+                    <img src="${this.image}" alt="Some img">
                     <div class="desc">
                         <h3>${this.title}</h3>
                         <p>${this.price} $</p>
                         <button class="buy-btn" 
                         data-id="${this.id}"
                         data-title="${this.title}"
-                        data-image="${this.img}"
+                        data-image="${this.image}"
+                        data-cartimage="${this.cartImg}"
                         data-price="${this.price}">Купить</button>
                     </div>
                 </div>`
@@ -36,11 +32,14 @@ class Products {
         this._init()
     }
     _init () {
-        //list - глобальный массив с заглушками продуктов
-        list.forEach(item => {
-            this.products.push(new Product(item))
+        fetch(urlProducts)
+        .then(data => data.json())
+        .then(data => {
+            data.forEach(item => {
+                this.products.push(new Product(item))
+            })
         })
-        this.render()
+        .then(() => this.render())
     }
     render () {
         let block = document.querySelector(this.block)
@@ -61,63 +60,68 @@ class CartItem {
       this.img = product.dataset.image
       this.price = product.dataset.price
       this.quantity = 1
-    }        
-  render () {
-    return `<div class="cart-item" data-id="${this.id}">
-                <div class="product-bio">
-                    <img src="${this.img}" alt="Some image">
-                    <div class="product-desc">
-                        <p class="product-title">${this.title}</p>
-                        <p class="product-quantity">Quantity: ${this.quantity}</p>
-                        <p class="product-single-price">$${this.price} each</p>
-                    </div>
-                </div>
-                <div class="right-block">
-                    <p class="product-price">${this.quantity * this.price}</p>
-                    <button class="del-btn" data-id="${this.id}">&times;</button>
-                </div>
-            </div>`
-
-    }
+    }       
 }
 
 class Cart {
     constructor () {
-        this.cart = []
+        this.cartItems = [];
     }
-    renderCart () {
-        let allProducts = ""
-        this.cart.forEach(item => {
-            allProducts += item.render()
-        })
-        document.querySelector('.cart-block').innerHTML = allProducts
-    }
-
+    
     addProduct (product) {
         let productId = product.dataset.id
-        let find = this.cart.find(element => element.id === productId)
+        let find = this.cartItems.find(item => item.id === productId)
         if (!find) {
-          let newItem = new CartItem(product)
-            this.cart.push(newItem)
+            this.cartItems.push(new CartItem(product))
         }  else {
             find.quantity++
         }
         this.renderCart()
     }
+
     removeProduct (product) {
         let productId = product.dataset.id
-        let find = this.cart.find (element => element.id === productId)
+        let find = this.cartItems.find (item => item.id === productId)
         if (find.quantity > 1) {
             find.quantity--
         } else {
-            this.cart.splice(this.cart.indexOf(find), 1)
+            this.cartItems.splice(this.cartItems.indexOf(find), 1)
             document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
         }
         this.renderCart()
     }
+
+    _calcSumma() {
+        let summa = 0;
+        this.cartItems.forEach(item => summa += item.quantity * item.price)
+        return summa
+    }
+
+    renderCart () {
+        let allProducts = ''
+        this.cartItems.forEach(item => {
+            allProducts += `<div class="cart-item" data-id="${item.id}">
+                    <div class="product-bio">
+                        <img src="${item.img}" alt="Some image">
+                        <div class="product-desc">
+                            <p class="product-title">${item.title}</p>
+                            <p class="product-quantity">Quantity: ${item.quantity}</p>
+                            <p class="product-single-price">$${item.price} each</p>
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <p class="product-price">${item.quantity * item.price}</p>
+                        <button class="del-btn" data-id="${item.id}">&times;</button>
+                    </div>
+                </div>`
+        })
+        allProducts += `<p>Общая сумма: ${this._calcSumma()}</p></div>`
+        document.querySelector('.cart-block').innerHTML = allProducts
+    }
 }
 
 let userCart = new Cart();
+userCart.renderCart()
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -135,23 +139,3 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
         userCart.addProduct(evt.target)
     }
 })
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = []
-    for (let i = 0; i < items.length; i++) {
-        arr.push(createProduct (i))
-    }
-    return arr
-}
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
-   }
-}
-

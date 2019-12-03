@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hw_2</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <form action="#">
+        <fieldset>
+            <legend><b>Размер</b></legend>
+            <div class="wrapper">
+                    <label>
+                        <input type="radio" name="size" id="small" value="small" data-price="50" data-calories="20" checked> Маленький
+                    </label>
+                    <label>
+                        <input type="radio" name="size" id="big" value="big" data-price="100" data-calories="40"> Большой
+                    </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend><b>Начинки</b></legend>
+            <div class="wrapper">
+                <label>
+                    <input type="checkbox" name="filling" value="cheese" data-price="10" data-calories="20"> Сыр
+                </label>
+                <label>
+                    <input type="checkbox" name="filling" value="salad" data-price="20" data-calories="5"> Салат
+                </label>
+                <label>
+                    <input type="checkbox" name="filling" value="potato" data-price="15" data-calories="10"> Картофель
+                </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend><b>Дополнительные опции</b></legend>    
+            <div class="wrapper">    
+                <label>
+                    <input type="checkbox" name="add" value="spices" data-price="15" data-calories="0"> Приправы
+                </label>
+                <label>
+                    <input type="checkbox" name="add" value="mayonnaise" data-price="20" data-calories="5"> Майонез
+                </label>
+            </div>
+        </fieldset>
+    </form>
+    <div class="result">
+        <button class="order">Сделать заказ</button>
+        <span><b>Цена:</b><span class="price">0</span></span>
+        <span><b>Калории:</b><span class="calories">0</span></span>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

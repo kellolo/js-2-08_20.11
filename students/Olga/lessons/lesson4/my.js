@@ -84,3 +84,4 @@ changeBtn.addEventListener("click", function () {
     console.log(text)
 
 })
+//Все работает только в хроме

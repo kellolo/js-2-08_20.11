@@ -5,7 +5,7 @@ const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', '
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
+//глобальные сущности каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
 let list = fetchData ();
 
 class Product {
@@ -56,83 +56,84 @@ class Products {
 
 
 class CartItem {
-    constructor (target) {
-        this.productId = target.dataset.id
-        this.itemProduct = list.find (el => el.id == this.productId)
+
+    constructor(target) {
+        this.id = target.dataset.id
+        this.item = list.find (el => el.id == this.id)
+        this.quantity = 1
+    }
+
+    render() {
+        return `<div class="cart-item" data-id="${this.id}">
+                    <div class="product-bio">
+                        <img src="${this.item.img}" alt="Some image">
+                        <div class="product-desc">
+                            <p class="product-name">${this.item.title}</p>
+                            <p class="product-quantity">Quantity: ${this.quantity}</p>
+                            <p class="product-single-price">$${this.item.price} each</p>
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <p class="product-price">$${this.quantity * this.item.price}</p>
+                        <button class="del-btn" data-id="${this.item.id}">&times;</button>
+                    </div>
+                </div>`        
     }
 }
 
 class Cart {
 
-    constructor (block) {
-        this.divBlock = `.${block}`
-        this.contentCart = []
+    constructor(block) {
+        this.divBlock = `.${block}`;
+        this.contentCart = [];
     }
 
-    addProduct (target) {
-        let itemProduct = new CartItem (target).itemProduct
-        let find = this.contentCart.find (el => el.id == itemProduct.id)
+    addProduct(target) {
 
-        if (!find) {
-            itemProduct.quantity = 1
-            this.contentCart.push (itemProduct)
-        }  else {
-            itemProduct.quantity++
+        let findItem = this.contentCart.find( el => el.id == target.dataset.id )
+
+        if (!findItem) {
+            this.contentCart.push( new CartItem(target) )
+        } else {
+            findItem.quantity++
         }
 
-        this.render ()
+        this.render()
     }
 
-    removeProduct (target) {
+    removeProduct(target) {
 
-        let productId = new CartItem (target).productId
-        let find = this.contentCart.find (el => el.id == productId)
+        let find = this.contentCart.find (el => el.id == target.dataset.id)
 
         if (find.quantity > 1) {
             find.quantity--;
         } else {
             this.contentCart.splice(this.contentCart.indexOf(find), 1)
-            document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
         }
         
         this.render ()
     }
     
     getTotoalSumProducts () {
-        let blockSumProducts = document.createElement("div")
-            , sumProducts = 0
+        let sumProducts = 0
         
         for (let el of this.contentCart) {
-            sumProducts += el.quantity * el.price 
+            sumProducts += el.quantity * el.item.price 
         }
 
-        blockSumProducts.innerHTML = 'Total sum: ' + sumProducts + '$'
-
-        return blockSumProducts
+        return 'Total sum: ' + sumProducts + '$'
     }
 
     render () {
-        let allProducts = ''
 
-        for (let el of this.contentCart) {
-            allProducts += `<div class="cart-item" data-id="${el.id}">
-                                <div class="product-bio">
-                                    <img src="${el.img}" alt="Some image">
-                                    <div class="product-desc">
-                                        <p class="product-name">${el.title}</p>
-                                        <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                        <p class="product-single-price">$${el.price} each</p>
-                                    </div>
-                                </div>
-                                <div class="right-block">
-                                    <p class="product-price">${el.quantity * el.price}</p>
-                                    <button class="del-btn" data-id="${el.id}">&times;</button>
-                                </div>
-                            </div>`
+        let textCartProducts = ''
+
+        for (let item of this.contentCart) {
+            textCartProducts += item.render()
         }
-    
-        document.querySelector (this.divBlock).innerHTML = allProducts
-        document.querySelector (this.divBlock).appendChild (this.getTotoalSumProducts ())
+
+        textCartProducts += this.getTotoalSumProducts ()
+        document.querySelector(this.divBlock).innerHTML = textCartProducts
     }
 }
 
@@ -176,3 +177,21 @@ function createProduct (i) {
         img: image
     }
 };
+
+function makeGETRequest(url, callback) {
+    let xhr;
+
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            callback(xhr.responseText);
+        }
+    }
+    xhr.open('GET', url, true);
+    xhr.send();
+}

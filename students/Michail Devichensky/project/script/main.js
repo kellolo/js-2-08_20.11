@@ -1,16 +1,38 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-let list = fetchData ();
+// заглушки (имитация базы данных)
+// const image = 'https://placehold.it/200x150';
+// const cartImage = 'https://placehold.it/100x80';
+// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
+// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+// let list = fetchData ();
+
+// ============================================================
+// let url_users = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
+// let users 
+// function makeGETreqest(url, callback) {
+//     let xhr = new XMLHttpRequest()
+//     xhr.onreadystatechange = function() {
+        // if(xhr.readyState === 4 && xhr.status === 200) {
+            // callback(xhr.responseText)
+        // } else {
+            // console.log('Server error')
+        // }  
+//     }
+//     xhr.open('GET', url, true);
+//     xhr.send();
+// }
+// function parseData(jsonAsyncData) {
+//     users = JSON.parse(jsonAsyncData)
+//     console.log(users)
+// }
+// makeGETreqest(url_users, parseData)
+// =============================================================
 let userCart = [];
 
 class Product {
     constructor(product) {
-        this.title = product.title
-        this.id = product.id
+        this.title = product_name.title
+        this.id = id_product.id
         this.img = product.img
         this.price = product.price
     }
@@ -37,7 +59,7 @@ class Products {
         this._init()
     }
     _init() {
-        list.forEach(item => {
+        users.forEach(item => {
             this.products.push(new Product(item))
         })
         this.render()
@@ -53,77 +75,77 @@ class Products {
 }
 let catalog = new Products('products')
 
-class Cart {
-    constructor(dataset) {
-       this.title = dataset.title
-       this.id = dataset.id
-       this.img = dataset.img
-       this.price = dataset.price
-       this.quantity = dataset.quantity
-    }
-    renderCart() {
-        return `<div class="cart-item" data-id="${this.id}">
-                                <div class="product-bio">
-                                    <img src="${this.img}" alt="Some image">
-                                    <div class="product-desc">
-                                        <p class="product-title">${this.title}</p>
-                                        <p class="product-quantity">Quantity: ${this.quantity}</p>
-                                        <p class="product-single-price">$${this.price} each</p>
-                                    </div>
-                                </div>
-                                <div class="right-block">
-                                    <p class="product-price">$${this.quantity * this.price}</p>
-                                    <button class="del-btn" data-id="${this.id}">&times;</button>
-                                </div>
-                            </div>`
-    }
-}
+// class CartItem {
+//     constructor(dataset) {
+//        this.title = dataset.title
+//        this.id = dataset.id
+//        this.img = dataset.img
+//        this.price = dataset.price
+//        this.quantity = dataset.quantity
+//     }
+//     renderCart() {
+//         return `<div class="cart-item" data-id="${this.id}">
+//                                 <div class="product-bio">
+//                                     <img src="${this.img}" alt="Some image">
+//                                     <div class="product-desc">
+//                                         <p class="product-title">${this.title}</p>
+//                                         <p class="product-quantity">Quantity: ${this.quantity}</p>
+//                                         <p class="product-single-price">$${this.price} each</p>
+//                                     </div>
+//                                 </div>
+//                                 <div class="right-block">
+//                                     <p class="product-price">$${this.quantity * this.price}</p>
+//                                     <button class="del-btn" data-id="${this.id}">&times;</button>
+//                                 </div>
+//                             </div>`
+//     }
+// }
 
-class CartItem {
-    constructor(block) {
-        this.dataset = []
-        this.productId = +product.dataset['id'];
-        this.block = `.${block}`
-        // this.addProduct()
-    }
-    addProduct (product) {
-        let find = userCart.find (element => element.id === this.productId);
-        if (!find) {
-            userCart.push ({
-                title: product.dataset['title'],
-                id: this.productId,
-                img: cartImage,
-                price: +product.dataset['price'],
-                quantity: 1
-            }).forEach(item => {
-                this.dataset.push(new Cart(item))
-            })
+// class Cart {
+//     constructor(block) {
+//         this.dataset = []
+//         this.productId = +product.dataset['id'];
+//         this.block = `.${block}`
+//         // this.addProduct()
+//     }
+//     addProduct (product) {
+//         let find = userCart.find (element => element.id === this.productId);
+//         if (!find) {
+//             userCart.push ({
+//                 title: product.dataset['title'],
+//                 id: this.productId,
+//                 img: cartImage,
+//                 price: +product.dataset['price'],
+//                 quantity: 1
+//             }).forEach(item => {
+//                 this.dataset.push(new Cart(item))
+//             })
 
-        }  else {
-            find.quantity++
-        }
-        this.renderCart()
-    }
-    renderCart() {
-     let block = document.querySelector(this.block)
-     let str = ''
-     this.dataset.forEach(item => {
-         str +=item.renderCart()
-     })
-      block.innerHTML = str
-    }
-    removeProduct (product) {
-        let productId = +product.dataset['id'];
-        let find = userCart.find (element => element.id === productId);
-        if (find.quantity > 1) {
-            find.quantity--;
-        } else {
-            userCart.splice(userCart.indexOf(find), 1);
-            document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-        }
-        renderCart ();
-    }
-}
+//         }  else {
+//             find.quantity++
+//         }
+//         this.renderCart()
+//     }
+//     renderCart() {
+//      let block = document.querySelector(this.block)
+//      let str = ''
+//      this.dataset.forEach(item => {
+//          str +=item.renderCart()
+//      })
+//       block.innerHTML = str
+//     }
+//     removeProduct (product) {
+//         let productId = +product.dataset['id'];
+//         let find = userCart.find (element => element.id === productId);
+//         if (find.quantity > 1) {
+//             find.quantity--;
+//         } else {
+//             userCart.splice(userCart.indexOf(find), 1);
+//             document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+//         }
+//         renderCart ();
+//     }
+// }
 
 
 
@@ -149,21 +171,21 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
 })
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
+// function fetchData () {
+//     let arr = [];
+//     for (let i = 0; i < items.length; i++) {
+//         arr.push (createProduct (i));
+//     }
+//     return arr
+// };
 
 //создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
+// function createProduct (i) {
+//     return {
+//         id: ids[i],
+//         title: items[i],
+//         price: prices[i],
+//         img: image,
         // quantity: 0,
         // createTemplate: function () {
         //     return `<div class="product-item" data-id="${this.id}">
@@ -183,8 +205,8 @@ function createProduct (i) {
         // add: function() {
         //     this.quantity++
         // }
-    }
-};
+//     }
+// };
 
 //рендер списка товаров (каталога)
 // function renderProducts () {

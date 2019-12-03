@@ -18,7 +18,7 @@ class Product {
                         data-id="${this.id}"
                         data-title="${this.title}"
                         data-image="${this.image}"
-                        data-cartimage="${this.cartImg}"
+                        data-cartimage="${this.cartImage}"
                         data-price="${this.price}">Купить</button>
                     </div>
                 </div>`
@@ -26,21 +26,25 @@ class Product {
 }
 
 class Products {
-    constructor (block) {
+    constructor (block, url) {
         this.products = []
         this.block = `.${block}`
-        this._init()
+        this._makeRequest(url)
     }
-    _init () {
-        fetch(urlProducts)
+
+    _makeRequest (url) {
+        fetch(url)
         .then(data => data.json())
-        .then(data => {
-            data.forEach(item => {
-                this.products.push(new Product(item))
-            })
-        })
-        .then(() => this.render())
+        .then(data => this._init(data))
     }
+
+    _init (list) {
+        list.forEach(item => {
+            this.products.push(new Product(item))
+        })
+        this.render()
+    }
+
     render () {
         let block = document.querySelector(this.block)
         let str = ''
@@ -51,7 +55,7 @@ class Products {
     }
 }
 
-let catalog = new Products('products')
+let catalog = new Products('products', urlProducts)
 
 class CartItem {
     constructor (product) {

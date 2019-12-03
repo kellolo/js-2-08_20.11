@@ -1,16 +1,17 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-let list = fetchData ();
+// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
+// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
+// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+// let list = fetchData ();
+const data_url = 'https://raw.githubusercontent.com/alexmaiorov/for_json/master/catalogData.json'
 
 class Product {
     constructor (product) {
         this.title = product.title
         this.id = product.id
-        this.img = product.img
+        this.img = image
         this.price = product.price
     }
     render () {
@@ -36,11 +37,14 @@ class Products {
         this._init ()
     }
     _init () {
-        //list - глобальный массив с заглушками продуктов
-        list.forEach (item => {
-            this.products.push (new Product (item))
-        })
-        this.render ()
+        fetch(data_url)
+            .then(d => d.json())
+            .then(data => {
+                data.forEach (item => {
+                    this.products.push (new Product (item))
+                })
+            })
+            .finally(() => this.render ())
     }
     render () {
         let block = document.querySelector (this.block)
@@ -58,7 +62,7 @@ class CartItem {
     constructor (product) {
         this.id = product.dataset.id;
         this.title = product.dataset.title;
-        this.img = product.dataset.image;
+        this.img = cartImage;
         this.price = product.dataset.price;
         this.quantity = 1;
     }
@@ -137,21 +141,21 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
 })
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
+// function fetchData () {
+//     let arr = [];
+//     for (let i = 0; i < items.length; i++) {
+//         arr.push (createProduct (i));
+//     }
+//     return arr
+// };
 
 //создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image,
+// function createProduct (i) {
+//     return {
+//         id: ids[i],
+//         title: items[i],
+//         price: prices[i],
+//         img: image,
         // quantity: 0,
         // createTemplate: function () {
         //     return `<div class="product-item" data-id="${this.id}">
@@ -171,8 +175,8 @@ function createProduct (i) {
         // add: function() {
         //     this.quantity++
         // }
-    }
-};
+//     }
+// };
 
 //рендер списка товаров (каталога)
 // function renderProducts () {

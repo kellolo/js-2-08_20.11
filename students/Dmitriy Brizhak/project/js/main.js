@@ -1,15 +1,7 @@
-//заглушки (имитация базы данных)
-const image = 'https://placehold.it/200x150';
-const cartImage = 'https://placehold.it/100x80';
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
+//сыылка на картинку для корзины
+const cartImage = 'https://placehold.it/100x80'
 
-
-//глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
-const list = fetchData ();
-
+//каталог
 class Product {
     constructor (product) {
         this.title = product.title
@@ -22,7 +14,7 @@ class Product {
                     <img src="${this.img}" alt="Some img">
                     <div class="desc">
                         <h3>${this.title}</h3>
-                        <p>${this.price} $</p>
+                        <p>${this.price} ₽</p>
                         <button class="buy-btn" 
                         data-id="${this.id}"
                         data-title="${this.title}"
@@ -40,19 +32,23 @@ class Products {
         this._init ()
     }
     _init () {
-        //list - глобальный массив с заглушками продуктов
-        this.products = list.map( item => new Product (item))
-        this.render ()
+        const url_users ='https://raw.githubusercontent.com/Legrank/js-2-08_20.11/master/students/Dmitriy%20Brizhak/project/jsonDATA/catalogData.json'
+        fetch (url_users)
+            .then (d => d.json())
+            .then (d => this.products = d.map( item => new Product (item)))
+            .then (() => this.render ())
+        
     }
     render () {
         document.querySelector (this.block).innerHTML = this.products.map(item => item.render ()).join('') 
     }
 }
 
+//корзина
 class CartItem {
-    constructor (product,productId,cartImage) {
+    constructor (product,cartImage) {
         this.title= product.dataset ['title'],
-        this.id= productId,
+        this.id= +product.dataset['id'],
         this.img= cartImage,
         this.price= +product.dataset['price'],
         this.quantity= 1
@@ -67,7 +63,7 @@ class CartItem {
                 <div class="product-desc">
                     <p class="product-title">${this.title}</p>
                     <p class="product-quantity">Quantity: ${this.quantity}</p>
-                    <p class="product-single-price">$${this.price} each</p>
+                    <p class="product-single-price">₽${this.price} each</p>
                 </div>
             </div>
             <div class="right-block">
@@ -84,18 +80,16 @@ class Cart {
         this.block = `.${block}`
     }
     addProduct (product) {
-        let productId = +product.dataset['id']
-        let find = this.userCart.find (element => element.id === productId)
+        let find = this.userCart.find (element => element.id === +product.dataset['id'])
         if (!find) {    
-            this.userCart.push (new CartItem(product,productId,cartImage))
+            this.userCart.push (new CartItem(product,cartImage))
         }  else {
             find.quantity++
         }
         this.render ()
     }
     removeProduct (product) {
-        let productId = +product.dataset['id']
-        let findID =  this.userCart.findIndex(element => element.id === productId)
+        let findID =  this.userCart.findIndex(element => element.id === +product.dataset['id'])
         if (this.userCart[findID].quantity > 1) {
             this.userCart[findID].quantity--
         } else {
@@ -128,74 +122,3 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
         cart.addProduct (evt.target);
     }
 })
-
-//создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    return arr = items.map((item,i) => createProduct (i) )
-};
-
-//создание товара
-function createProduct (i) {
-    return {
-        id: ids[i],
-        title: items[i],
-        price: prices[i],
-        img: image
-    }
-}
-
-//CART
-
-// Добавление продуктов в корзину
-function addProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (!find) {
-        userCart.push ({
-            name: product.dataset ['name'],
-            id: productId,
-            img: cartImage,
-            price: +product.dataset['price'],
-            quantity: 1
-        })
-    }  else {
-        find.quantity++
-    }
-    renderCart ()
-}
-
-//удаление товаров
-function removeProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (find.quantity > 1) {
-        find.quantity--;
-    } else {
-        userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-    }
-    renderCart ();
-}
-
-//перерендер корзины
-function renderCart () {
-    let allProducts = '';
-    for (el of userCart) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
-                            <div class="product-bio">
-                                <img src="${el.img}" alt="Some image">
-                                <div class="product-desc">
-                                    <p class="product-title">${el.name}</p>
-                                    <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                    <p class="product-single-price">$${el.price} each</p>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">${el.quantity * el.price}</p>
-                                <button class="del-btn" data-id="${el.id}">&times;</button>
-                            </div>
-                        </div>`
-    }
-
-    document.querySelector(`.cart-block`).innerHTML = allProducts;
-}

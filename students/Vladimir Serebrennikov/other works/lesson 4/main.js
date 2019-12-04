@@ -1,53 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <style>
-    form input,
-    form textarea {
-      display: block;
-      margin-bottom: 15px;
-    }
-
-    form .invalid {
-      outline: 2px solid rgb(255, 0, 47);
-    }
-  </style>
-</head>
-
-<body>
-
-  <form class="feedback">
-    <fieldset>
-      <legend>Обратная связь</legend>
-
-      <label> Имя
-        <input type="text" class="input_name" placeholder="А-я, A-z">
-      </label>
-      <label> Phone
-        <input type="phone" class="input_phone" placeholder="+7(000)000-0000">
-      </label>
-      <label> E-mail
-        <input type="email" class="input_email" placeholder="mymail@mail.ru">
-      </label>
-      <label> Text
-        <textarea class="tx_field">Lorem lorem lorem</textarea>
-      </label>
-
-      <button class="btn-submit" type="button" value="">Отправить</button>
-    </fieldset>
-  </form>
-
-  <script>
-
+    
     // Задание 1 и 2
-
+    
     let str = "Lorem ipsum, 'dolor' sit amen't consectetur 'adipisicing' elit."
-
+    
     class MathText {
       raplaceAllQuotes(string) {
         let template = /'/g
@@ -58,15 +13,14 @@
         return string.replace(template, '"')
       }
     }
-
+    
     let editor = new MathText()
-
+    
     console.log(editor.raplaceAllQuotes(str))
     console.log(editor.raplaceSmartQuotes(str))
-
-
-
-
+    
+    
+    
     // Задание 3
 
     class Validator {
@@ -108,10 +62,8 @@
       _validation(name, type, text) {
         let regExp = this.types[type][0]
         let message = this.types[type][1]
-
         let element = this.form.querySelector(name)
         let valueField = element.value
-
         if (this.isValided(regExp, valueField)) {
           element.classList.remove('invalid')
         } else {
@@ -123,7 +75,7 @@
       isValided(regExp, value) {
         return regExp.test(value)
       }
-
+      
       _displayMeesage(text) {
         if (text) {
           alert(text)
@@ -131,15 +83,9 @@
       }
     }
 
-
     let validForm1 = new Validator('.feedback')
     
     validForm1.addField('.input_name', 'name')
     validForm1.addField('.input_phone', 'phone')
     validForm1.addField('.input_email', 'email')
     validForm1.addSubmit('.btn-submit')
-
-  </script>
-
-</body>
-</html>

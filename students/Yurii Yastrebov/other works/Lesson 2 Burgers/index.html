@@ -3,46 +3,54 @@
 <head>
 	<meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-	<script src="main.js"></script>
 	<title>Yastrebov, lesson 2</title>
 </head>
 <body>
 	<h2>Составь свой бургер</h2>
-	<form action="#">
+	<form action="#" id="userform">
         <fieldset>
             <legend>Размер</legend>
             <label>
-                <input type="radio" name="size" price="50" calories="20">Маленький (50 рублей, 20 калорий)<br>
+                <input type="radio" name="size" data-price="50" data-calories="20" checked>Маленький (50 рублей, 20 калорий)<br>
             </label>
             <label>
-                <input type="radio" name="size" price="100" calories="40">Большой (100 рублей, 40 калорий)
+                <input type="radio" name="size" data-price="100" data-calories="40">Большой (100 рублей, 40 калорий)
             </label>
         </fieldset>
         <fieldset>
             <legend>Начинка (обязательно)</legend>
             <label>
-				<input type="radio" name="stuffing" value="cheese" price="10" calories="20">С сыром (+10 рублей, +20 калорий)<br>
+				<input type="radio" name="stuffing" value="cheese" data-price="10" data-calories="20" checked>С сыром (+10 рублей, +20 калорий)<br>
 			</label>
 			<label>
-				<input type="radio" name="stuffing" value="salat" price="20" calories="5">С салатом (+20 рублей, +5 калорий)<br>
+				<input type="radio" name="stuffing" value="salat" data-price="20" data-calories="5">С салатом (+20 рублей, +5 калорий)<br>
 			</label>
 			<label>
-				<input type="radio" name="stuffing" value="potato" price="15" calories="10">С картофелем (+15 рублей, +10 калорий)
+				<input type="radio" name="stuffing" value="potato" data-price="15" data-calories="10">С картофелем (+15 рублей, +10 калорий)
 			</label>
         </fieldset>
         <fieldset>
             <legend>Дополнительно</legend>
             <label>
-				<input type="checkbox" name="topping" value="priprava" price="15" calories="0">Посыпать приправой (+15 рублей, +0 калорий)
+				<input type="checkbox" name="topping" value="priprava" data-price="15" data-calories="0">Посыпать приправой (+15 рублей, +0 калорий)
 			</label>
 			<label>
-				<input type="checkbox" name="topping" value="mayonez" price="20" calories="5">Полить майонезом (+20 рублей, +5 калорий)
+				<input type="checkbox" name="topping" value="mayonez" data-price="20" data-calories="5">Полить майонезом (+20 рублей, +5 калорий)
 			</label>
         </fieldset>
-		<input class="button-submit" type="submit" value="Заказать">
+		<input type="button" id="calculate" value="Заказать">
     </form>
-    <label id="priceLabel">Итоговая стоимость: 0</label><br>
-    <label id="caloriesLabel">Калории: 0</label>
-    
-</body> 
+        <p>Итоговая стоимость: <span id="priceLabel">0</span></p>
+        <p>Калории: <span id="caloriesLabel">0</span></p><br>
+    <script src="main.js"></script>
+    <script>
+        window.onload = () => {
+            document.getElementById('calculate').addEventListener('click', () => {
+                let burger = new Hamburger('size', 'stuffing', 'topping');
+                console.log(burger);
+                burger.calc('#priceLabel', '#caloriesLabel');
+            })
+        }
+    </script>
+</body>
 </html>

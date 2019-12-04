@@ -58,6 +58,9 @@ p {
     overflow: hidden;
     margin: 20px 0;
 }
+.product-wait{
+    position: absolute;
+}
 img {
     max-width: 100%;
     height: auto

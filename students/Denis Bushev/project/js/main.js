@@ -34,22 +34,18 @@ class Products {
     constructor(block) {
         this.products = []
         this.block = `.${block}`
-        this._init()
+        this._makeGETRequest(data_url)
     }
-    _init() {
-        //list - глобальный массив с заглушками продуктов
-        // list.forEach(item => {
-        //     this.products.push(new Product(item))
-        // })
-        // this.render()
+    _makeGETRequest(data_url) {
         fetch(data_url)
-            .then(d => d.json())
-            .then(data => {
-                data.forEach (item => {
-                    this.products.push(new Product(item))
-                })
-            })
+            .then(data => data.json())
+            .then(data => this._init(data))
             .finally(() => this.render())
+    }
+    _init(list) {
+        list.forEach(item => {
+            this.products.push(new Product(item));
+        })
     }
     render() {
         let block = document.querySelector(this.block)

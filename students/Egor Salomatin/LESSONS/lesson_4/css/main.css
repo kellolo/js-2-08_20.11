@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;  
+}
+
+.feedback-form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-form__textarea {
+    width: 300px;
+    height: 200px;
+}
+
+.formbutton {
+    width: 100px;
+}
+
+.red-border {
+    border-color: red;
+}

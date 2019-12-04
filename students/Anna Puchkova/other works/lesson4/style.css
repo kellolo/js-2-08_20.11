@@ -1,0 +1,26 @@
+
+.forma{
+	width: 40%;
+	border: 5px solid gray;
+	border-radius: 5px;
+	text-align: center;
+	margin: 10% auto;
+}
+p {
+	text-align: center;
+}
+input{
+	margin: 3% 0 0 0;	
+}
+input[type="submit"]{
+	margin: 3% 0 5% 0;
+}
+input[type="submit"]:hover{
+	background-color: green;
+	color: #fff;
+}
+input[type="text"]:hover,
+input[type="text"]:active {
+	background-color: #000;
+	color: #fff;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Burger Maker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="title">Бургер-конструктор</h1>
+    <form id="maker" action="#">
+        <fieldset>
+            <p class="caption">Размер:</p>
+            <label>
+                <input type="radio" name="size" id="size-small" value="small" checked> Маленький (50 рублей, 20 калорий)
+            </label>
+            <label>
+                <input type="radio" name="size" id="size-big" value="big"> Большой (100 рублей, 40 калорий)
+            </label>
+        </fieldset> 
+        <fieldset>
+            <p class="caption">Начинка:</p>
+            <label>
+                <input type="radio" name="stuff" id="stuff-cheese" value="cheese" checked> с сыром (+10 рублей, +20 калорий)
+            </label>
+            <label>
+                <input type="radio" name="stuff" id="stuff-salad" value="salad"> с салатом (+20 рублей, +5 калорий)
+            </label>
+            <label>
+                <input type="radio" name="stuff" id="stuff-potato" value="potato"> с картофелем (+15 рублей, +10 калорий)
+            </label>
+        </fieldset>
+        <fieldset>
+            <p class="caption">Дополнение:</p>
+            <label>
+                <input type="checkbox" name="extra" id="extra-spice" value="spice"> посыпать приправой (+15 рублей, + 0 калорий)
+            </label>
+            <label>
+                <input type="checkbox" name="extra" id="extra-mayo" value="mayo"> полить майонезом (+20 рублей, + 5 калорий)
+            </label>
+        </fieldset>
+    </form>
+    <div class='after-form'>
+        <label><input type="checkbox" name="auto" id="auto">Автоподсчёт</label>
+        <button id='go'>Посчитать всё</button>
+        <div class="totalPrice"></div>
+        <div class="totalCalories"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

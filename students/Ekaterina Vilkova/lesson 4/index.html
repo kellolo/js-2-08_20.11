@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function search(yourStr) {
+            let str = yourStr;
+            const regexp = /(\s\')|(\'\s)|(\'$)|(^\')/g; // Ищет все вхождения 'smth или smth'
+            let newStr = str.replace(regexp, ` \" `);
+            console.log(newStr)
+        }
+        search(' \'Hello, my name is Kate.\' I\'m using Twine, When I use two or more apostrophes in the same passage, Twine mistakenly thinks I\'m using single quotes, and the text in between the apostrophes isn\'t displayed correctly. (For example \'I don\'t know. I haven\'t tried that.\'')
+    </script>
+
+</body>
+
+</html>

@@ -1,80 +1,191 @@
-// заглушки (имитация базы данных)
-// const image = 'https://placehold.it/200x150';
-// const cartImage = 'https://placehold.it/100x80';
-// const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-// const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-// const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-// let list = fetchData ();
 
-// ============================================================
-// let url_users = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json';
-// let users 
-// function makeGETreqest(url, callback) {
-//     let xhr = new XMLHttpRequest()
-//     xhr.onreadystatechange = function() {
-        // if(xhr.readyState === 4 && xhr.status === 200) {
-            // callback(xhr.responseText)
-        // } else {
-            // console.log('Server error')
-        // }  
-//     }
-//     xhr.open('GET', url, true);
-//     xhr.send();
-// }
-// function parseData(jsonAsyncData) {
-//     users = JSON.parse(jsonAsyncData)
-//     console.log(users)
-// }
-// makeGETreqest(url_users, parseData)
-// =============================================================
-let userCart = [];
-
-class Product {
-    constructor(product) {
-        this.title = product_name.title
-        this.id = id_product.id
-        this.img = product.img
-        this.price = product.price
+const cartImage = 'https://placehold.it/100x80'
+const image = 'https://placehold.it/200x150'
+const FAKEAPI = 'https://raw.githubusercontent.com/invector4ik002/myJSON/master'
+class list {// список
+    // debugger
+    constructor(url, container) {
+        this.container = container
+        this.url = url
+        // общее
+        this.items = [] // массив хранения активных обьектов
+        this.DTOarr = []// массив для получения данных
+        this._init()//метод инициализации "_" методы для внутренней обработки внутри обьектов
+    }
+    _init() {
+        return false // метод заглушка которая позволяет переоприделить его в других классах при наследовании
+    }
+    getJSON(url) { //аформление запросов 
+        return fetch(url)
+        .then(data => data.json())
+            
     }
     render() {
-         return `<div class="product-item" data-id="${this.id}">
+        const block = document.querySelector(this.container)
+        this.DTOarr.forEach(elem => {
+            let item = new Lists[this.constructor.name](elem)
+            this.items.push(item)
+            block.insertAdjacentHTML('beforeend', item.render())
+        })
+    }
+    fiter() {
+        // потом
+    }
+
+}
+//супер класс для ProductItem и CartItem
+class listItem {// эл-т списка   
+    constructor(elem, img = image) {
+        this.product_name = elem.product_name
+        this.id_product = elem.id_product
+        this.img = img
+        this.price = elem.price
+    }
+    render() {
+        // debugger
+        return `<div class="product-item" data-id="${this.id_product}">
                  <img src="${this.img}" alt="Some img">
                     <div class="desc">
-                        <h3>${this.title}</h3>
+                        <h3>${this.product_name}</h3>
                         <p>${this.price} $</p>
                         <button class="buy-btn" 
-                        data-id="${this.id}"
-                        data-title="${this.title}"
+                        data-id="${this.id_product}"
+                        data-title="${this.product_name}"
                         data-image="${this.img}"
                         data-price="${this.price}">Купить</button>
                     </div>
-                </div>`
+                </div>` 
     }
 }
 
-class Products {
-    constructor(block) {
-        this.products = []
-        this.block = `.${block}`
-        this._init()
+class Productslist extends list {
+    constructor(cart, url = '/myJSON.json', container = '.products') {
+      super(url, container)
+      this.cart = cart
     }
     _init() {
-        users.forEach(item => {
-            this.products.push(new Product(item))
-        })
-        this.render()
+        this.getJSON(FAKEAPI + this.url) 
+           .then(data => {this.DTOarr = data})     
+           .finally(() => {
+               this.render()
+            })
+        }
     }
-    render() {
-        let block = document.querySelector(this.block)
-        let str = ''
-        this.products.forEach(item => {
-            str += item.render()
+    // let cartblock = new Cartlist
+    
+    
+class Cartlist extends list {
+    constructor(url = '/getBasket.json', container = '.cart-block') {
+        super(url, container)
+    }
+    _init() {
+        this.getJSON(FAKEAPI + this.url)
+        .then(data => {this.DTOarr = data.contents})
+        .finally(() => { 
+            this.render()
         })
-        block.innerHTML = str
     }
 }
-let catalog = new Products('products')
 
+let cart = new Cartlist()
+let products = new Productslist(cart)
+
+
+class ProductItem extends listItem {
+
+}
+
+class CartItem extends listItem {
+   constructor(elem, img = cartImage) {
+      super(elem, img)
+      this.quantity = elem.quantity
+   }
+   render() {
+       return `<div class="cart-item" data-id="${this.id_product}">
+                <div class="product-bio">
+                    <img src="${this.img}" alt="Some image">
+                    <div class="product-desc">
+                        <p class="product-title">${this.product_name}</p>
+                        <p class="product-quantity">Quantity: ${this.quantity}</p>
+                        <p class="product-single-price">$${this.price} each</p>
+                    </div>
+                </div>
+                <div class="right-block">
+                    <p class="product-price">$${this.quantity * this.price}</p>
+                    <button class="del-btn" data-id="${this.id_product}">&times;</button>
+                </div>
+            </div>`
+   }
+} 
+
+const Lists = {
+    Productslist: ProductItem,
+    Cartlist: CartItem
+}
+
+document.querySelector('.btn-cart').addEventListener('click', () => {
+    document.querySelector('.cart-block').classList.toggle('invisible');
+});
+//кнопки удаления товара (добавляется один раз)
+document.querySelector('.cart-block').addEventListener ('click', (evt) => {
+    if (evt.target.classList.contains ('del-btn')) {
+        removeProduct (evt.target);
+    }
+})
+//кнопки покупки товара (добавляется один раз)
+document.querySelector('.products').addEventListener ('click', (evt) => {
+    if (evt.target.classList.contains ('buy-btn')) {
+        addProduct (evt.target);
+    }
+})
+// let userCart = [];
+
+// class Product {
+//     constructor(product) {
+//         this.title = product.title
+//         this.id = product.id
+//         this.img = product.img
+//         this.price = product.price
+//     }
+//     render() {
+//          return `<div class="product-item" data-id="${this.id}">
+//                  <img src="${this.img}" alt="Some img">
+//                     <div class="desc">
+//                         <h3>${this.title}</h3>
+//                         <p>${this.price} $</p>
+//                         <button class="buy-btn" 
+//                         data-id="${this.id}"
+//                         data-title="${this.title}"
+//                         data-image="${this.img}"
+//                         data-price="${this.price}">Купить</button>
+//                     </div>
+//                 </div>`
+//     }
+// }
+
+// class Products {
+//     constructor(block) {
+//         this.products = []
+//         this.block = `.${block}`
+//         this._init()
+//     }
+//     _init() {
+//         arrItems.forEach(item => {
+//             this.products.push(new Product(item))
+//         })
+//         this.render()
+//     }
+//     render() {
+//         let block = document.querySelector(this.block)
+//         let str = ''
+//         this.products.forEach(item => {
+//             str += item.render()
+//         })
+//         block.innerHTML = str
+//     }
+// }
+// // console.log(list)
+// let catalog = new Products('products')
 // class CartItem {
 //     constructor(dataset) {
 //        this.title = dataset.title
@@ -154,23 +265,9 @@ let catalog = new Products('products')
 
 
 //кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('del-btn')) {
-        removeProduct (evt.target);
-    }
-})
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('buy-btn')) {
-        addProduct (evt.target);
-    }
-})
 
-//создание массива объектов - имитация загрузки данных с сервера
+
+// создание массива объектов - имитация загрузки данных с сервера
 // function fetchData () {
 //     let arr = [];
 //     for (let i = 0; i < items.length; i++) {
@@ -186,7 +283,7 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
 //         title: items[i],
 //         price: prices[i],
 //         img: image,
-        // quantity: 0,
+//         quantity: 0,
         // createTemplate: function () {
         //     return `<div class="product-item" data-id="${this.id}">
         //                 <img src="${this.img}" alt="Some img">
@@ -222,56 +319,56 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
 //CART
 
 // Добавление продуктов в корзину
-function addProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (!find) {
-        userCart.push ({
-            title: product.dataset ['title'],
-            id: productId,
-            img: cartImage,
-            price: +product.dataset['price'],
-            quantity: 1
-        })
-    }  else {
-        find.quantity++
-    }
-    renderCart ()
-}
+// function addProduct (product) {
+//     let productId = +product.dataset['id'];
+//     let find = userCart.find (element => element.id === productId);
+//     if (!find) {
+//         userCart.push ({
+//             title: product.dataset ['title'],
+//             id: productId,
+//             img: cartImage,
+//             price: +product.dataset['price'],
+//             quantity: 1
+//         })
+//     }  else {
+//         find.quantity++
+//     }
+//     renderCart ()
+// }
 
 
-//удаление товаров
-function removeProduct (product) {
-    let productId = +product.dataset['id'];
-    let find = userCart.find (element => element.id === productId);
-    if (find.quantity > 1) {
-        find.quantity--;
-    } else {
-        userCart.splice(userCart.indexOf(find), 1);
-        document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
-    }
-    renderCart ();
-}
+// //удаление товаров
+// function removeProduct (items) {
+//     let productId = +items.dataset['id'];
+//     let find = items.find (element => element.id === productId);
+//     if (find.quantity > 1) {
+//         find.quantity--;
+//     } else {
+//         items.splice(items.indexOf(find), 1);
+//         document.querySelector(`.cart-item[data-id="${productId}"]`).remove()
+//     }
+//     renderCart ();
+// }
 
-//перерендер корзины
-function renderCart () {
-    let allProducts = '';
-    for (el of userCart) {
-        allProducts += `<div class="cart-item" data-id="${el.id}">
-                            <div class="product-bio">
-                                <img src="${el.img}" alt="Some image">
-                                <div class="product-desc">
-                                    <p class="product-title">${el.title}</p>
-                                    <p class="product-quantity">Quantity: ${el.quantity}</p>
-                                    <p class="product-single-price">$${el.price} each</p>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <p class="product-price">$${el.quantity * el.price}</p>
-                                <button class="del-btn" data-id="${el.id}">&times;</button>
-                            </div>
-                        </div>`
-    }
+// //перерендер корзины
+// function renderCart () {
+//     let allProducts = '';
+//     for (el of userCart) {
+//         allProducts += `<div class="cart-item" data-id="${el.id}">
+//                             <div class="product-bio">
+//                                 <img src="${el.img}" alt="Some image">
+//                                 <div class="product-desc">
+//                                     <p class="product-title">${el.title}</p>
+//                                     <p class="product-quantity">Quantity: ${el.quantity}</p>
+//                                     <p class="product-single-price">$${el.price} each</p>
+//                                 </div>
+//                             </div>
+//                             <div class="right-block">
+//                                 <p class="product-price">$${el.quantity * el.price}</p>
+//                                 <button class="del-btn" data-id="${el.id}">&times;</button>
+//                             </div>
+//                         </div>`
+//     }
 
-    document.querySelector(`.cart-block`).innerHTML = allProducts;
-}
+//     document.querySelector(`.cart-block`).innerHTML = allProducts;
+// }

@@ -105,28 +105,56 @@ class Cart {
             }
         })
     }
+    _getRequestAdd () {
+        return makeGETRequestPromise (`${API_URL}/addToBasket.json`);
+    }
+    _getRequestRemove () {
+        return makeGETRequestPromise (`${API_URL}/deleteFromBasket.json`);
+    }
     addItem (product) {
-        const id = +product.dataset['product_id'];
-        const find = this.products.find (element => element.product_id === id);
-        if (!find) {
-            product.product_id = id;
-            product.product_name = product.dataset['product_name'];
-            product.price = +product.dataset['price'];
-            this.products.push (new CartItem (product));
-        } else {
-            find.quantity++;
-        }
-        this.render ();
+        this._getRequestAdd ()
+            .then (result => {
+                const answer = JSON.parse(result);
+                return answer.result;
+            })
+            .then (result => {
+                if (result == 1) {
+                    const id = +product.dataset['product_id'];
+                    const find = this.products.find (element => element.product_id === id);
+                    if (!find) {
+                        product.product_id = id;
+                        product.product_name = product.dataset['product_name'];
+                        product.price = +product.dataset['price'];
+                        this.products.push (new CartItem (product));
+                    } else {
+                        find.quantity++;
+                    }
+                    this.render ();            
+                } else {
+                    throw new Error ('Server error adding item!');
+                }
+            });
     }
     removeItem (product) {
-        const id = +product.dataset['product_id'];
-        const find = this.products.find (element => element.product_id === id);
-        if (find.quantity > 1) {
-            find.quantity--;
-        } else {
-            this.products.splice (this.products.indexOf (find), 1);
-        }
-        this.render ();
+        this._getRequestRemove ()
+            .then (result => {
+                const answer = JSON.parse(result);
+                return answer.result;
+            })
+            .then (result => {
+                if (result == 1) {
+                    const id = +product.dataset['product_id'];
+                    const find = this.products.find (element => element.product_id === id);
+                    if (find.quantity > 1) {
+                        find.quantity--;
+                    } else {
+                        this.products.splice (this.products.indexOf (find), 1);
+                    }
+                    this.render ();
+                } else {
+                    throw new Error ('Server error removing item!')
+                }
+            });
     }
     render () {
         this.totalSum = 0;

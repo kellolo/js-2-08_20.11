@@ -2,6 +2,84 @@
 //ссылка ра json-файл массива с продуктами (каталога).
 let urlListProducts = 'https://raw.githubusercontent.com/maufaka/home_work/master/products.json';
 
+// // суперкласс для каталога и корзины
+// class List {
+//     constructor (url, container) {
+//         this.container = container
+//         this.url = url
+//         //общее
+//         this.items = [] // актывные объекты
+//         this.DTOarr = [] // получение данных
+//         this._init ()
+//     }
+//     _init () {
+//         return false
+//     }
+//     getJSON (url) {
+//         return fetch (url)
+//         .then(d => d.json ())
+//     }
+//     render () {
+//         const block = document.querySelector (this.container)
+//         this.DTOarr.forEach (el => {
+//             let item = new lists [this.constructor.name] (el)
+//             this.items.push (item)
+//             block.insertAdjacentHTML ('beforeend', item.render ())
+//         })
+        
+//     }
+//     filter () {
+//         //позже
+//     }
+// }
+
+// class ListItem {
+//     constructor (el, img = image) {
+//         this.product_name = el.product_name
+//         this.prise = el.price
+//         this.id_product = el.id_product
+//         this.img = img
+//     }
+//     render () {
+//         return `<div class="product-item" data-id="${this.id_product}">
+//                         <img src="${this.img}" alt="Some img">
+//                         <div class="desc">
+//                             <h3>${this.product_name}</h3>
+//                             <p>${this.price} $</p>
+//                             <button class="buy-btn" 
+//                             data-id="${this.id_product}"
+//                             data-title="${this.product_name}"
+//                             data-image="${this.img}"
+//                             data-imagecart="${this.imgCart}"
+//                             data-price="${this.price}">Купить</button>
+//                         </div>
+//                     </div>`
+//     }
+// }
+
+// class ProductsList extends List {
+//     constructor (cart, url = '/catalogData.json', container = '.products') {
+//         super (url, container)
+//         this.cart = cart
+//     }
+//     _init () {
+        
+//     }
+// }
+
+// class CartList {
+
+// }
+
+// class ProductItem {
+
+// }
+
+// class CartItem {
+
+// }
+
+
 //класс продукта
 class Product {
     constructor (product) {
@@ -24,7 +102,7 @@ class Product {
                             data-imagecart="${this.imgCart}"
                             data-price="${this.price}">Купить</button>
                         </div>
-                    </div>`;
+                    </div>`
     }
 }
 

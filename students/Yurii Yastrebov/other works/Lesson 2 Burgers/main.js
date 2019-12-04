@@ -1,41 +1,40 @@
-let form = document.querySelector('form');
-let buttSubmit = document.querySelector('.button-submit');
-buttSubmit.addEventListener('click', submit(event));
-
-class​ Hamburger​ {
-    constructor​ (size, stuffing, more) {
-        this.price = 0
-        this.calories = 0
-        this._getSize()
-        this._render()
+class Hamburger {
+    constructor(size, stuffing, topping) {
+        this.size = new Parameter (this._check(size))
+        this.stuffing = new Parameter (this._check(stuffing))
+        this.topping = this._getToppings(topping)
     }
-    _getSize() {// Узнать размер гамбургера
-        let size = document.querySelector('input[name="size"]:checked');
-        this.price += +size.dataset.price;
-        this.cal += +size.dataset.calories;
+    _check(attrName) {
+        return document.querySelector(`input[name=${attrName}]:checked`)
     }
-    getToppings (topping) {// Получить список добавок
-
+    _getToppings(attrName) {
+        let arr=[...document.querySelectorAll(`input[name=${attrName}]:checked`)]
+        let tops = []
+        arr.forEach (el => tops.push(new Parameter(el)))
+        return tops
+    }
+    _calculatePrice () {
+        let result = this.size.price + this.stuffing.price
+        this.topping.forEach(el => {result += el.price})
+        return result
+    }
+    _calculateCalories () {
+        let result = this.size.calories + this.stuffing.calories
+        this.topping.forEach(el => {result += el.calories})
+        return result
+    }
+    calc (pr, cal) {
+        document.querySelector(pr).innerText = this._calculatePrice()
+        document.querySelector(cal).innerText = this._calculateCalories()
     }
 
-    getStuffing () {// Узнать начинку гамбургера
-
-    }
-    calculatePrice () {// Узнать цену
-
-    }
-    calculateCalories () {// Узнать калорийность
-
-    }
-    _render() {
-        let priceLabel = document.getElementById("priceLabel");
-        let caloriesLabel = document.getElementById("caloriesLabel");
-        priceLabel.innerText = 'Итоговая стоимость: ${this.price}'
-        caloriesLabel.innerText = 'Калории: ${this.price}'
+}
+class Parameter {
+    constructor(el) {
+        this.name = el.value
+        this.price = +el.dataset.price
+        this.calories = +el.dataset.calories
     }
 }
 
-function submit(event) {
-    let buter = new Hamburger (size, stuffing, more)
-}
 

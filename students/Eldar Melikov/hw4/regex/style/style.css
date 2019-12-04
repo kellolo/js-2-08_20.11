@@ -169,3 +169,6 @@ img {
     border: none;
     border-bottom: 2px solid #fafafa;
 }
+.notValid {
+    border: 2px solid #ff0000;
+}

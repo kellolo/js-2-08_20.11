@@ -85,12 +85,19 @@ class CartList extends List {
         this.addEventsListeners ();
     }
     addEventsListeners () {
+        //кнопка скрытия и показа корзины
+        document.querySelector('.btn-cart').addEventListener('click', () => {
+            document.querySelector('.cart-block').classList.toggle('invisible');
+        });
+
+        //кнопки удаления товара из корзины
         document.querySelector('.cart-block').addEventListener ('click', (evt) => {
             if (evt.target.classList.contains ('del-btn')) {
                 this.removeItem (evt.target);
             }
         })
         
+        // кнопка добавления товара из каталога в корзину
         document.querySelector('.products').addEventListener ('click', (evt) => {
             if (evt.target.classList.contains ('buy-btn')) {
                 this.addItem (evt.target);
@@ -98,11 +105,46 @@ class CartList extends List {
         })
     }
     addItem (product) {
-        
+        this.getJSON (`${API_URL}/addToBasket.json`)
+            .then (answer => {return answer.result})
+            .then (result => {
+                this.DTOarr = [];
+                if (result == 1) {
+                    const id = +product.dataset['product_id'];
+                    const find = this.items.find (element => element.product_id === id);
+                    if (!find) {
+                        product.product_id = id;
+                        product.product_name = product.dataset['product_name'];
+                        product.price = +product.dataset['price'];
+                        product.quantity = 1;
+                        this.DTOarr.push (new CartItem (product));
+                        this.render ();            
+                    } else {
+                        find.quantity++;
+                        this.reRender ();
+                    }
+                } else {
+                    throw new Error ('Server error adding item!');
+                }
+            }); 
     }
     removeItem (product) {
         
     }
+    reRender () { // в случае, если поменялось только количество - перерисовать корзину
+        const block = document.querySelector (this.container);
+        block.innerText = "";
+        this.items.forEach (el => {
+            let item = new lists [this.constructor.name] (el);
+            block.insertAdjacentHTML ('beforeend', item.render());
+        });
+    }
+    // _getRequestAdd () {
+    //     return makeGETRequestPromise (`${API_URL}/addToBasket.json`);
+    // }
+    // _getRequestRemove () {
+    //     return makeGETRequestPromise (`${API_URL}/deleteFromBasket.json`);
+    // }
 }
 
 let basket = new CartList ();
@@ -318,11 +360,6 @@ const lists = { // словарь
 
 // let catalog = new Products ('products');
 // let basket = new Cart ('cart-block');
-
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
 
 // function makeGETRequestPromise (url) {
 //     return new Promise ((res, rej) => {

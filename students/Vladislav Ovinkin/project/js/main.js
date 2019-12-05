@@ -9,7 +9,33 @@ const API_URL = 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/mas
 // /deleteFromBasket.json //удалить товар из корзины
 
 class List { // список
-
+    // суперкласс для Каталога и Корзины
+    constructor (url, container) {
+        this.container = container;
+        this.url = url;
+        // общее
+        this.items = []; // массив хранения активных объектов
+        this.DTOarr = []; // массив для получения данных
+        this._init ();
+    }
+    _init () {
+        return false;
+    }
+    getJSON (url) {
+        return fetch (url)
+            .then (d => d.json());
+    }
+    render () {
+        const block = document.querySelector (this.container);
+        this.DTOArr.forEach (el => {
+            let item = new lists [this.constructor.name] (el);
+            this.items.push (item);
+            block.insertAdjacentHTML = ('beforeend', item.render());
+        });
+    }
+    filter () {
+        // потом
+    }
 }
 
 class ListItem { // элемент списка
@@ -32,7 +58,7 @@ class ListItem {
     
 }
 
-const list = { // словарь
+const lists = { // словарь
     ProductsList: ProductItem,
     CartList: CartItem,
 }

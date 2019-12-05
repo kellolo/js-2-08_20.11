@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task 1-2</title>
+	
+</head>
+<body>
+	<script>
+		let str = `'Punctuation goes inside the closing quotation mark', she said. 'Where'd you say the punctuation should go?', he asked.`;
+        console.log(str);
+        let medResult  = str.replace(/(?!s'|[a-z]'[a-z])([\s\S])'|^'/g, '\"');
+        let result = medResult.replace(/[.]\"/g,'. \"');
+        console.log(result);
+	</script>
+</body>
+</html>

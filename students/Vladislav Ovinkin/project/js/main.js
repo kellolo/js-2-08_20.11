@@ -129,7 +129,22 @@ class CartList extends List {
             }); 
     }
     removeItem (product) {
-        
+        this.getJSON (`${API_URL}/deleteFromBasket.json`)
+            .then (answer => {return answer.result})
+            .then (result => {
+                if (result == 1) {
+                    const id = +product.dataset['product_id'];
+                    const find = this.items.find (element => element.product_id === id);
+                    if (find.quantity > 1) {
+                        find.quantity--;
+                    } else {
+                        this.items.splice (this.items.indexOf (find), 1);
+                    }
+                    this.reRender ();
+                } else {
+                    throw new Error ('Server error removing item!')
+                }
+            });
     }
     reRender () { // в случае, если поменялось только количество - перерисовать корзину
         const block = document.querySelector (this.container);

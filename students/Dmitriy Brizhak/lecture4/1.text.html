@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Замена ковычек в текте</title>
+</head>
+<body>
+        <textarea type="text" name="Text" id="text_before"  rows="7" cols="60">adipisicing e'lit. 
+                'Consequatur ex facilis explicabo facere provident'
+                 unde esse! 'Quisquam vero nemo doloremque molestias modi' praesentium </textarea>
+        <textarea type="text" name="Text" id="text_after"  rows="7" cols="60"></textarea>
+        <script>
+            let textBefore = document.getElementById('text_before').value
+            const elemAfter = document.getElementById('text_after')
+            //Уверен это можно сделать и в 1-ну регулярку,  но идей пока нету
+            textBefore = textBefore.replace(/(?<=(^|\s))'/gm, '"')
+            textBefore = textBefore.replace(/'(?=(\s|$))/gm, '"')
+            elemAfter.value = textBefore
+        </script>
+</body>
+</html>

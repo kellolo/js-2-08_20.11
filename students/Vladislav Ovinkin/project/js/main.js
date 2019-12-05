@@ -39,7 +39,27 @@ class List { // список
 }
 
 class ListItem { // элемент списка
-
+    // суперкласс для ProductItem и CartItem
+    constructor (el, img = image) {
+        this.product_id = el.product_id;
+        this.product_name = el.product_name;
+        this.price = el.price;
+        this.img = img;
+    }
+    render () {
+        return `<div class="product-item" data-product_id="${this.product_id}">
+                    <img src="${this.img}" alt="Some img">
+                    <div class="desc">
+                        <h3>${this.product_name}</h3>
+                        <p>${this.price} $</p>
+                        <button class="buy-btn" 
+                        data-product_id="${this.product_id}"
+                        data-product_name="${this.product_name}"
+                        data-image="${this.img}"
+                        data-price="${this.price}">Купить</button>
+                    </div>
+                </div>`;
+    }
 }
 
 class ProductsList {
@@ -64,28 +84,28 @@ const lists = { // словарь
 }
 
 
-class Product {
-    constructor (product) {
-        this.product_name = product.product_name;
-        this.product_id = product.product_id;
-        this.img = product.img;
-        this.price = product.price;
-    }
-    render () {
-        return `<div class="product-item" data-product_id="${this.product_id}">
-                    <img src="${this.img}" alt="Some img">
-                    <div class="desc">
-                        <h3>${this.product_name}</h3>
-                        <p>${this.price} $</p>
-                        <button class="buy-btn" 
-                        data-product_id="${this.product_id}"
-                        data-product_name="${this.product_name}"
-                        data-image="${this.img}"
-                        data-price="${this.price}">Купить</button>
-                    </div>
-                </div>`
-    }
-}
+// class Product {
+//     constructor (product) {
+//         this.product_name = product.product_name;
+//         this.product_id = product.product_id;
+//         this.img = product.img;
+//         this.price = product.price;
+//     }
+//     render () {
+//         return `<div class="product-item" data-product_id="${this.product_id}">
+//                     <img src="${this.img}" alt="Some img">
+//                     <div class="desc">
+//                         <h3>${this.product_name}</h3>
+//                         <p>${this.price} $</p>
+//                         <button class="buy-btn" 
+//                         data-product_id="${this.product_id}"
+//                         data-product_name="${this.product_name}"
+//                         data-image="${this.img}"
+//                         data-price="${this.price}">Купить</button>
+//                     </div>
+//                 </div>`
+//     }
+// }
 
 class Products {
     constructor (block) {

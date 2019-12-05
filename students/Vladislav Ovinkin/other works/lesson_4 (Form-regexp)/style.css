@@ -1,0 +1,12 @@
+fieldset {
+    display: flex;
+}
+
+label {
+    margin: 10px 0;
+}
+
+input {
+    width: 250px;
+}
+

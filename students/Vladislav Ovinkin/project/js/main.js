@@ -8,6 +8,36 @@ const API_URL = 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/mas
 // /addToBasket.json //добавить товар в корзину;
 // /deleteFromBasket.json //удалить товар из корзины
 
+class List { // список
+
+}
+
+class ListItem { // элемент списка
+
+}
+
+class ProductsList {
+
+}
+
+class CartList {
+
+}
+
+class ProductItem {
+
+}
+
+class ListItem {
+    
+}
+
+const list = { // словарь
+    ProductsList: ProductItem,
+    CartList: CartItem,
+}
+
+
 class Product {
     constructor (product) {
         this.product_name = product.product_name;

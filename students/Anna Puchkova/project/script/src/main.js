@@ -3,7 +3,48 @@ const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const FAKEAPI = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/master/students/Anna%20Puchkova/other%20works/lesson3';
+const FAKEAPI = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/master/students/Anna%20Puchkova/other%20works/lesson3/catalogData.json';
+
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        catalogURL: FAKEAPI,
+        products: null,
+        cart: null,
+        cartImage: 'https://placehold.it/100x80',
+        image: 'https://placehold.it/200x150',
+        cartVisible: false,
+
+    },
+    mounted () {
+        this.getJSON(this.catalogURL)
+        .then(d => this.products = d)
+    },
+    methods: {
+        cartShown() {
+            this.cartVisible = !this.cartVisible;
+        },
+        getJSON(url) {
+            return fetch(url)
+            .then(result => result.json())
+        },
+        addItem(event) {
+            console.log(event.target);
+            let item = this.products.find((el) => el.id == event.target.dataset["id"]);
+            item.quantity = typeof(item.quantity) === 'undefined' ? 1 : item.quantity + 1;
+            this.cart = this.products.filter(el => typeof(el.quantity) != 'undefined' && el.quantity > 0);
+        },
+        removeItem(event) {
+            let prod = this.products.find((el) => el.id == event.target.dataset["id"]);
+            prod.quantity--;
+            this.cart = this.products.filter(el => typeof(el.quantity) != 'undefined' && el.quantity > 0);
+        }
+    }
+});
+
+
+/*
 
 class List { //спиток
     // суперкласс для каталога и корзины
@@ -144,7 +185,7 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
         addProduct (evt.target);
     }
-})
+})*/
 // поле поиска
 document.querySelector('.btn-search').addEventListener('click', (e) => {
     const value = searchInput.value;

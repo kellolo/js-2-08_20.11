@@ -15,6 +15,7 @@ const app = new Vue({
         cartImage: 'https://placehold.it/100x80',
         image: 'https://placehold.it/200x150',
         cartVisible: false,
+       // searchLine
 
     },
     mounted () {

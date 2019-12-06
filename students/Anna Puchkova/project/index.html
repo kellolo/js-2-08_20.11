@@ -38,7 +38,7 @@
                 </div>
             </header>
             <main>
-                <div class="products">
+                <div class="products" v-if="products != null">
                     <div class="product-item" v-for="item in products">
                         <img :src="image" alt="Some img">
                         <div class="desc">
@@ -48,6 +48,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="products" v-else>No items</div>
             </main>
         </div>
         <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>

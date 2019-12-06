@@ -21,14 +21,18 @@
       padding: 15px;
       text-align: left;
     }
+    
+    button {
+      margin: 5px 0 5px 0;
+    }
   </style>
   <div id="app">
     <div class="container">
       <input type="text" v-model="limit"> <button v-on:click="reload">Показать</button>
       <div class="post" v-for="item of reqPosts">
-        <!-- <button v-if="!item.hide" v-on:click="`${item.hide = true}`">Скрыть</button>
-        <button v-else v-on:click="`${item.hide = false}`">Показать</button>-->
-        <div>
+        <button v-if="!item.show" v-on:click="hide(item)">Скрыть</button>
+        <button v-else v-on:click="show(item)">Показать</button>
+        <template v-if="!checkVisible(item)">
           <div class="user">
             Name: <strong>{{item.name}}</strong>
           </div>
@@ -42,7 +46,7 @@
             <p>commentId: {{item.id}} </p>
             <p>postId: {{item.postId}} </p>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </div>
@@ -61,6 +65,7 @@
       },
       methods: {
         getJSON(url) {
+
           return fetch(url)
             .then(d => d.json())
         },
@@ -69,14 +74,27 @@
             .then(data => {
               this.reqPosts = data
             })
+        },
+        //отсюда начинаются функции скрытия и открытие блока с постом
+        hide: function(block) {
+          if (block.show === undefined) {
+            Vue.set(block, 'show', true) //добавим немножко реактивности этой переменной ;)
+          } else {
+            block.show = true
+          }
+        },
+        show: function(block) {
+          block.show = false
+        },
+        checkVisible: function(block) {
+          return block.show
         }
       },
       mounted() {
         //запрашиваем JSON и записываем данные из него
         this.getJSON(this.api.comments + this.api.commandLimit + this.limit).then(data => {
-            this.reqPosts = data
-          })
-          //.finally(() => console.log(this.reqPosts))
+          this.reqPosts = data
+        })
       },
     })
   </script>

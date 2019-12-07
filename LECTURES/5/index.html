@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 40%;
+            margin: 0 auto
+        }
+        .post {
+            border-radius: 5px;
+            border: 2px solid grey;
+            padding: 15px;
+            margin-bottom: 10px
+        }
+        .post-footer {
+            text-align: right
+        }
+        .font-it {
+            font-style: italic
+        }
+        .red {
+            color: red
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="limit"> <button @click="reload">Показать</button>
+        <div class="container">
+            <div class="post" v-for="item of requestedPosts">
+                <!-- <button v-if="!item.show" @click="hide (item)">Скрыть</button>
+                <button v-else @click="item.show = false">Показать</button> -->
+                <div>
+                    <div class="user">
+                        <strong> {{ item.name }} </strong>
+                    </div>
+                    <div class="body">
+                        {{ item.body }}
+                    </div>
+                    <div class="footer">
+                        <a href="#">{{ item.email }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        let app = new Vue ({
+            el: '#app', //ищет обертку для вью-приложения
+            data: {     //"а-ля свойства в объекте"
+                test: 'Hello Vue',
+                requestedPosts: null,
+                arr: [1, 2, 3, 4, 5],
+                limit: 10
+
+                //полуреактивная (нереактивна)
+            },
+            methods: {
+                //список методов (а ля "методы" в объекте)
+                // Вью смотрит на методы как на функции
+                getJSON (url) {
+                    fetch (url)
+                        .then (d => d.json ())
+                        .then (data => {this.requestedPosts = data})
+                },
+                reload () {
+                    this.getJSON ('https://jsonplaceholder.typicode.com/comments?_limit=' + this.limit)
+                }
+                // hide (el) {
+                //     el.hide = true
+                //     console.log (this.requestedPosts)
+                // }
+            },
+            computed: {
+                // вычисляемые значения (а ля "методы, возвращающие значения" в объектах)
+                // Вью смотрит на методы как на данные
+                // полностью реактивны
+                testComputed () {
+                    console.log ('Я пишу вычисляху')
+                    return 'I am computed'
+                }
+            },
+            mounted () {
+                this.getJSON ('https://jsonplaceholder.typicode.com/comments?_limit=' + this.limit)
+            }
+            // components: {
+            //     //компоненты
+            // },
+            // watch: {
+            //     // поле для организации реактивного ответа на изменения в каких-то полях обл. data
+            // },
+            // props: {
+            //     // поле (а ля data, но для приема данных извне)
+            //     // искл для компонентов
+            // },
+            // mounted () {
+            //     // ХУК жиз цикла, отвечающий за время, когда экземп
+            //     // только смонтировался
+            //     console.log ('Я встроился в ДОМ')
+            // },
+            // created () {
+            //     console.log ('Я родился')
+            // },
+        })
+    </script>
+</body>
+</html>

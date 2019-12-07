@@ -20,7 +20,7 @@
             <button class="btn-cart" type="button" v-on:click="isVisibleCart = !isVisibleCart">Корзина</button>
             <div class="cart-block " v-bind:class="{ invisible: isVisibleCart }">
                 <template v-for="item of userCart">
-                    <div class="cart-item" :data-id="item.id_product">
+                    <div class="cart-item">
                         <div class="product-bio">
                             <img :src="cartImage" alt="Some image">
                             <div class="product-desc">
@@ -31,7 +31,7 @@
                         </div>
                         <div class="right-block">
                             <p class="product-price">{{productPrice(item)}}</p>
-                            <button class="del-btn" :data-id="item.id_product" v-on:click="removeProduct($event.target)">&times;</button>
+                            <button class="del-btn" v-on:click="removeProduct(item)">&times;</button>
                         </div>
                     </div>
                 </template>
@@ -40,17 +40,12 @@
     </header>
         <div class="products" v-if="isVisibleProducts">
             <template v-for="item of showProducts">
-                <div class="product-item" :data-id="item.id_product">
+                <div class="product-item">
                     <img :src="productImage" alt="Some img">
                     <div class="desc">
                         <h3>{{item.product_name}}</h3>
                         <p>{{item.price}} ₽</p>
-                        <button class="buy-btn" 
-                        :data-id="item.id_product"
-                        :data-title="item.product_name"
-                        :data-image="productImage"
-                        :data-price="item.price"
-                        v-on:click="addProduct($event.target)">Купить</button>
+                        <button class="buy-btn" v-on:click="addProduct(item)">Купить</button>
                     </div>
                 </div>
             </template>

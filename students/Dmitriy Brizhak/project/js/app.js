@@ -41,26 +41,26 @@ let app = new Vue ({
                 this.isVisibleProducts = true
             }
         },
-        addProduct (htmlElement) {
-            const product = this.normalizeProduct (htmlElement)
+        addProduct (product) {
             this.getJSONPromise(this.API_URL + '/addToBasket.json')
                 .then(d => {
                     if (d.result == 1) {
                         let find = this.userCart.find (element => element.id_product === product.id_product)
-                        if (!find) {    
-                            this.userCart.push (product)  
+                        if (!find) {  
+                            const newProduct = Object.assign({quantity: 1}, product)
+                            this.userCart.push (newProduct)  
                         }  else {
-                            find.quantity++          
+                            find.quantity++        
                         }
                     }
                     return d
                 })  
         },
-        removeProduct (htmlElement) {
+        removeProduct (product) {
             this.getJSONPromise(this.API_URL + '/deleteFromBasket.json')
                 .then(d => {
                     if (d.result == 1) {
-                        let findID =  this.userCart.findIndex(element => element.id_product === +htmlElement.dataset['id'])
+                        let findID =  this.userCart.findIndex(element => element.id_product === product.id_product)
                         if (this.userCart[findID] && this.userCart[findID].quantity > 1) {
                             this.userCart[findID].quantity--
                         } else if (this.userCart[findID]) {

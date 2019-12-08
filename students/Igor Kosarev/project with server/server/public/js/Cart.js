@@ -49,12 +49,23 @@ Vue.component('cart', {
         .catch(err => this.$parent.$children[2].viewError("Ошибка сохранения корзины: " + err))
     },
     updateCounters() {
-      this.amount = 0
-      this.countGoods = 0
-      for (el of this.items) {
-        this.amount += el.price * el.quantity
-        this.countGoods += el.quantity
-      }
+
+      //*Тут берём расчёт с back-end
+      this.$parent.getJSON(this.cartUrl)
+        .catch(err => {
+          this.$parent.$children[2].viewError("Ошибка загрузки расчёта корзины: " + err)
+            //*Тут производим расчёт на стороне front-end если при загрузке данных возникает ошибка, чтобы пользователь не страдал
+          this.amount = 0
+          this.countGoods = 0
+          for (el of this.items) {
+            this.amount += el.price * el.quantity
+            this.countGoods += el.quantity
+          }
+        })
+        .then(data => {
+          this.amount = data.amount
+          this.countGoods = data.countGoods
+        })
     }
   },
   mounted() {

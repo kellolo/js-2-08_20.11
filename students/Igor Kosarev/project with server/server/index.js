@@ -100,6 +100,7 @@ app.post('/api/updateBasket', function(req, res) {
   //console.log(req.body);
   //basket.contents = req.body;
   basket.updateBasket(req.body)
+    //* выводим в лог состояние корзины при изменении (для целей проверки)
   console.log(basket);
   console.log("_____________");
   res.send('ok').end

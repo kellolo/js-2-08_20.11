@@ -3,6 +3,8 @@ Vue.component('cart', {
   data() {
     return {
       items: [],
+      amount: 0,
+      countGoods: 0,
       imgCart: 'https://placehold.it/100x80',
       //cartUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json',
       cartUrl: '/api/getBasket',
@@ -27,6 +29,7 @@ Vue.component('cart', {
       } else {
         find.quantity++
       }
+      this.updateCounters()
       this.$parent.sendJSON(this.updateCartUrl, this.items)
     },
     removeProduct(product) {
@@ -34,21 +37,41 @@ Vue.component('cart', {
       let find = this.items.find(element => element.id_product === productId);
       find.quantity--;
       if (find.quantity < 1) {
-        let position = this.items.indexOf(find)
+        let position = +this.items.indexOf(find)
         this.items.splice(position, position)
+          //*тут небольшие костыли для удления нулевого элемента массива с помощью splice
+        if (position === 0) {
+          this.items.splice(0, 1)
+        }
       }
+      this.updateCounters()
       this.$parent.sendJSON(this.updateCartUrl, this.items)
+        .catch(err => this.$parent.$children[2].viewError("Ошибка сохранения корзины: " + err))
+    },
+    updateCounters() {
+      this.amount = 0
+      this.countGoods = 0
+      for (el of this.items) {
+        this.amount += el.price * el.quantity
+        this.countGoods += el.quantity
+      }
     }
   },
   mounted() {
     this.$parent.getJSON(this.cartUrl)
       .catch(err => this.$parent.$children[2].viewError("Ошибка загрузки корзины: " + err))
-      .then(data => this.items = data.contents)
+      .then(data => {
+        this.items = data.contents
+        this.amount = data.amount
+        this.countGoods = data.countGoods
+      })
 
   },
   template: `
     <div class="cart-block" v-show="visible">
         <cart-item v-for="product of items" :img="imgCart" :el="product" :key="product.id_product"/>
+        <p>Всего товаров: {{this.countGoods}} шт.</p>
+        <p>На сумму: {{this.amount}} рублей</p>
     </div>
     `,
   // components: {

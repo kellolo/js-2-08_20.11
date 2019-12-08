@@ -16,18 +16,22 @@ let app = new Vue({
         .then(d => d.json())
     },
     sendJSON(url, data) {
-      fetch(url, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
-      })
+      return fetch(url, {
+          method: 'POST',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrer: 'no-referrer', // no-referrer, *client
+          keepalive: false,
+          body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
+        })
+        // .then((response) => {
+        //   console.log(response)
+        // })
     },
     showCart() {
       this.$children[0].show()

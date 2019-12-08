@@ -1,56 +1,38 @@
-const productApi = "https://raw.githubusercontent.com/salegorka/json/master/catalogData.json";
-
 let app = new Vue({
     el: "#app",
     data: {
-        products: [],
         isCartVisible: false,
         cart: [],
-        searchLine: ""
+        filteredProducts: [],
+        products: [],
+        productApi: "https://raw.githubusercontent.com/salegorka/json/master/catalogData.json" 
     },
     methods: {
+        getJSON(url) {
+            return fetch(url)
+                .then(response => response.json())
+        },
+        filterProducts(regString) {
+            if (regString === "") {
+                this.filteredProducts = this.products
+                return
+            }
+            this.filteredProducts = []
+            let regExp = new RegExp(regString, "i")
+            this.products.forEach(function (el) {
+                if(regExp.test(el.item)) {
+                    this.filteredProducts.push(el);
+                }
+            }, this)
+        },
         showCart() {
             this.isCartVisible = !this.isCartVisible;
         },
-        getJSON(url) {
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    this.products = data
+    },
+    mounted () {
+        this.getJSON(this.productApi)
+                .then(data => this.products = data)
+                .then(data => {this.filteredProducts = this.products
                 })
-        },
-        addProductToCart(event) {
-            let id = +event.target.dataset["id"]
-            let find = this.cart.find(elem => elem.pr.id === id)
-            if (!find) {
-                // Так поле quantity обновляется реактивно
-                let NewCartItem = {
-                    pr: this.products[id-1],
-                    quantity: 1
-                }
-                this.cart.push(NewCartItem)
-            } else {
-                find.quantity++
-            }
-        },
-        removeProductFrCart(event) {
-            let productId = +event.target.dataset["id"];
-            let find = this.cart.find(elem => elem.pr.id === productId);
-            if(find.quantity > 1) {
-                find.quantity--;
-            } else {
-                this.cart.splice(this.cart.indexOf(find), 1);
-            }
-        },
-        searchEvt() {
-            console.log(this.searchLine);
-            this.filterProducts();
-        },
-        filterProducts() {
-
-        }
-    },
-    mounted() {
-        this.getJSON(productApi)
-    },
-});
+    }
+})

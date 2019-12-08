@@ -16,6 +16,7 @@ class List { // список
         // общее
         this.items = []; // массив хранения активных объектов
         this.DTOarr = []; // массив для получения данных
+        this.filtered = []; // массив для отфильтрованных данных
         this._init ();
     }
     _init () {
@@ -33,8 +34,18 @@ class List { // список
             block.insertAdjacentHTML ('beforeend', item.render());
         });
     }
-    filter () {
-        // потом
+    filter (value) {
+        const regexp = new RegExp (value, 'i');
+        this.filtered = this.items.filter (product => regexp.test (product.product_name));
+        this.renderFilter ();
+    }
+    renderFilter () {
+        const block = document.querySelector (this.container);
+        block.innerHTML = '';
+        this.filtered.forEach (el => {
+            let item = new lists [this.constructor.name] (el);
+            block.insertAdjacentHTML ('beforeend', item.render());
+        });
     }
 }
 
@@ -66,11 +77,17 @@ class ProductsList extends List {
     constructor (cart, url = '/catalogData.json', container = '.products') {
         super (url, container);
         this.cart = cart;
+        this.addEventsListeners ();
     }
     _init () {
         this.getJSON (API_URL + this.url)
             .then (data => {this.DTOarr = data})
             .finally (() => {this.render ()});
+    }
+    addEventsListeners () {
+        document.querySelector('.btn-search').addEventListener ('click', () => {
+            this.filter (document.querySelector('.search-field').value);
+        })
     }
 }
 

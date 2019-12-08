@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>getComments</title>
+</head>
+
+<body>
+  <style>
+    .container {
+      text-align: center;
+    }
+    
+    .post {
+      border: 1px solid black;
+      margin: 10px;
+      padding: 15px;
+      text-align: left;
+    }
+    
+    button {
+      margin: 5px 0 5px 0;
+    }
+  </style>
+  <div id="app">
+    <div class="container">
+      <input type="text" v-model="limit"> <button v-on:click="reload">Показать</button>
+      <div class="post" v-for="item of reqPosts">
+        <button v-if="!item.show" v-on:click="hide(item)">Скрыть</button>
+        <button v-else v-on:click="show(item)">Показать</button>
+        <template v-if="!checkVisible(item)">
+          <div class="user">
+            Name: <strong>{{item.name}}</strong>
+          </div>
+          <div class="body">
+            <p>{{item.body}}</p>
+          </div>
+          <div class="footer">
+            e-mail: <a :href="'mailto:'+item.email">{{item.email}}</a>
+          </div>
+          <div class="id">
+            <p>commentId: {{item.id}} </p>
+            <p>postId: {{item.postId}} </p>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+  <script>
+    let fakeAPI = {
+      comments: 'https://jsonplaceholder.typicode.com/posts/1/comments',
+      commandLimit: '?_limit=',
+    }
+    let app = new Vue({
+      el: '#app',
+      data: {
+        text: 'Hello world',
+        reqPosts: [],
+        limit: 10,
+        api: fakeAPI,
+      },
+      methods: {
+        getJSON(url) {
+
+          return fetch(url)
+            .then(d => d.json())
+        },
+        reload() {
+          this.getJSON(this.api.comments + this.api.commandLimit + this.limit)
+            .then(data => {
+              this.reqPosts = data
+            })
+        },
+        //отсюда начинаются функции скрытия и открытие блока с постом
+        hide: function(block) {
+          if (block.show === undefined) {
+            Vue.set(block, 'show', true) //добавим немножко реактивности этой переменной ;)
+          } else {
+            block.show = true
+          }
+        },
+        show: function(block) {
+          block.show = false
+        },
+        checkVisible: function(block) {
+          return block.show
+        }
+      },
+      mounted() {
+        //запрашиваем JSON и записываем данные из него
+        this.getJSON(this.api.comments + this.api.commandLimit + this.limit).then(data => {
+          this.reqPosts = data
+        })
+      },
+    })
+  </script>
+</body>
+
+</html>

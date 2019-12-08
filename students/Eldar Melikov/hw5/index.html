@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field" v-model="searchStr" @keyup.enter="filterProd">
+                    <button class="btn-search" type="button" @Click="filterProd">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" type="button" @Click="cartVisible">Корзина</button>
+                <div v-if="isCartVisible" class="cart-block">
+                    <div v-if="selectedProd == null || !(selectedProd.length > 0)">Корзина пуста!</div>
+                    <div class="cart-item" v-for="prod in selectedProd">
+                        <div class="product-bio">
+                            <img :src="cartImage" alt="Some image">
+                            <div class="product-desc">
+                                <p class="product-title">{{prod.name}}</p>
+                                <p class="product-quantity">Quantity: {{prod.quantity}}</p>
+                                <p class="product-single-price">{{prod.price}} each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price">{{prod.quantity * prod.price}} $</p>
+                            <button class="del-btn" :data-id="prod.id" @Click="outFromCart">&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products" v-if="filteredProducts != null">
+                <div class="product-item" v-for="prod in filteredProducts">
+                    <img :src="prod.img" alt="Some img">
+                    <div class="desc">
+                        <h3>{{prod.name}}</h3>
+                        <p>{{prod.price}} $</p>
+                        <button class="buy-btn" :data-id="prod.id" @Click="putInCart">Купить</button>
+                    </div>
+                </div>
+            </div>
+            <div v-else><h1 class="products">   На сегодня товаров не завезли!</h1></div>
+        </main>
+    </div>
+
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                url: {
+                    products: 'https://raw.githubusercontent.com/VaGoryainova/js-gb-second-18.09/master/02%20-%20students/Виктория%20Горяйнова/HW/3/async/goods.json'
+                },
+                products: null,
+                filteredProducts: null,
+                cartProd: null,
+                selectedProd: null,
+                cartImage: 'https://placehold.it/100x80',
+                isCartVisible: false,
+                isGoodsOut: false,
+                searchStr: ""
+            },
+            async mounted () {
+                this.products = await fetch(this.url.products)
+                .then((data) => data.json()).catch((err) => { debugger; console.log(err)});
+                if (this.products != null)
+                    this.filteredProducts = [...this.products];
+            },
+            methods: {
+                cartVisible() {
+                    this.isCartVisible = !this.isCartVisible;
+                },
+                filterProd() {
+                    if (this.products != null)
+                        this.filteredProducts = this.products.filter(el => el.name.toUpperCase() == (this.searchStr == "" ? el.name.toUpperCase() : this.searchStr.toUpperCase()))
+                },
+                putInCart(evnt) {
+                    let prod = this.products.find((el) => el.id == evnt.target.dataset["id"]);
+                    prod.quantity = typeof(prod.quantity) === 'undefined' ? 1 : ++prod.quantity;
+                    this.selectedProd = this.products.filter(el => typeof(el.quantity) != 'undefined' && el.quantity > 0);
+                },
+                outFromCart(evnt) {
+                    let prod = this.products.find((el) => el.id == evnt.target.dataset["id"]);
+                    prod.quantity--;
+                    this.selectedProd = this.products.filter(el => typeof(el.quantity) != 'undefined' && el.quantity > 0);
+                }
+            }
+        });
+    
+    
+    </script>
+    <!-- <script src="js/main.js"></script> -->
+</body>
+</html>

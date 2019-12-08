@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Конвертация текста</title>
+</head>
+
+<body>
+  <form action="#">
+    <div class="form-field">
+      <textarea class="original" name="message" cols="40" rows="10" placeholder="Исходный текст"></textarea>
+    </div>
+    <div class="form-field">
+      <textarea class="converted" name="message" cols="40" rows="10" placeholder="Обработанный текст"></textarea>
+    </div>
+    <input class="convert" type="submit" value="Конвертировать">
+  </form>
+  <script>
+    'use strict';
+    //Выбираем кнопку из DOM
+    let action = document.querySelector('.convert');
+
+    //Добавляем слушатель на кнопку.
+    action.addEventListener('click', function(event) {
+      event.preventDefault();
+      let original = event.target.parentNode.querySelector('.original');
+      let converted = event.target.parentNode.querySelector('.converted');
+      converted.value = replaceText(original.value);
+    });
+
+    function replaceText(text) {
+      //Замена одинарных на двойные ковычки
+      const reg1 = /'/g;
+      let textReplacement = text.replace(reg1, '"');
+      //Возврат одинарных ковычек если ковычка между буквами
+      const reg2 = /([a-z])"([a-z])/g;
+      return textReplacement.replace(reg2, replacer);
+    }
+
+    function replacer(str, p1, p2) {
+      return p1 + "'" + p2;
+    }
+    //Тестовый текст: 'hi! How are you?'  'I don't know'
+  </script>
+</body>
+
+</html>

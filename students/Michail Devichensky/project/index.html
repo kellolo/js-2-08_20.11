@@ -21,13 +21,26 @@
         </div>
     </header>
     <main>
-        <div class="products"></div>
+        <div class="products" id="prod-vue" for="item of incomingURL">
+             <div class="product-item" data-id="id_product">
+                <img src="img" alt="Some img">
+                    <div class="desc">
+                       <h3>{{ item.product_name }}</h3>
+                       <p>{{ item.price }} $</p>
+                       <button class="buy-btn" 
+                       data-id="id_product"
+                       data-title="product_name"
+                       data-image="img"
+                       data-price="price">Купить</button>
+                   </div>
+               </div>
+            </div>
     </main>
 
 
-
+     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="script/main.js"></script>
-    <!-- <script src="script/test.js"></script> -->
+    <!-- <script src="script/main.js"></script> -->
+    <script src="script/test.js"></script>
 </body>
 </html>

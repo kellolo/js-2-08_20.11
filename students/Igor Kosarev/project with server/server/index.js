@@ -57,11 +57,12 @@ const basketContents = [{
   }
 ]
 
+//* класс корзины
 class Basket {
-  constructor(amount, countGoods, contents) {
-    this.amount = amount,
-      this.countGoods = countGoods,
-      this.contents = contents
+  constructor() {
+    this.amount = 0
+    this.countGoods = 0
+    this.contents = []
   }
   updateBasket(contents) {
     this.contents = contents
@@ -75,8 +76,16 @@ class Basket {
 }
 
 
-let basket = new Basket(46600, 2, basketContents)
+//let basket = new Basket(46600, 2, basketContents)
+let basket = new Basket()
 
+//*функция инициализации
+function init() {
+  basket.updateBasket(basketContents)
+}
+
+
+//* сервер
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
   //app.set('view engine', 'pug');
@@ -88,12 +97,12 @@ let server = app.listen(80, function() {
 })
 
 app.get('/api/catalogData', function(req, res) {
-  res.send(catalogData);
+  res.send(catalogData).end;
 
 });
 
 app.get('/api/getBasket', function(req, res) {
-  res.send(basket);
+  res.send(basket).end;
 });
 
 app.post('/api/updateBasket', function(req, res) {
@@ -105,3 +114,6 @@ app.post('/api/updateBasket', function(req, res) {
   console.log("_____________");
   res.send('ok').end
 });
+
+//* инициализация
+init()

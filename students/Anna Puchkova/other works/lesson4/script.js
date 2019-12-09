@@ -1,9 +1,44 @@
+class Validation {
+    constructor (target, re) {
+        this.target = document.getElementById(target);
+        this.name = this.target.name;
+        this.re = re;       
+    }
+    output() {
+        let valid = this.re.test(this.target.value);
+        let text = (valid) ? `${this.name} is correct!` : `${this.name} is incorrect! Try again`;
+        let place = document.getElementById(`${this.name}_output`);
+        this.target.style.color = (valid) ? 'green' : 'red';
+        this.target.style.backgroundColor = (valid) ? "lightgreen" : 'red';
+        place.innerHTML = text;
+    }
+}
+
+let reName = /^[a-zA-Zа-яА-ЯёЁ]+/;
+let checkName = new Validation('name', reName);
+
+let rePhone = /^\+7\(\d{3}\)\d{3}-\d{4}$/;
+let checkPhone = new Validation('phone', rePhone);
+
+let reMail = /[a-zA-Z0-9.]*@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+let checkEmail = new Validation('email', reMail);
+
+let reText = /./;
+let checkText = new Validation('mes', reText);
+
+const checkAll = () => {
+    checkName.output();
+    checkPhone.output();
+    checkEmail.output();
+    checkText.output();
+};
+/*
 const ValidName = () => {
     let re = /^[a-zA-Zа-яА-ЯёЁ]+/;
     let target = document.getElementById('name');
     let myName = target.value;
     let result = document.getElementById('name_output');
-    var valid = re.test(myName);
+    let valid = re.test(myName);
     if (valid) {
         output = 'Name is correct!';
         result.style.color = 'green';
@@ -76,4 +111,4 @@ const ValidText = () => {
     result.innerHTML = output;
     
     return valid;
-}  
+}  */

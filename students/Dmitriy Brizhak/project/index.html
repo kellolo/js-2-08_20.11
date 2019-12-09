@@ -7,26 +7,54 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
+    <div id="app">
     <header>
         <div class="logo">E-shop</div>
         <div class="cart">
             <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
+                <input type="text" class="search-field" v-model="searchLine">
+                <button class="btn-search" type="submit" v-on:click="filterProduct">
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+            <button class="btn-cart" type="button" v-on:click="isVisibleCart = !isVisibleCart">Корзина</button>
+            <div class="cart-block " v-bind:class="{ invisible: isVisibleCart }">
+                <template v-for="item of userCart">
+                    <div class="cart-item">
+                        <div class="product-bio">
+                            <img :src="cartImage" alt="Some image">
+                            <div class="product-desc">
+                                <p class="product-title">{{item.product_name}}</p>
+                                <p class="product-quantity">Quantity: {{item.quantity}}</p>
+                                <p class="product-single-price">₽{{item.price}} each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price">{{productPrice(item)}}</p>
+                            <button class="del-btn" v-on:click="removeProduct(item)">&times;</button>
+                        </div>
+                    </div>
+                </template>
+            </div>
         </div>
     </header>
-    <main>
-        <div class="products"></div>
-    </main>
-
-
+        <div class="products" v-if="isVisibleProducts">
+            <template v-for="item of showProducts">
+                <div class="product-item">
+                    <img :src="productImage" alt="Some img">
+                    <div class="desc">
+                        <h3>{{item.product_name}}</h3>
+                        <p>{{item.price}} ₽</p>
+                        <button class="buy-btn" v-on:click="addProduct(item)">Купить</button>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div v-else>Нет данных</div>
+    </div>
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

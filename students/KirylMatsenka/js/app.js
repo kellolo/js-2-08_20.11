@@ -1,4 +1,4 @@
-let addProductEvent = new Vue ()
+const addProductEvent = new Vue ()
 
 let app = new Vue ({
     el: '#app',

@@ -7,21 +7,21 @@ Vue.component ('cart', {
         }
     },
     methods: {
-        getCart () {
-            this.$parent.getJSON (this.$parent.localfakeapi + this.cartUrl)
-            .then (json => {this.cart = json.contents})
-        },
-        showCart () {
-             this.show ? this.show = false : this.show = true
-        },
-        // Простой вопрос: Здесь для удобства лучше через if писать или можно и так?
+        // Простой вопрос: Здесь для удобства лучше через if писать или можно и так? или пофиг?
         removeProduct (product) {
             let cartItem = this.cart.find (item => item == product)
             cartItem.quantity == 1 
             ? this.cart.splice (this.cart.indexOf (product), 1) 
             : cartItem.quantity--
         },
-        addProduct (product) {
+    },
+    mounted () {
+        this.$parent.getJSON (this.$parent.localfakeapi + this.cartUrl)
+            .then (json => {this.cart = json.contents})
+        // По клику на кнопку в компоненте CatalogItem сюда (через $root)
+        // прилетает product и тут мы его добавляем корзину 
+        // Можно так делать? Или лучше по другому связывать компоненты?
+        this.$root.events.addProduct.$on ('addProduct', (product) => {
             let cartItem = this.cart.find ((cartItem) => cartItem.id == product.id)
             if (cartItem) {
                 cartItem.quantity++
@@ -29,15 +29,6 @@ Vue.component ('cart', {
                 Vue.set (product, 'quantity', 1)
                 this.cart.push (product)
             }
-        }
-    },
-    mounted () {
-        this.getCart ()
-        // По клику на кнопку в компоненте CartItem сюда (через главный компонент)
-        // прилетает product и тут мы его добавляем корзину 
-        // Можно так делать? Или лучше по другому связывать компоненты?
-        this.$root.events.addProduct.$on ('addProduct', (product) => {
-            this.addProduct (product)
         })
     },
     template: `<div class="cart">
@@ -47,7 +38,7 @@ Vue.component ('cart', {
                             <i class="fas fa-search"></i>
                         </button>
                     </form>
-                    <button class="btn-cart" type="button" @click="showCart">Корзина</button>
+                    <button class="btn-cart" type="button" @click="show = !show">Корзина</button>
                     <div class="cart-block" v-show="show">
                         <cart-item v-for="product of cart" :product="product" :key="product.id"></cart-item> 
                     </div>

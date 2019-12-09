@@ -1,0 +1,22 @@
+fieldset {
+    display: flex;
+}
+
+label {
+    margin: 10px 0;
+}
+
+input, textarea {
+    width: 250px;
+    padding: 5px;
+    outline: 0;
+}
+
+.error-msg  {
+    color: #ccc;
+    margin-left: 5px;
+}
+
+.text-red {
+    color: red;
+}

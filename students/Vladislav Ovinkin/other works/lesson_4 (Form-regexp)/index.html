@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form RegExp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form id='form' action='#'>
+        <fieldset>
+            <label>Имя:<br>
+                <input type="text" id='name' name='name' placeholder='Имя'>
+                <span class='error-msg' id='eName'></span>
+            </label>
+            <label>Телефон:<br>
+                <input type="text" id='phone' name='phone' placeholder='Номер телефона'>
+                <span class='error-msg' id='ePhone'></span>
+            </label>
+            <label>Адрес электронной почты:<br>
+                <input type="text" id='email' name='email' placeholder='E-mail'>
+                <span class='error-msg' id='eEmail'></span>
+            </label>
+            <label>Текст:<br>
+                <textarea name='message' id='message' rows='5' placeholder='Сообщение'></textarea>
+                <span class='error-msg' id='eMessage'></span>
+            </label>
+            <button id="send" disabled>Отправить</button>
+        </fieldset>
+    </form>
+
+    <script src="app.js"></script>
+</body>
+</html>

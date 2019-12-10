@@ -1,0 +1,28 @@
+form{
+    display: flex;
+    flex-direction: column;
+}
+input {
+    padding: 5px 10px;
+    margin: 10px 0;
+}
+input:focus{
+    outline: none;
+}
+.error{
+    color: red;
+}
+textarea{
+    padding: 5px 10px;
+    margin: 10px 0;
+}
+textarea:focus{
+    outline: none;
+}
+.submit{
+    max-width: 200px;
+    padding: 10px 20px;
+}
+.incorrect{
+    border: 2px solid red;
+}

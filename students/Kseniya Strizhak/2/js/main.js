@@ -4,11 +4,39 @@ const cartImage = 'https://placehold.it/100x80';
 const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
 const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
 const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-
+//создание базы товаров
+function cartItem(name, price, id) {
+  this.name = name;
+  this.price = price;
+  this.id = id;
+  this.addMeToCart = function () {  };
+  this.removeMeFromCart = function () {  }
+}
+const item1 = new MenuItem('Notebook', '1000','1');
+const item2 = new MenuItem('Display', '200', '2');
 
 //глобальные сущности корзины и каталога (ИМИТАЦИЯ! НЕЛЬЗЯ ТАК ДЕЛАТЬ!)
-var userCart = [];
+//var userCart = [];
 var list = fetchData ();
+
+//класс для корзины
+function userCart() {
+    this.elements = [];
+    this.Sum = 0;
+  this.addToCart = function () { };
+  this.removeFromCart = function () {  };
+    this.countSum = function () {
+        for (var i=0; i<this.elements.length; i++) {
+            this.Sum += this.elements.[i].price
+        }
+        
+        
+    };
+}
+//2 задание
+class Goodlist {
+    
+}
 
 //кнопка скрытия и показа корзины
 document.querySelector('.btn-cart').addEventListener('click', () => {
@@ -28,14 +56,13 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
 })
 
 //создание массива объектов - имитация загрузки данных с сервера
-//function fetchData () {
-//    let arr = [];
-//    for (let i = 0; i < items.length; i++) {
-//        arr.push (createProduct (i));
-//    }
- //   return arr
-//};
-fetch
+function fetchData () {
+    let arr = [];
+    for (let i = 0; i < items.length; i++) {
+        arr.push (createProduct (i));
+    }
+    return arr
+};
 
 //создание товара
 function createProduct (i) {

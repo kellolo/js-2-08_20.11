@@ -40,6 +40,9 @@ const app = new Vue({
                 this.cartItems.splice(this.cartItems.indexOf(find), 1)
             }
         },
+        filterGoods() {
+            this.filter = this.products.filter(el => (el.title = this.searchLine))
+        }
     },
     mounted () {
         this.getJSON(this.urlProducts)

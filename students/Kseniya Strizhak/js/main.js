@@ -28,13 +28,14 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
 })
 
 //создание массива объектов - имитация загрузки данных с сервера
-function fetchData () {
-    let arr = [];
-    for (let i = 0; i < items.length; i++) {
-        arr.push (createProduct (i));
-    }
-    return arr
-};
+//function fetchData () {
+//    let arr = [];
+//    for (let i = 0; i < items.length; i++) {
+//        arr.push (createProduct (i));
+//    }
+ //   return arr
+//};
+fetch
 
 //создание товара
 function createProduct (i) {

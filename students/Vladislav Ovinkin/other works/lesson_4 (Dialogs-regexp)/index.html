@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regexp dialogs</title>
+</head>
+<body>
+    <script>
+        'use strict';
+
+        // отрывок из Полианны
+        let sometext = "'I ain't a-tellin' that. It ain't fit that I should.' The old man drew himself erect. In his dim blue eyes, as he faced the house, there was the loyal servant's honest pride in the family he has served and loved for long years. 'But it don't seem possible – her and a lover,' still maintained Nancy. Old Tom shook his head. 'You didn't know Miss Polly as I did,' he argued. 'She used ter be real handsome – and she would be now, if she'd let herself be.' 'Handsome! Miss Polly!' 'Yes. If she'd just let that tight hair of hern all out loose and careless-like, as it used ter be, and wear the sort of bunnits with posies in 'em, and the kind o'dresses all lace and white things – you'd see she'd be handsome! Miss Polly ain't old, Nancy.' 'Ain't she, though Well, then she's got an awfully good imitation of it – she has, she has!' sniffed Nancy. 'Yes, I know. It begun then – at the time of the trouble with her lover,' nodded Old Tom; 'and it seems as if she'd been feedin' on wormwood an' thistles ever since – she's that bitter an' prickly ter deal with.' 'I should say she was,' declared Nancy, indignantly. 'There's no pleasin' her, nohow, no matter how you try! I wouldn't stay if 'twa'n't for the wages and the folks at home what's needin' 'em. But some day – some day I shall jest b'ile over; and when I do, of course it'll be good-by Nancy for me. It will, it will.' Old Tom shook his head. 'I know. I've felt it. It's nart'ral – but 'tain't best, child; 'tain't best. Take my word for it, 'tain't best.' And again he bent his old head to the work before him. 'Nancy!' called a sharp voice. 'Y-yes, ma'am,' stammered Nancy; and hurried toward the house.";
+        
+        let some_regexp = /[^a-z+](\')(\b|\w.+?)(\,|\.|\?|\!)(\')/ig;
+        some_regexp = /^\w|\s(\')(\b|\w.+?)(\,|\.|\?|\!)(\')/ig; // оба варианта выдают один и тот же результат
+
+        // в обоих вариантах ^^ не обрабатывается первый диалог (не нашёл как выразить "начало текста" или "ничего нет до")
+        // однако выход всегда есть)
+
+        sometext = " " + sometext;
+
+        console.log (sometext.slice(1));
+        let out = sometext.replace(some_regexp, ' "$2$3"');
+
+        out = out.slice (1);
+
+        console.log (out);
+    </script>
+</body>
+</html>

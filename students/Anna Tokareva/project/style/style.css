@@ -18,6 +18,10 @@ button:focus{
     width: 140px;
 }
 
+.div-cart {
+    display: inline-block;
+}
+
 .btn-cart{
     background-color: #00868B;
     padding: 10px 20px;

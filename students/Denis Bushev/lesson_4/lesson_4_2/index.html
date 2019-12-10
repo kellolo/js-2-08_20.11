@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lesson_4_2</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1 class="title">Отправить сообщение</h1>
+    <form action="#" class="form">
+        <div class="form-list">
+            <label for="name">Введите Ваше имя</label>
+            <input type="text" id="name" placeholder="Иван">
+        </div>
+        <div class="form-list">
+            <label for="number">Введите Ваш номер сотового телефона</label>
+            <input type="text" id="number" placeholder="+7(000)000-00-00">
+        </div>
+        <div class="form-list">
+            <label for="email">Введите Ваш email</label>
+            <input type="text" id="email" placeholder="mypost@email.com">
+        </div>
+        <div class="form-list">
+            <textarea name="message" id="message" cols="30" rows="10" required></textarea>
+        </div>
+        <div class="form-list">
+            <input type="button" value="Отправить" class="sell" onclick="checkAll()">
+            <!-- <input type="button" value="Отправить" class="sell" onclick="validator()"> -->
+        </div>
+    </form>
+    <script src="js/script.js"></script>
+</body>
+</html>

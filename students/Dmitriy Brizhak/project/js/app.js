@@ -8,12 +8,12 @@ let app = new Vue ({
         userCart: [],
         API_URL: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses',
         searchLine: '',
-        isVisibleCart: true,
         isVisibleProducts: true,
+        errorMessage: '',
     },
     methods: {
         // Вью смотрит на методы как на функции
-        getJSONPromise (url) {
+        getJSON (url) {
             return fetch (url)
                 .then (d => d.json ())
         },
@@ -25,26 +25,22 @@ let app = new Vue ({
             this.userCart = data.contents
             return data
         },
-        normalizeProduct (htmlElement) {
-            const product = {}
-            product.product_name= htmlElement.dataset ['title']
-            product.id_product= +htmlElement.dataset['id']
-            product.price= +htmlElement.dataset['price']
-            product.quantity= 1
-            return product
-        },
         filterProduct () {
             this.showProducts = this.newProducts.filter(item => item.product_name.toLowerCase().includes(this.searchLine.toLowerCase()))
             if (this.showProducts.length == 0) {
                 this.isVisibleProducts = false
             } else {
-                this.isVisibleProducts = true
+                this.showMessage ('Ничего не найдено') 
             }
         },
+        showMessage (text) {
+            this.isVisibleProducts = true
+            this.errorMessage = text
+        },
         addProduct (product) {
-            this.getJSONPromise(this.API_URL + '/addToBasket.json')
+            this.getJSON(this.API_URL + '/addToBasket.json')
                 .then(d => {
-                    if (d.result == 1) {
+                    if (d.result) {
                         let find = this.userCart.find (element => element.id_product === product.id_product)
                         if (!find) {  
                             const newProduct = Object.assign({quantity: 1}, product)
@@ -57,9 +53,9 @@ let app = new Vue ({
                 })  
         },
         removeProduct (product) {
-            this.getJSONPromise(this.API_URL + '/deleteFromBasket.json')
+            this.getJSON(this.API_URL + '/deleteFromBasket.json')
                 .then(d => {
-                    if (d.result == 1) {
+                    if (d.result) {
                         let findID =  this.userCart.findIndex(element => element.id_product === product.id_product)
                         if (this.userCart[findID] && this.userCart[findID].quantity > 1) {
                             this.userCart[findID].quantity--
@@ -70,16 +66,18 @@ let app = new Vue ({
                     return d
                 })        
         },
-        productPrice (item) {
-            return item.quantity * item.price
-        },
     },
     computed: {
         // Вью смотрит на методы как на данные
         // полностью реактивны
     },
     mounted () {      
-        this.getJSONPromise (this.API_URL + '/catalogData.json').then(d => this.saveNewProducts(d)).finally(() => this.filterProduct ())
-        this.getJSONPromise (this.API_URL + '/getBasket.json').then(d => this.saveUserCart (d))
+        this.getJSON (this.API_URL + '/catalogData.json')
+            .then(d => this.saveNewProducts(d))
+            .catch(e => this.showMessage ('Ошибка получения данных'))
+            .finally(() => this.filterProduct ())
+        this.getJSON (this.API_URL + '/getBasket.json')
+            .then(d => this.saveUserCart (d))
+            .catch(e => this.showMessage ('Ошибка получения данных'))
     }
 })

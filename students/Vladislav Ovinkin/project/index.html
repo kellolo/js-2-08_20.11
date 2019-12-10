@@ -7,22 +7,54 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
-        </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field">
+                    <button class="btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" type="button">Корзина</button>
+                <div class="cart-block invisible">
+                    <div class="cart-item" v-for="cartitem of cart" :data-product_id="cartitem.product_id">
+                        <div class="product-bio">
+                            <img :src="cartImage" alt="Some image">
+                            <div class="product-desc">
+                                <p class="product-title">{{ cartitem.product_name }}</p>
+                                <p class="product-quantity">Quantity: {{ cartitem.quantity }}</p>
+                                <p class="product-single-price">${{ cartitem.price }} each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price">${{ cartitem.quantity * cartitem.price }}</p>
+                            <button class="del-btn" :data-product_id="cartitem.product_id">&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <div v-for="product of products">
+                    <div class="product-item" :data-product_id="product.product_id">
+                        <img :src="product.img" alt="Some img">
+                        <div class="desc">
+                            <h3>{{ product.product_name }}</h3>
+                            <p>{{ product.price }}$</p>
+                            <button class="buy-btn" 
+                            :data-product_id="product.product_id"
+                            :data-product_name="product.product_name"
+                            :data-image="product.img"
+                            :data-price="product.price">Купить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>

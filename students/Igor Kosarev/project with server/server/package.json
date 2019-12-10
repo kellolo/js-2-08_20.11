@@ -1,0 +1,15 @@
+{
+  "name": "e-shop",
+  "version": "1.0.0",
+  "description": "GeekBrains homework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Igor Kosarev",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

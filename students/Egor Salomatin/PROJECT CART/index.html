@@ -14,42 +14,13 @@
         <header>
             <div class="logo">E-shop</div>
             <div class="cart">
-                <form action="#" class="search-form">
-                    <input type="text" class="search-field" v-model="searchLine">
-                    <button class="btn-search" type="submit" v-on:click="searchEvt">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <button class="btn-cart" v-on:click="showCart" type="button">Корзина</button>
-                <div class="cart-block" v-show="isCartVisible">
-                    <div class="cart-item" v-for="item in cart" v-bind:data-id="item.pr.id">
-                        <div class="product-bio">
-                            <img v-bind:src="item.pr.imgCart" alt="Some image">
-                            <div class="product-desc">
-                                <p class="product-title">{{ item.pr.item }}</p>
-                                <p class="product-quantity">Quantity: {{item.quantity}}</p>
-                                <p class="product-single-price">$${{ item.pr.price }} each</p>
-                            </div>
-                        </div>
-                        <div class="right-block">
-                            <p class="product-price">{{ item.quantity * item.pr.price }}</p>
-                            <button class="del-btn" v-on:click="removeProductFrCart($event)" v-bind:data-id="item.pr.id">&times;</button>
-                        </div>
-                    </div>
-                </div>
+                <search></search>
+                <button class="btn-cart" type="button" v-on:click="showCart">Корзина</button>
+                <cart :cart="cart" :visible="isCartVisible"></cart>
             </div>
         </header>
         <main>
-            <div class="products">
-                <div class="product-item" v-for="item in products" v-bind:data-id="item.id">
-                    <img v-bind:src="item.img" alt="Some img">
-                    <div class="desc">
-                        <h3>{{ item.item }}</h3>
-                        <p>{{ item.price }}</p>
-                        <button class="buy-btn" v-bind:data-id="item.id" v-on:click="addProductToCart($event)">Купить</button>
-                    </div>
-                </div>
-            </div>
+            <catalog :products="filteredProducts"></catalog>
         </main>
     </div>
 
@@ -57,6 +28,11 @@
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
     </script>
+    <script src="js/CatalogItem.js"></script>
+    <script src="js/CartItem.js"></script>
+    <script src="js/Catalog.js"></script>
+    <script src="js/Cart.js"></script>
+    <script src="js/Search.js"></script>    
     <script src="js/main.js"></script>
 </body>
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="search">
+        <button v-on:click="counter += 1">Найти</button>
+        <p>Кнопка выше была нажата {{ counter }} раз</p>
+    </div>
+    <div id="search-2">
+        <button v-on:click="greet">Найти</button>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+var search = new Vue({
+    el: '#search',
+    data: {
+        counter: 0
+    }
+})
+var search2 = new Vue({
+  el: '#search-2',
+  data: {
+    name: 'не найдено'
+  },
+  methods: {
+    greet: function (event) {
+      alert('Привет, ничего ' + this.name + '!')
+    }
+  }
+})
+</script>
+</html>

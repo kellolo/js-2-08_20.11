@@ -1,0 +1,26 @@
+[
+    {
+        "id_product": 111,
+        "product_name": "Молоко",
+        "price": 60,
+        "size": "bottle"
+  },
+    {
+        "id_product": 222,
+        "product_name": "Хлеб",
+        "price": 40,
+        "size": "loaf"
+  },
+    {
+        "id_product": 333,
+        "product_name": "Пряники",
+        "price": 55,
+        "size": "packet"
+  },
+    {
+        "id_product": 444,
+        "product_name": "Сахар",
+        "price": 150,
+        "size": "box"
+  }
+]

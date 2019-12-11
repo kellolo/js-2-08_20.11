@@ -36,7 +36,7 @@ let app = new Vue({
                 .then(d => d.json())
         },
 
-        filterProduct() {
+        filterProduct() { //фильтр и сортировка
 
             this.arrItemsDTO = this.arrItems.filter((item => {
                 if (this.filterEnd == '' || this.filterEnd == null) {

@@ -11,49 +11,21 @@
         <header>
             <div class="logo">E-shop</div>
             <div class="cart">
-                <form action="#" class="search-form">
-                    <input type="text" class="search-field">
-                    <button class="btn-search" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <button class="btn-cart" type="button" @Click = "showCart">Корзина</button>
-                <div class="cart-block" v-if = "!cartInvisible">
-                    <div class="cart-item" v-for = "item of cart">
-                        <div class="product-bio">
-                            <img :src="cartImg" alt="Some image">
-                            <div class="product-desc">
-                                <p class="product-title">{{item.title}}</p>
-                                <p class="product-quantity">Quantity: {{item.quantity}}</p>
-                                <p class="product-single-price">{{item.price}} each</p>
-                            </div>
-                        </div>
-                        <div class="right-block">
-                            <p class="product-price">${{item.quantity * item.price}}</p>
-                            <button class="del-btn" :data-id="item.id" @Click="removeProduct">&times;</button>
-                        </div>
-                    </div>
-                </div>
+                <search ref="search"></search>
+                <cart ref="cart"></cart>
             </div>
         </header>
         <main>
-            <div class="products">
-                <div class="product-item" v-for="item of products">
-                    <img :src="img" alt="Some img">
-                    <div class="desc">
-                        <h3>{{item.title}}</h3>
-                        <p>{{item.price}}</p>
-                        <button class="buy-btn" :data-id="item.id" @Click="addProduct">Купить</button>
-                    </div>
-                </div>
-            </div>
+            <products ref="products"></products>
         </main>
     </div>
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="js/search.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/cartItem.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/productsItem.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

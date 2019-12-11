@@ -30,7 +30,9 @@
                         </div>
                         <div class="right-block">
                             <p class="product-price">${{ cartitem.quantity * cartitem.price }}</p>
-                            <button class="del-btn" :data-product_id="cartitem.product_id">&times;</button>
+                            <button class="del-btn"
+                                @click="removeProduct"
+                                :data-product_id="cartitem.product_id">&times;</button>
                         </div>
                     </div>
                 </div>
@@ -45,7 +47,8 @@
                         <div class="desc">
                             <h3>{{ product.product_name }}</h3>
                             <p>{{ product.price }}$</p>
-                            <button class="buy-btn" 
+                            <button class="buy-btn"
+                            @click="addProduct"
                             :data-product_id="product.product_id"
                             :data-product_name="product.product_name"
                             :data-image="product.img"

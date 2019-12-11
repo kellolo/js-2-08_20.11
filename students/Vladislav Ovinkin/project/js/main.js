@@ -13,6 +13,7 @@ const app = new Vue ({
     data: {
         API_URL: 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json',
         cartImage: 'https://placehold.it/100x80',
+        DTOarr: null,
         filtered: null,
         products: null,
         cart: null,
@@ -38,6 +39,34 @@ const app = new Vue ({
         filter () {
             const regexp = new RegExp (this.searchLine, 'i');
             this.filtered = this.products.filter (product => regexp.test (product.product_name));
+        },
+        addProduct () {
+            const dataset = event.target.dataset;
+            this.getJSON (this.API_URL + '/addToBasket.json')
+                .then (answer => {return answer.result})
+                .then (result => {
+                    this.DTOarr = [];
+                    if (result == 1) {
+                        const id = +dataset.product_id;
+                        const find = this.cart.find (element => element.product_id === id);
+                        if (!find) {
+                            let newItem = {
+                                product_id: id,
+                                product_name: dataset.product_name,
+                                price: +dataset.price,
+                                quantity: 1,
+                            };
+                            this.cart.push (newItem);
+                        } else {
+                            find.quantity++;
+                        }
+                    } else {
+                        throw new Error ('Server error adding item!');
+                    }
+                }); 
+        },
+        removeProduct () {
+            console.log (event.target.dataset.product_id);
         },
     },
     computed: {

@@ -17,7 +17,10 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
-                <button class="btn-cart" type="button" @click="toggleCartShow">Корзина</button>
+                <button class="btn-cart" type="button" @click="toggleCartShow">
+                    Корзина
+                    <span v-show="getCartItemsCount > 0" class="btn-cart-items-counter">{{ getCartItemsCount }}</span>
+                </button>
                 <div v-show="cartshow" class="cart-block">
                     <div class="cart-item" v-for="cartitem of cart" :data-product_id="cartitem.product_id">
                         <div class="product-bio">
@@ -35,6 +38,8 @@
                                 :data-product_id="cartitem.product_id">&times;</button>
                         </div>
                     </div>
+                    <div v-show="getCartItemsCount > 0" class='cart-total'>Итого: {{ totalSum }}</div>
+                    <div v-show="getCartItemsCount == 0">Корзине скучно без товаров :(</div>
                 </div>
             </div>
         </header>

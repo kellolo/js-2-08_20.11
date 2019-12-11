@@ -16,6 +16,7 @@ const app = new Vue ({
         cart: null,
         cartshow: false,
         searchLine: '',
+        totalSum: 0,
     },
     methods: {
         getJSON (url) {
@@ -27,7 +28,7 @@ const app = new Vue ({
                 .then (data => this.products = data);
         },
         getCart (url) {
-            this.getJSON (url)
+            return this.getJSON (url)
                 .then (data => this.cart = data.contents);
             },
         toggleCartShow () {
@@ -56,6 +57,7 @@ const app = new Vue ({
                         } else {
                             find.quantity++;
                         }
+                        this.calcTotalSum();
                     } else {
                         throw new Error ('Server error adding item!');
                     }
@@ -74,21 +76,33 @@ const app = new Vue ({
                         } else {
                             this.cart.splice (this.cart.indexOf (find), 1);
                         }
+                        this.calcTotalSum();
                     } else {
                         throw new Error ('Server error removing item!')
                     }
             });
+        },
+        calcTotalSum () {
+            let totalSum = 0;
+            this.cart.forEach(element => {
+                totalSum += element.price * element.quantity;
+            });
+            this.totalSum = totalSum;
         },
     },
     computed: {
         getFilteredLength: function () {
             return (this.filtered != null) ? this.filtered.length : 0
         },
+        getCartItemsCount: function () {
+            return (this.cart != null) ? this.cart.length : 0
+        },
     },
     mounted () {
         this.getProducts (this.API_URL + '/catalogData.json')
-            .finally (() => this.filter());
-        this.getCart (this.API_URL + '/getBasket.json');
+            .finally (() => this.filter ());
+        this.getCart (this.API_URL + '/getBasket.json')
+            .finally (() => this.calcTotalSum ());
     },
 })
 

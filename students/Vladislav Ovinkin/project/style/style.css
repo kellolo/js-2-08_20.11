@@ -23,6 +23,7 @@ button:focus{
     border-radius: 5px;
     transition: all ease-in-out .4s;
     cursor: pointer;
+    position: relative;
 }
 .btn-cart:hover{
     background-color: transparent;
@@ -32,6 +33,22 @@ button:focus{
 .btn-cart, .logo{
     align-self: center;
 }
+
+.btn-cart-items-counter {
+    display: block;
+    position: absolute;
+    top: -15px;
+    left: 85px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /*.products {*/
 /*display: flex;*/
 /*justify-content: space-between;*/

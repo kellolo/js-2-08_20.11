@@ -17,8 +17,8 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
-                <button class="btn-cart" type="button">Корзина</button>
-                <div class="cart-block invisible">
+                <button class="btn-cart" type="button" @click="toggleCartShow">Корзина</button>
+                <div v-show="cartshow" class="cart-block">
                     <div class="cart-item" v-for="cartitem of cart" :data-product_id="cartitem.product_id">
                         <div class="product-bio">
                             <img :src="cartImage" alt="Some image">
@@ -38,6 +38,7 @@
         </header>
         <main>
             <div class="products">
+                <span v-if="getProductsLength == 0">Нет данных</span>
                 <div v-for="product of products">
                     <div class="product-item" :data-product_id="product.product_id">
                         <img :src="product.img" alt="Some img">

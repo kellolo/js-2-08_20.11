@@ -15,6 +15,8 @@ const app = new Vue ({
         cartImage: 'https://placehold.it/100x80',
         products: null,
         cart: null,
+        cartshow: false,
+        searchLine: '',
     },
     methods: {
         getJSON (url) {
@@ -28,10 +30,19 @@ const app = new Vue ({
         getCart (url) {
             this.getJSON (url)
                 .then (data => this.cart = data.contents);
-        }
+            },
+        toggleCartShow () {
+            this.cartshow = !this.cartshow;
+        },
     },
     computed: {
-
+        getProductsLength: function () {
+            if (this.products != null) {
+                return this.products.length;
+            } else {
+                return 0;
+            }
+        },
     },
     mounted () {
         this.getProducts (this.API_URL + '/catalogData.json');
@@ -39,10 +50,10 @@ const app = new Vue ({
     },
 })
 
-//кнопка скрытия и показа корзины
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
+// //кнопка скрытия и показа корзины
+// document.querySelector('.btn-cart').addEventListener('click', () => {
+//     document.querySelector('.cart-block').classList.toggle('invisible');
+// });
 
 // class List { // список
 //     // суперкласс для Каталога и Корзины

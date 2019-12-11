@@ -33,13 +33,13 @@
                                 <div class="wrap-calc">
                                     <p class="cart-count-prduct">count: {{ itemCart.count }}</p>
                                     <p class="cart-sum-product">amount: {{ itemCart.price*itemCart.count }}</p>
-                                    <input type="button" value="+" class="btn-product-item" @click="addProduct(itemCart.id, itemCart.name, itemCart.price)">
+                                    <input type="button" value="+" class="btn-product-item" @click="addProduct(itemCart.id, itemCart.name, itemCart.price, itemCart.count)">
                                     <input type="button" value="-" class="btn-delete-product" @click="subProductCart(itemCart.id)">
                                 </div>
                             </div>
 
                         </div>
-                        <h2 class="amount">Total amount: 0&#36;
+                        <h2 class="amount">Total amount: {{ objCart.amount }}&#36;
                             <input type="button" value="X" class="close-cart" @click="visibilityCart = !visibilityCart"></h2>
                     </div>
                 </div>
@@ -49,22 +49,22 @@
                     <div class="wrap-filter">
                         <h4>Filter</h4>
                         <div class="filter">
-                            from <input type="text" placeholder="1000" class="inp-filter"> - <input type="text" placeholder="100000000000" class="inp-filter">
-                            <button class="btn-filter">Go!</button>
+                            from <input type="text" placeholder="1000" class="inp-filter" v-model="filterStart"> - <input type="text" placeholder="100000000000" class="inp-filter" v-model="filterEnd">
+                            <button class="btn-filter" @click="filterProduct">Go!</button>
                         </div>
                     </div>
                     <div class="sort">
                         <h4>Sorting</h4>
-                        <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort" checked> in ascending order</p>
-                        <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort"> in descending order</p>
+                        <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort" ref="check_ask" @click="filterProduct" checked> in ascending order</p>
+                        <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort" ref="check_desc" @click="filterProduct"> in descending order</p>
                     </div>
                 </div>
                 <div class="wrap-product">
-                    <div class="product-item" v-for="itemProduct in arrItems">
+                    <div class="product-item" v-for="itemProduct in arrItemsDTO">
                         <img src="http://placehold.it/200x200" alt="img" class="img-product-item">
                         <p class="name-product-item">{{ itemProduct.name }}</p>
                         <p class="price-product-item">{{ itemProduct.price }} &#36;</p>
-                        <input type="button" value="BUY" class="btn-product-item" @click="addProduct(itemProduct.id, itemProduct.name, itemProduct.price)">
+                        <input type="button" value="BUY" class="btn-product-item" @click="addProduct(itemProduct.id, itemProduct.name, itemProduct.price, itemProduct.count)">
                     </div>
                 </div>
             </main>

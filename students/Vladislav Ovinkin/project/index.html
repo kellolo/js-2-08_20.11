@@ -12,8 +12,8 @@
             <div class="logo">E-shop</div>
             <div class="cart">
                 <form action="#" class="search-form">
-                    <input type="text" class="search-field">
-                    <button class="btn-search" type="submit">
+                    <input type="text" v-model="searchLine" class="search-field">
+                    <button class="btn-search" @click="filter" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -38,8 +38,8 @@
         </header>
         <main>
             <div class="products">
-                <span v-if="getProductsLength == 0">Нет данных</span>
-                <div v-for="product of products">
+                <span v-if="getFilteredLength == 0">Нет данных</span>
+                <div v-for="product of filtered">
                     <div class="product-item" :data-product_id="product.product_id">
                         <img :src="product.img" alt="Some img">
                         <div class="desc">

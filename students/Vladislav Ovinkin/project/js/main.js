@@ -13,6 +13,7 @@ const app = new Vue ({
     data: {
         API_URL: 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json',
         cartImage: 'https://placehold.it/100x80',
+        filtered: null,
         products: null,
         cart: null,
         cartshow: false,
@@ -24,7 +25,7 @@ const app = new Vue ({
                 .then (d => d.json());
         },
         getProducts (url) {
-            this.getJSON (url)
+            return this.getJSON (url)
                 .then (data => this.products = data);
         },
         getCart (url) {
@@ -34,18 +35,19 @@ const app = new Vue ({
         toggleCartShow () {
             this.cartshow = !this.cartshow;
         },
+        filter () {
+            const regexp = new RegExp (this.searchLine, 'i');
+            this.filtered = this.products.filter (product => regexp.test (product.product_name));
+        },
     },
     computed: {
-        getProductsLength: function () {
-            if (this.products != null) {
-                return this.products.length;
-            } else {
-                return 0;
-            }
+        getFilteredLength: function () {
+            return (this.filtered != null) ? this.filtered.length : 0
         },
     },
     mounted () {
-        this.getProducts (this.API_URL + '/catalogData.json');
+        this.getProducts (this.API_URL + '/catalogData.json')
+            .finally (() => this.filter());
         this.getCart (this.API_URL + '/getBasket.json');
     },
 })

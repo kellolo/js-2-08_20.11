@@ -1,7 +1,5 @@
 'use strict';
 
-// const cartImage = 'https://placehold.it/100x80';
-
 // const API_URL = 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json';
 // /catalogData.json //получить список товаров;
 // /getBasket.json //получить содержимое корзины;
@@ -13,7 +11,6 @@ const app = new Vue ({
     data: {
         API_URL: 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json',
         cartImage: 'https://placehold.it/100x80',
-        DTOarr: null,
         filtered: null,
         products: null,
         cart: null,
@@ -45,7 +42,6 @@ const app = new Vue ({
             this.getJSON (this.API_URL + '/addToBasket.json')
                 .then (answer => {return answer.result})
                 .then (result => {
-                    this.DTOarr = [];
                     if (result == 1) {
                         const id = +dataset.product_id;
                         const find = this.cart.find (element => element.product_id === id);
@@ -66,7 +62,22 @@ const app = new Vue ({
                 }); 
         },
         removeProduct () {
-            console.log (event.target.dataset.product_id);
+            const id = +event.target.dataset.product_id;
+            this.getJSON (this.API_URL + '/deleteFromBasket.json')
+                .then (answer => {return answer.result})
+                .then (result => {
+                    if (result == 1) {
+                        // const id = +event.target.dataset.product_id;
+                        const find = this.cart.find (element => element.product_id === id);
+                        if (find.quantity > 1) {
+                            find.quantity--;
+                        } else {
+                            this.cart.splice (this.cart.indexOf (find), 1);
+                        }
+                    } else {
+                        throw new Error ('Server error removing item!')
+                    }
+            });
         },
     },
     computed: {
@@ -80,11 +91,6 @@ const app = new Vue ({
         this.getCart (this.API_URL + '/getBasket.json');
     },
 })
-
-// //кнопка скрытия и показа корзины
-// document.querySelector('.btn-cart').addEventListener('click', () => {
-//     document.querySelector('.cart-block').classList.toggle('invisible');
-// });
 
 // class List { // список
 //     // суперкласс для Каталога и Корзины

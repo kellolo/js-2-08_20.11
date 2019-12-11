@@ -4,48 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Document</title>
 </head>
 
 <body>
-    <div class="container">
-        <header class="main-head">
-            <a href="#" class="logo">LOGO</a>
-            <nav class="site-nav">
-                <ul class="header-list">
-                    <li class="header-list-item"><a href="#" class="header-link-item">Main</a></li>
-                    <li class="header-list-item"><a href="#" class="header-link-item">About</a></li>
-                    <li class="header-list-item"><a href="contacts.html" class="header-link-item">Contacts</a></li>
-                </ul>
-            </nav>
-            <div class="cart">
-                <input type="button" value="Cart" class="btn-cart">
-                <div class="wrap-cart">
-                    <h2 class="amount">Total amount: 0&#36;
-                        <input type="button" value="X" class="close-cart"></h2>
-                </div>
-            </div>
-        </header>
-        <main class="main-content">
-            <div class="wrap-f">
-                <div class="wrap-filter">
-                    <h4>Filter</h4>
-                    <div class="filter">
-                        from <input type="text" placeholder="1000" class="inp-filter"> - <input type="text" placeholder="100000000000" class="inp-filter">
-                        <button class="btn-filter">Go!</button>
+    <div id="app">
+        <div class="container">
+            <header class="main-head">
+                <a href="#" class="logo">LOGO</a>
+                <nav class="site-nav">
+                    <ul class="header-list">
+                        <li class="header-list-item"><a href="#" class="header-link-item">Main</a></li>
+                        <li class="header-list-item"><a href="#" class="header-link-item">About</a></li>
+                        <li class="header-list-item"><a href="contacts.html" class="header-link-item">Contacts</a></li>
+                    </ul>
+                </nav>
+                <div class="cart">
+                    <input type="button" value="Cart" class="btn-cart" @click="visibilityCart = !visibilityCart">
+                    <div class="wrap-cart" :class="{'wrap-cart-vis': visibilityCart}">
+                        <div class="cartt" v-for="itemCart in arrCart">
+                            <div class="wrap-item-cart">
+                                <div class="wrap-desc">
+                                    <img src="http://placehold.it/75x75" alt="img">
+                                    <p class="cart-name-product">{{ itemCart.name }}</p>
+                                    <p class="cart-price-prduct">{{ itemCart.price }} &#36;</p>
+                                </div>
+                                <div class="wrap-calc">
+                                    <p class="cart-count-prduct">count: {{ itemCart.count }}</p>
+                                    <p class="cart-sum-product">amount: {{ itemCart.price*itemCart.count }}</p>
+                                    <input type="button" value="+" class="btn-product-item" @click="addProduct(itemCart.id, itemCart.name, itemCart.price)">
+                                    <input type="button" value="-" class="btn-delete-product" @click="subProductCart(itemCart.id)">
+                                </div>
+                            </div>
+
+                        </div>
+                        <h2 class="amount">Total amount: 0&#36;
+                            <input type="button" value="X" class="close-cart" @click="visibilityCart = !visibilityCart"></h2>
                     </div>
                 </div>
-                <div class="sort">
-                    <h4>Sorting</h4>
-                    <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort" checked> in ascending order</p>
-                    <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort"> in descending order</p>
+            </header>
+            <main class="main-content">
+                <div class="wrap-f">
+                    <div class="wrap-filter">
+                        <h4>Filter</h4>
+                        <div class="filter">
+                            from <input type="text" placeholder="1000" class="inp-filter"> - <input type="text" placeholder="100000000000" class="inp-filter">
+                            <button class="btn-filter">Go!</button>
+                        </div>
+                    </div>
+                    <div class="sort">
+                        <h4>Sorting</h4>
+                        <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort" checked> in ascending order</p>
+                        <p class="sort-p"><input type="radio" name="radio-sort" class="radio-sort"> in descending order</p>
+                    </div>
                 </div>
-            </div>
-            <div class="wrap-product">
-
-            </div>
-        </main>
-        <footer class="main footer"></footer>
+                <div class="wrap-product">
+                    <div class="product-item" v-for="itemProduct in arrItems">
+                        <img src="http://placehold.it/200x200" alt="img" class="img-product-item">
+                        <p class="name-product-item">{{ itemProduct.name }}</p>
+                        <p class="price-product-item">{{ itemProduct.price }} &#36;</p>
+                        <input type="button" value="BUY" class="btn-product-item" @click="addProduct(itemProduct.id, itemProduct.name, itemProduct.price)">
+                    </div>
+                </div>
+            </main>
+            <footer class="main footer"></footer>
+        </div>
     </div>
     <script src="js/cart.js"></script>
 </body>

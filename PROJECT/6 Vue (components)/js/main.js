@@ -19,6 +19,7 @@ let app = new Vue ({
         
     },
     mounted () {
+        console.log(this)
         // this.getJSON (FAKEAPI + this.catalogUrl)
         //     .then (data => this.products = data)
     },

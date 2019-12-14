@@ -67,6 +67,10 @@ img {
     padding: 15px
 }
 .cart{
+    display: flex;
+    justify-content: space-between;
+}
+.wrapper{
     position: relative;
 }
 .cart-block{
@@ -131,7 +135,7 @@ img {
     font-size: 0.5em;
 }
 .product-price{
-    margin-left: 150px;
+    margin-left: 30px;
 }
 .product-desc{
     max-width: 150px;
@@ -151,6 +155,7 @@ img {
     position: absolute;
     bottom: 5px;
     right: 0;
+    cursor: pointer;
 }
 .search-form{
     position: relative;

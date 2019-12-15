@@ -15,6 +15,7 @@ Vue.component ('cart', {
     },
     methods: {
         addProduct (product) {
+            this.$root.$refs.error.clearErrorData ();
             this.$parent.getJSON (this.addUrl)
                 .then (answer => {return answer.result})
                 .then (result => {
@@ -30,11 +31,13 @@ Vue.component ('cart', {
                         this.calcTotalSum();
                         this.$root.setCartItemsCount ();
                     } else {
-                        throw new Error ('Server error adding item!');
+                        // throw new Error ('Server error adding item!');
+                        this.$root.$refs.error.setErrorData (345, "товар не может быть добавлен в корзину");
                     }
                 }); 
         },
         removeProduct (product) {
+            this.$root.$refs.error.clearErrorData ();
             this.$parent.getJSON (this.delUrl)
                 .then (answer => {return answer.result})
                 .then (result => {
@@ -48,7 +51,8 @@ Vue.component ('cart', {
                         this.calcTotalSum();
                         this.$root.setCartItemsCount ();
                     } else {
-                        throw new Error ('Server error removing item!')
+                        // throw new Error ('Server error removing item!')
+                        this.$root.$refs.error.setErrorData (348, "товар не может удалён из корзины");
                     }
             });
         },

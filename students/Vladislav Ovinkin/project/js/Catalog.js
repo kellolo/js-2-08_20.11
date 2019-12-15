@@ -29,7 +29,7 @@ Vue.component ('catalog', {
     },
     template: `
         <div class="products">
-            <span v-if="!getFilteredLength()">Нет данных</span>
+            <div v-if="!getFilteredLength()">Нет данных</div>
             <catalog-item v-for="product of filtered" :el="product" :key="product.product_id"></catalog-item>
         </div>
     `,

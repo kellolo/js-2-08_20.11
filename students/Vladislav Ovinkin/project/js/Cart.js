@@ -50,16 +50,9 @@ Vue.component ('cart', {
                     }
             });
         },
-        getFilteredLength: function () {
-            return (this.filtered != null) ? this.filtered.length : 0
-        },
         getCart () {
             return this.$parent.getJSON (this.cartUrl)
                 .then (data => this.items = data.contents);
-        },
-        filter () {
-            const regexp = new RegExp (this.searchLine, 'i');
-            this.filtered = this.items.filter (product => regexp.test (product.product_name));
         },
         calcTotalSum () {
             let totalSum = 0;
@@ -79,8 +72,8 @@ Vue.component ('cart', {
     template: `
         <div class="cart-block" v-if="$parent.cartshow">
             <cart-item v-for="product of items" :img="cartImage" :el="product" :key="product.product_id"></cart-item>
-            <div v-show="getCartItemsCount > 0" class='cart-total'>Итого: $ {{ totalSum }}</div>
-            <div v-show="getCartItemsCount == 0">Корзине скучно без товаров :(</div>
+            <div v-show="getCartItemsCount() > 0" class='cart-total'>Итого: {{'$' + totalSum }}</div>
+            <div v-show="getCartItemsCount() == 0">Корзине скучно без товаров :(</div>
         </div>
     `,
     // components: {

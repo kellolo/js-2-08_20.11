@@ -28,6 +28,7 @@ Vue.component ('cart', {
                             find.quantity++;
                         }
                         this.calcTotalSum();
+                        this.$root.setCartItemsCount ();
                     } else {
                         throw new Error ('Server error adding item!');
                     }
@@ -45,6 +46,7 @@ Vue.component ('cart', {
                             this.items.splice (this.items.indexOf (find), 1);
                         }
                         this.calcTotalSum();
+                        this.$root.setCartItemsCount ();
                     } else {
                         throw new Error ('Server error removing item!')
                     }
@@ -67,7 +69,10 @@ Vue.component ('cart', {
     },
     mounted () {
         this.getCart (this.cartUrl)
-            .finally (() => this.calcTotalSum ());
+            .finally (() => {
+                this.calcTotalSum ();
+                this.$root.setCartItemsCount ();
+            });
     },
     template: `
         <div class="cart-block" v-if="$parent.cartshow">

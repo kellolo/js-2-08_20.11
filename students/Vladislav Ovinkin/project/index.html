@@ -19,7 +19,7 @@
                 </form>
                 <button class="btn-cart" type="button" @click="toggleCartShow">
                     Корзина
-                    <!-- <span v-show="getCartItemsCount > 0" class="btn-cart-items-counter">{{ getCartItemsCount }}</span> -->
+                    <span v-show="cartItemsCount > 0" class="btn-cart-items-counter">{{ cartItemsCount }}</span>
                 </button>
                 <cart ref="cartComp"></cart>
             </div>

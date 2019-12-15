@@ -5,6 +5,7 @@
 const app = new Vue ({
     el: '#app',
     data: {
+        cartItemsCount: 0,
         cartshow: false,
         searchLine: '',
     },
@@ -15,6 +16,9 @@ const app = new Vue ({
         },
         toggleCartShow () {
             this.cartshow = !this.cartshow;
+        },
+        setCartItemsCount () {
+            this.cartItemsCount = this.$root.$refs.cartComp.getCartItemsCount ();
         },
     },
     // components: {

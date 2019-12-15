@@ -8,7 +8,7 @@ Vue.component ('catalog-item', {
             <div class="desc">
                 <h3>{{ el.product_name }}</h3>
                 <p>{{ el.price }}$</p>
-                <button class="buy-btn" @click="$parent.addProduct (el)">Купить</button>
+                <button class="buy-btn" @click="$root.$refs.cartComp.addProduct (el)">Купить</button>
             </div>
         </div>
     `,

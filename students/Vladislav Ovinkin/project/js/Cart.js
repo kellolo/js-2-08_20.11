@@ -15,7 +15,6 @@ Vue.component ('cart', {
     },
     methods: {
         addProduct (product) {
-            console.log ('addProduct');
             this.$parent.getJSON (this.addUrl)
                 .then (answer => {return answer.result})
                 .then (result => {
@@ -34,18 +33,16 @@ Vue.component ('cart', {
                     }
                 }); 
         },
-        removeProduct () {
-            const id = +event.target.dataset.product_id;
-            this.getJSON (this.API_URL + '/deleteFromBasket.json')
+        removeProduct (product) {
+            this.$parent.getJSON (this.delUrl)
                 .then (answer => {return answer.result})
                 .then (result => {
                     if (result == 1) {
-                        // const id = +event.target.dataset.product_id;
-                        const find = this.cart.find (element => element.product_id === id);
+                        const find = this.items.find (element => element.product_id === product.product_id);
                         if (find.quantity > 1) {
                             find.quantity--;
                         } else {
-                            this.cart.splice (this.cart.indexOf (find), 1);
+                            this.items.splice (this.items.indexOf (find), 1);
                         }
                         this.calcTotalSum();
                     } else {

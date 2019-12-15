@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header class="main-head">
+            <a href="#" class="logo">LOGO</a>
+            <nav class="site-nav">
+                <ul class="header-list">
+                    <li class="header-list-item"><a href="index.html" class="header-link-item">Main</a></li>
+                    <li class="header-list-item"><a href="#" class="header-link-item">About</a></li>
+                    <li class="header-list-item"><a href="contacts.html" class="header-link-item">Contacts</a></li>
+                </ul>
+            </nav>
+            <div class="cart">
+                <input type="button" value="Cart" class="btn-cart">
+                <div class="wrap-cart">
+                    <h2 class="amount">Total amount: 0&#36;
+                        <input type="button" value="X" class="close-cart"></h2>
+                </div>
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="wrap-contact">
+                <p class="field_text"><input type="text" name="name" class="inp-txt"> имя</p>
+                <p class="field_text"><input type="text" name="phone" class="inp-txt"> телефон</p>
+                <p class="field_text"><input type="text" name="email" class="inp-txt"> e-mail</p>
+                <p class="field_text"><textarea id="" cols="35" rows="5" class="inp-txt" name="text"></textarea> сообщение</p>
+                <button class="btn-contact btn-filter">ГОУ</button>
+            </div>
+            <div class="err-mes"></div>
+        </main>
+    </div>
+    <script src="js/contact.js"></script>
+</body>
+
+</html>

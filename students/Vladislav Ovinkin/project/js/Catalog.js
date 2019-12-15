@@ -18,8 +18,8 @@ Vue.component ('catalog', {
             return this.$parent.getJSON (url)
                 .then (data => this.items = data);
         },
-        filter () {
-            const regexp = new RegExp (this.searchLine, 'i');
+        filter (searchValue = "") {
+            const regexp = new RegExp (searchValue, 'i');
             this.filtered = this.items.filter (product => regexp.test (product.product_name));
         },
     },
@@ -30,7 +30,7 @@ Vue.component ('catalog', {
     template: `
         <div class="products">
             <span v-if="!getFilteredLength()">Нет данных</span>
-            <catalog-item v-for="product of items" :el="product" :key="product.product_id"></catalog-item>
+            <catalog-item v-for="product of filtered" :el="product" :key="product.product_id"></catalog-item>
         </div>
     `,
     // components: {

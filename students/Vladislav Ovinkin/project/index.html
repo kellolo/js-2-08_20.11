@@ -13,7 +13,7 @@
             <div class="cart">
                 <form action="#" class="search-form">
                     <input type="text" v-model="searchLine" class="search-field">
-                    <button class="btn-search" type="submit">
+                    <button class="btn-search" @click="filterCatalog" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -25,7 +25,7 @@
             </div>
         </header>
         <main>
-            <catalog></catalog>
+            <catalog ref="catalogComp"></catalog>
         </main>
     </div>
 

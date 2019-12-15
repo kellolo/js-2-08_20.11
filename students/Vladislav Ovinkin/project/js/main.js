@@ -20,6 +20,9 @@ const app = new Vue ({
         setCartItemsCount () {
             this.cartItemsCount = this.$root.$refs.cartComp.getCartItemsCount ();
         },
+        filterCatalog () {
+            this.$root.$refs.catalogComp.filter (this.searchLine);
+        }
     },
     // components: {
     //     'catalog': catalog,

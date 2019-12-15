@@ -11,7 +11,7 @@ Vue.component ('cart', {
             let find = this.cart.find (element => element.id === product.id)
             if (find) {
                 find.quantity++
-                this.$parent.putJSON ('/api/cart', find).then (answer => {
+                this.$parent.putJSON (this.cartUrl, find).then (answer => {
                     !answer.ok ? find.quantity-- : null
                 })
             } else {

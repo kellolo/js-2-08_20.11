@@ -6,7 +6,7 @@ const app  = express ()
 app.use (express.json ())
 app.use ('/', express.static ('public'))
 
-const cartApi = '/api/cart'
+const cartCore = require ('./cartModule')
 
 app.get ('/api/catalog', (req, res) => {
     fs.readFile('server/db/catalog.json', 'utf-8', (err, data) => {
@@ -18,7 +18,7 @@ app.get ('/api/catalog', (req, res) => {
     })
 })
 
-app.get (cartApi, (req, res) => {
+app.get (cartCore.cartApi, (req, res) => {
     fs.readFile ('server/db/cart2.json', 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))
@@ -28,9 +28,7 @@ app.get (cartApi, (req, res) => {
     })
 })
 
-const cartCore = require ('./cartModule')
-
-app.post (cartApi, (req, res) => {
+app.post (cartCore.cartApi, (req, res) => {
     fs.readFile (cartCore.cartFile, 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))
@@ -47,7 +45,7 @@ app.post (cartApi, (req, res) => {
     })
 })
 
-app.put (cartApi, (req, res) => {
+app.put (cartCore.cartApi, (req, res) => {
     fs.readFile (cartCore.cartFile, 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))
@@ -64,7 +62,7 @@ app.put (cartApi, (req, res) => {
     })
 })
 
-app.delete(cartApi, (req, res) => {
+app.delete(cartCore.cartApi, (req, res) => {
     fs.readFile (cartCore.cartFile, 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))

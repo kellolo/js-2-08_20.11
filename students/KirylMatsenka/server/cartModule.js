@@ -1,4 +1,5 @@
 const cartFile = 'server/db/cart2.json'
+const cartApi = '/api/cart'
 
 let add = (cart, req) => {
     cart.contents.push (req.body)
@@ -23,5 +24,6 @@ module.exports = {
     add,
     put,
     del,
-    cartFile
+    cartFile,
+    cartApi
 }

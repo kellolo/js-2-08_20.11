@@ -13,38 +13,19 @@
             <div class="cart">
                 <form action="#" class="search-form">
                     <input type="text" v-model="searchLine" class="search-field">
-                    <button class="btn-search" @click="filter" type="submit">
+                    <button class="btn-search" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
                 <button class="btn-cart" type="button" @click="toggleCartShow">
                     Корзина
-                    <span v-show="getCartItemsCount > 0" class="btn-cart-items-counter">{{ getCartItemsCount }}</span>
+                    <!-- <span v-show="getCartItemsCount > 0" class="btn-cart-items-counter">{{ getCartItemsCount }}</span> -->
                 </button>
-                <div v-show="cartshow" class="cart-block">
-                    <div class="cart-item" v-for="cartitem of cart" :data-product_id="cartitem.product_id">
-                        <div class="product-bio">
-                            <img :src="cartImage" alt="Some image">
-                            <div class="product-desc">
-                                <p class="product-title">{{ cartitem.product_name }}</p>
-                                <p class="product-quantity">Quantity: {{ cartitem.quantity }}</p>
-                                <p class="product-single-price">${{ cartitem.price }} each</p>
-                            </div>
-                        </div>
-                        <div class="right-block">
-                            <p class="product-price">${{ cartitem.quantity * cartitem.price }}</p>
-                            <button class="del-btn"
-                                @click="removeProduct"
-                                :data-product_id="cartitem.product_id">&times;</button>
-                        </div>
-                    </div>
-                    <div v-show="getCartItemsCount > 0" class='cart-total'>Итого: ${{ totalSum }}</div>
-                    <div v-show="getCartItemsCount == 0">Корзине скучно без товаров :(</div>
-                </div>
+                <cart></cart>
             </div>
         </header>
         <main>
-            <catalog :items="products"></catalog=>
+            <catalog></catalog=>
         </main>
     </div>
 

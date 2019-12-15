@@ -1,8 +1,13 @@
 export default Vue.component('catalog-item', {
-  props: ['img', 'el'],
+  data() {
+    return {
+      imgDefault: 'https://placehold.it/200x150',
+    }
+  },
+  props: ['el'],
   template: `
     <div class="product-item">
-      <img :src="img" alt="Some img">
+      <img :src="imgDefault" alt="Some img">
       <div class="desc">
           <h3>{{ el }}</h3>
           <p>{{ el }} $</p>

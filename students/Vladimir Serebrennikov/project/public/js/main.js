@@ -9,7 +9,7 @@ class Product {
         this.img = product.img || image
         this.price = product.price
     }
-    render () {
+    render() {
         return `<div class="product-item" data-id="${this.id_product}">
                     <img src="${this.img}" alt="Some img">
                     <div class="desc">

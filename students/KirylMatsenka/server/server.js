@@ -7,6 +7,7 @@ app.use (express.json ())
 app.use ('/', express.static ('public'))
 
 const cartCore = require ('./cartModule')
+const logCore = require ('./logger')
 
 app.get ('/api/catalog', (req, res) => {
     fs.readFile('server/db/catalog.json', 'utf-8', (err, data) => {
@@ -39,6 +40,7 @@ app.post (cartCore.cartApi, (req, res) => {
                     res.sendStatus (500, JSON.stringify ({result: 0}))
                 } else {
                     res.sendStatus (200, JSON.stringify ({result: 1}))
+                    logCore.log (req)
                 }
             })
         }
@@ -56,6 +58,7 @@ app.put (cartCore.cartApi, (req, res) => {
                     res.sendStatus (500, JSON.stringify ({result: 0}))
                 } else {
                     res.sendStatus (200, JSON.stringify ({result: 1}))
+                    logCore.log (req)
                 }
             })
         }
@@ -73,6 +76,7 @@ app.delete(cartCore.cartApi, (req, res) => {
                     res.sendStatus (500, JSON.stringify ({result: 0}))
                 } else {
                     res.sendStatus (200, JSON.stringify ({result: 1}))
+                    logCore.log (req)
                 }
             })
         }

@@ -1,3 +1,5 @@
+import {makeGETRequest} from './connectLib.js'
+
 export default Vue.component('catalog', {
   data() {
     return {
@@ -5,17 +7,18 @@ export default Vue.component('catalog', {
       catalogUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
     }
   },
-  methods: {
-    addProduct (product) {
-      console.log (product.product_name)
-    }
-  },
-  mounted(){
-
+  mounted() {
+    makeGETRequest(this.catalogUrl)
+    .then((data) => {
+      this.products = JSON.parse(data)
+    })
+    .catch((err) => {
+        console.log(err)
+    });
   },
   template: `
-    <div>catalog
-      <catalog-item v-for="items of products" :el="items" :key="items.id_product"></catalog-item>
+    <div class="products">
+      <catalog-item v-for="item of products" :el="item" :key="item.id_product"></catalog-item>
     </div>
   `,
 });

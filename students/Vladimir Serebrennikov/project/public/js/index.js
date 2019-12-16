@@ -3,6 +3,7 @@ import cartItem from './CartItem.js'
 import catalog from './Catalog.js'
 import catalogItem from './CatalogItem.js'
 
+
 let app = new Vue({
   el: "#app",
   data: {
@@ -12,4 +13,8 @@ let app = new Vue({
   }
 })
 
-console.log(cartItem)
+document.querySelector('.btn-cart').addEventListener('click', () => {
+  document.querySelector('.cart-block').classList.toggle('invisible');
+});
+
+console.log(cart)

@@ -1,22 +1,15 @@
+import {makeGETRequest} from './connectLib.js'
+
 export default Vue.component('catalog-item', {
   data() {
     return {
       imgDefault: 'https://placehold.it/200x150',
+      cartUrl: '/api/cart',
     }
   },
   props: ['el'],
   methods: {
-    addProduct(target) {
-      console.log(target)
-      // let findItemInCart = this.contentCart.find( el => el.id_product == target.dataset.id_product)
-      // let newItem = catalog.products.find( el => el.id_product == target.dataset.id_product)
 
-      // if (!findItemInCart) {
-      //     this.contentCart.push( new CartItem(newItem) )
-      // } else {
-      //     findItemInCart.quantity++
-      // }
-    },
   },
   template: `
     <div class="product-item">
@@ -24,8 +17,8 @@ export default Vue.component('catalog-item', {
       <div class="desc">
           <h3>{{ el.product_name }}</h3>
           <p>{{ el.price }} $</p>
-          <button class="buy-btn" @click="addProduct(el)">Купить</button>
+          <button class="buy-btn" @click="$root.$refs.cartcomp.addProduct(el)">Купить</button>
       </div>
     </div>
-  `,
+  `
 });

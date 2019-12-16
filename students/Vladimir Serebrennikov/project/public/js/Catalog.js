@@ -4,7 +4,7 @@ export default Vue.component('catalog', {
   data() {
     return {
       products: [],
-      catalogUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/catalogData.json'
+      catalogUrl: '/api/catalog'
     }
   },
   mounted() {

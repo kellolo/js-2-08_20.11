@@ -1,4 +1,3 @@
-
 const express = require('express');
 const fs = require('fs');
 const cart = require('./cartRouter');
@@ -30,22 +29,23 @@ app.get('/api/cart',(req, res) => {
 
 const cartCore = require('./cart')
 
-app.post('/api/cart',(req, res) => {
+app.post('/api/cart', (req, res) => {
     let file = 'server/db/userCart.json'
-    fs.readFile(file, 'utf-8',(err, data) => {
+    console.log(req.body)
+    fs.readFile(file, 'utf-8', (err, data) => {
         if(err) {
             res.sendStatus(404, JSON.stringify({result: 0}))
         } else {
             let oldCart = JSON.parse(data)
+            // console.log(oldCart)
             let newCart = cartCore.add(oldCart, req)
             fs.writeFile(file, newCart,(err) => {
                 if(err) {
                     res.sendStatus(500, JSON.stringify({result: 0}))
                 } else {
-                    res.sendStatus(JSON.stringify({result: 1}))
+                    res.send(JSON.stringify(newCart))
                 }
             })
-            //res.send(data)
         }
     })
 }) 

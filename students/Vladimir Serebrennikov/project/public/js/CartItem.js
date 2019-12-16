@@ -5,17 +5,6 @@ export default Vue.component('cart-item', {
     }
   },
   props: ['el'],
-  methods: {
-    removeProduct(target) {
-      console.log(target)
-      // let find = this.contentCart.find (el => el.id_product == target.dataset.id_product)
-      if (target.quantity > 1) {
-        target.quantity--;
-      } else {
-          this.contentCart.splice(this.contentCart.indexOf(find), 1)
-      }
-    }
-  },
   template: `
     <div class="cart-item">
       <div class="product-bio">

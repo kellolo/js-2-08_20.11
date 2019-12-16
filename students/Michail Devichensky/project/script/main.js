@@ -1,143 +1,221 @@
 
 const cartImage = 'https://placehold.it/100x80'
 const image = 'https://placehold.it/200x150'
-const FAKEAPI = 'https://raw.githubusercontent.com/invector4ik002/myJSON/master'
-class list {// список
-    // debugger
-    constructor(url, container) {
-        this.container = container
-        this.url = url
-        // общее
-        this.items = [] // массив хранения активных обьектов
-        this.DTOarr = []// массив для получения данных
-        this._init()//метод инициализации "_" методы для внутренней обработки внутри обьектов
+// const FAKEAPI = 'https://raw.githubusercontent.com/invector4ik002/myJSON/master'
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
+//пилим босса
+const app = new Vue({
+   el: '#app',
+    data: {
+    //ProductsComponent <= cartImage:`https://placehold.it/100x80`,//картинка товара в корзинке.
+    //ProductsComponent <= image:`https://placehold.it/200x150`,//картинка товара в каталоге.
+    //ProductsComponent <= catalogUrl:`/catalogData.json`,//ссылка на url для каталога.
+    cartUrl:`/getBasket.json`,//ссылка для url для корзинки.
+    //ProductsComponent <=DTOarr:[],//фокус массив для каталога.
+    //ProductsComponent <= items:[],//фокус массив для перенесенных.
+    //ProductsComponent <= filtered:[],//фокус массив после поисков
+    //    userSearch:'',//странная херня
+    //ProductsComponent <= shoeCart: false,//метод инвизибЫл ))
+    },
+    methods: {//методы Vue
+        getJSON(url){//первая функция это получение и обработка данных с сервера
+            return fetch(url)//собственно метод
+               .then(d => d.json())//получили обработали в джинсон
+               .catch(error => console.log(error))//упал сервак держи
+        },
     }
-    _init() {
-        return false // метод заглушка которая позволяет переоприделить его в других классах при наследовании
-    }
-    getJSON(url) { //аформление запросов 
-        return fetch(url)
-        .then(data => data.json())
+})
+        // addProduct(product){
+        //     this.getJSON(`${API}/addToBasket.json`)
+        //     .then(data => {
+        //         if(data.d){
+        //             let find = this.items.find(el => el.id_product === product.id_product);
+        //             if(find){
+        //                 find.quantity++;
+        //             }else{
+        //                 let prod = Object.assign({quantity: 1},product);
+        //                 this.items.push(prod);
+        //             }
+        //         }else{
+        //             console.log('error');
+        //         }
+        //     })
+        // },
+        // remove(product){
+        //     this.getJSON(`${API}/deleteFromBasket.json`)
+        //     .then(data => {
+        //         if(data.d){
+        //             if(product.quantity > 1){
+        //                 product.quantity--;
+        //             }else{
+        //                 this.items.splice(this.items.indexOf(product), 1)
+        //             }
+        //         }else{
+        //             console.log('error');
+        //         }
+        //     })
+        // }
+    // },
+    // mounted(){
+    //    this.getJSON(`${API + this.cartUrl}`)
+    //     .then(data => {
+    //        for(let el of data.contents){
+    //            this.items.push(el)
+    //        }
+    //     });
+    //    this.getJSON(`${API + this.catalogUrl}`)
+    //     .then(data => {
+    //        for(let el of data){
+    //            this.products.push(el);
+    //        }
+    //     });
+    //     this.getJSON(`getProducts.json`)
+    //      .then(data => {
+    //          for(let el of data){
+    //              this.products.push(el);
+    //          }
+    //      })
+    // }
+// })
+
+
+
+// class list {// список
+//     // debugger
+//     constructor(url, container) {
+//         this.container = container
+//         this.url = url
+//         // общее
+//         this.items = [] // массив хранения активных обьектов
+//         this.DTOarr = []// массив для получения данных
+//         this._init()//метод инициализации "_" методы для внутренней обработки внутри обьектов
+//     }
+//     _init() {
+//         return false // метод заглушка которая позволяет переоприделить его в других классах при наследовании
+//     }
+//     getJSON(url) { //аформление запросов 
+//         return fetch(url)
+//         .then(data => data.json())
             
-    }
-    render() {
-        const block = document.querySelector(this.container)
-        this.DTOarr.forEach(elem => {
-            let item = new Lists[this.constructor.name](elem)
-            this.items.push(item)
-            block.insertAdjacentHTML('beforeend', item.render())
-        })
-    }
-    fiter() {
-        // потом
-    }
+//     }
+//     render() {
+//         const block = document.querySelector(this.container)
+//         this.DTOarr.forEach(elem => {
+//             let item = new Lists[this.constructor.name](elem)
+//             this.items.push(item)
+//             block.insertAdjacentHTML('beforeend', item.render())
+//         })
+//     }
+//     fiter() {
+//         // потом
+//     }
 
-}
+// }
 //супер класс для ProductItem и CartItem
-class listItem {// эл-т списка   
-    constructor(elem, img = image) {
-        this.product_name = elem.product_name
-        this.id_product = elem.id_product
-        this.img = img
-        this.price = elem.price
-    }
-    render() {
-        // debugger
-        return `<div class="product-item" data-id="${this.id_product}">
-                 <img src="${this.img}" alt="Some img">
-                    <div class="desc">
-                        <h3>${this.product_name}</h3>
-                        <p>${this.price} $</p>
-                        <button class="buy-btn" 
-                        data-id="${this.id_product}"
-                        data-title="${this.product_name}"
-                        data-image="${this.img}"
-                        data-price="${this.price}">Купить</button>
-                    </div>
-                </div>` 
-    }
-}
+// class listItem {// эл-т списка   
+//     constructor(elem, img = image) {
+//         this.product_name = elem.product_name
+//         this.id_product = elem.id_product
+//         this.img = img
+//         this.price = elem.price
+//     }
+//     render() {
+//         // debugger
+//         return `<div class="product-item" data-id="${this.id_product}">
+//                  <img src="${this.img}" alt="Some img">
+//                     <div class="desc">
+//                         <h3>${this.product_name}</h3>
+//                         <p>${this.price} $</p>
+//                         <button class="buy-btn" 
+//                         data-id="${this.id_product}"
+//                         data-title="${this.product_name}"
+//                         data-image="${this.img}"
+//                         data-price="${this.price}">Купить</button>
+//                     </div>
+//                 </div>` 
+//     }
+// }
 
-class Productslist extends list {
-    constructor(cart, url = '/myJSON.json', container = '.products') {
-      super(url, container)
-      this.cart = cart
-    }
-    _init() {
-        this.getJSON(FAKEAPI + this.url) 
-           .then(data => {this.DTOarr = data})     
-           .finally(() => {
-               this.render()
-            })
-        }
-    }
-    // let cartblock = new Cartlist
+// class Productslist extends list {
+//     constructor(cart, url = '/myJSON.json', container = '.products') {
+//       super(url, container)
+//       this.cart = cart
+//     }
+//     _init() {
+//         this.getJSON(FAKEAPI + this.url) 
+//            .then(data => {this.DTOarr = data})     
+//            .finally(() => {
+//                this.render()
+//             })
+//         }
+//     }
+//     // let cartblock = new Cartlist
     
     
-class Cartlist extends list {
-    constructor(url = '/getBasket.json', container = '.cart-block') {
-        super(url, container)
-    }
-    _init() {
-        this.getJSON(FAKEAPI + this.url)
-        .then(data => {this.DTOarr = data.contents})
-        .finally(() => { 
-            this.render()
-        })
-    }
-}
+// class Cartlist extends list {
+//     constructor(url = '/getBasket.json', container = '.cart-block') {
+//         super(url, container)
+//     }
+//     _init() {
+//         this.getJSON(FAKEAPI + this.url)
+//         .then(data => {this.DTOarr = data.contents})
+//         .finally(() => { 
+//             this.render()
+//         })
+//     }
+// }
 
-let cart = new Cartlist()
-let products = new Productslist(cart)
+// let cart = new Cartlist()
+// let products = new Productslist(cart)
 
 
-class ProductItem extends listItem {
+// class ProductItem extends listItem {
 
-}
+// }
 
-class CartItem extends listItem {
-   constructor(elem, img = cartImage) {
-      super(elem, img)
-      this.quantity = elem.quantity
-   }
-   render() {
-       return `<div class="cart-item" data-id="${this.id_product}">
-                <div class="product-bio">
-                    <img src="${this.img}" alt="Some image">
-                    <div class="product-desc">
-                        <p class="product-title">${this.product_name}</p>
-                        <p class="product-quantity">Quantity: ${this.quantity}</p>
-                        <p class="product-single-price">$${this.price} each</p>
-                    </div>
-                </div>
-                <div class="right-block">
-                    <p class="product-price">$${this.quantity * this.price}</p>
-                    <button class="del-btn" data-id="${this.id_product}">&times;</button>
-                </div>
-            </div>`
-   }
-} 
+// class CartItem extends listItem {
+//    constructor(elem, img = cartImage) {
+//       super(elem, img)
+//       this.quantity = elem.quantity
+//    }
+//    render() {
+//        return `<div class="cart-item" data-id="${this.id_product}">
+//                 <div class="product-bio">
+//                     <img src="${this.img}" alt="Some image">
+//                     <div class="product-desc">
+//                         <p class="product-title">${this.product_name}</p>
+//                         <p class="product-quantity">Quantity: ${this.quantity}</p>
+//                         <p class="product-single-price">$${this.price} each</p>
+//                     </div>
+//                 </div>
+//                 <div class="right-block">
+//                     <p class="product-price">$${this.quantity * this.price}</p>
+//                     <button class="del-btn" data-id="${this.id_product}">&times;</button>
+//                 </div>
+//             </div>`
+//    }
+// } 
 
-const Lists = {
-    Productslist: ProductItem,
-    Cartlist: CartItem
-}
+// const Lists = {
+//     Productslist: ProductItem,
+//     Cartlist: CartItem
+// }
 
-document.querySelector('.btn-cart').addEventListener('click', () => {
-    document.querySelector('.cart-block').classList.toggle('invisible');
-});
-//кнопки удаления товара (добавляется один раз)
-document.querySelector('.cart-block').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('del-btn')) {
-        removeProduct (evt.target);
-    }
-})
-//кнопки покупки товара (добавляется один раз)
-document.querySelector('.products').addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains ('buy-btn')) {
-        addProduct (evt.target);
-    }
-})
+// document.querySelector('.btn-cart').addEventListener('click', () => {
+//     document.querySelector('.cart-block').classList.toggle('invisible');
+// });
+// //кнопки удаления товара (добавляется один раз)
+// document.querySelector('.cart-block').addEventListener ('click', (evt) => {
+//     if (evt.target.classList.contains ('del-btn')) {
+//         removeProduct (evt.target);
+//     }
+// })
+// //кнопки покупки товара (добавляется один раз)
+// document.querySelector('.products').addEventListener ('click', (evt) => {
+//     if (evt.target.classList.contains ('buy-btn')) {
+//         addProduct (evt.target);
+//     }
+// })
 // let userCart = [];
 
 // class Product {

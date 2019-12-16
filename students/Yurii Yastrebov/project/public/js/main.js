@@ -2,11 +2,11 @@ let app = new Vue({
     el: '#app',
     data: {
         urlProducts: 'https://raw.githubusercontent.com/netproblemmm/js-2-08_20.11/master/students/Yurii%20Yastrebov/project/products.json',
-        cart: [],
-        isVisibleCart: false,
-        filteredProducts: [],
         products: [],
-        cartImage: 'https://placehold.it/100x80',
+        cartItems: [],
+        imgCart: 'https://placehold.it/100x80',
+        isVisibleCart: false,
+        filteredProducts: []
     },
     methods: {
         showCart() {
@@ -15,6 +15,20 @@ let app = new Vue({
         getJSON(url) {
             return fetch(url)
                 .then(d => d.json ())
+        },
+        postJSON(url, obj) {
+            return fetch(url, {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(obj)
+            })
+                .then(d => d.json ())
+        },
+        putJSON(url) {
+
+        },
+        deleteJSON(url) {
+
         },
         filterProducts() {   
             if (this.products != null)

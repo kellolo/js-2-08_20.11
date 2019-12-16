@@ -8,7 +8,7 @@ Vue.component('catalog', {
         }
     },
     mounted() {
-        this.$parent.getJSON(this.urlProducts)
+        this.$parent.getJSON('api/catalog')
         .then(data => this.items = data)
     },
     template: `

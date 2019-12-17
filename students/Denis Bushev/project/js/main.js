@@ -151,63 +151,73 @@
 //     }
 // })
 
-let list = new Vue({
+// let list = new Vue({
+//     el: '#app',
+//     data: {
+//         data_url: 'https://raw.githubusercontent.com/Jestric-sys/js-data-item/master',
+//         image: 'https://placehold.it/200x150',
+//         cartImage: 'https://placehold.it/100x80',
+//         products: [],
+//         filterProducts: [],
+//         cart: [],
+//         searchLine: '',
+//         cartVisible: false,
+//     },
+//     methods: {
+//         getJSON(url) {
+//             return fetch(url)
+//                 .then(d => d.json())
+//         },
+//         FilterGoods() {
+//             this.filterProducts = this.products.filter(el => (el.title = this.searchLine))
+//         },
+//         getProducts() {
+//             this.getJSON(this.data_url + '/dataCatalog.json')
+//                 .then(data => {
+//                     this.products = data
+//                 })
+//         },
+//         getCart() {
+//             this.getJSON(this.data_url + '/dataBasket.json')
+//                 .then(data => {
+//                     this.cart = data
+//                 })
+//         },
+//         getBtn() {
+//             this.cartVisible = !this.cartVisible
+//         },
+//         addProduct() {
+//             this.getJSON(this.data_url + '/addBasket.json')
+//             .then(data => {
+//                 if(data.result == 1) {
+//                     this.getCart()
+//                 }
+//             })
+//         },
+//         removeProduct() {
+//             this.getJSON(this.data_url + '/deleteBasket.json')
+//             .then(data => {
+//                 if(data.result == 1) {
+//                     this.getCart()
+//                 }
+//             })
+//         }
+//     },
+//     mounted() {
+//         this.getProducts()
+//     }
+// })
+
+let app = new Vue({
     el: '#app',
-    data: {
-        data_url: 'https://raw.githubusercontent.com/Jestric-sys/js-data-item/master',
-        image: 'https://placehold.it/200x150',
-        cartImage: 'https://placehold.it/100x80',
-        products: [],
-        filterProducts: [],
-        cart: [],
-        searchLine: '',
-        cartVisible: false,
-    },
     methods: {
         getJSON(url) {
             return fetch(url)
-                .then(d => d.json())
-        },
-        FilterGoods() {
-            this.filterProducts = this.products.filter(el => (el.title = this.searchLine))
-        },
-        getProducts() {
-            this.getJSON(this.data_url + '/dataCatalog.json')
-                .then(data => {
-                    this.products = data
-                })
-        },
-        getCart() {
-            this.getJSON(this.data_url + '/dataBasket.json')
-                .then(data => {
-                    this.cart = data
-                })
-        },
-        getBtn() {
-            this.cartVisible = !this.cartVisible
-        },
-        addProduct() {
-            this.getJSON(this.data_url + '/addBasket.json')
-            .then(data => {
-                if(data.result == 1) {
-                    this.getCart()
-                }
-            })
-        },
-        removeProduct() {
-            this.getJSON(this.data_url + '/deleteBasket.json')
-            .then(data => {
-                if(data.result == 1) {
-                    this.getCart()
-                }
-            })
+                .then (d => d.json())
+                .catch(() => console.log('error loading data'))
         }
-    },
-    mounted() {
-        this.getProducts()
     }
 })
-
 
 //создание массива объектов - имитация загрузки данных с сервера
 // function fetchData() {

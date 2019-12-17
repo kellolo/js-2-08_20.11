@@ -14,6 +14,15 @@ const app = new Vue ({
             return fetch (url)
                 .then (d => d.json());
         },
+        postJSON (url) {
+
+        },
+        putJSON (url) {
+
+        },
+        deleteJSON (url) {
+
+        },
         toggleCartShow () {
             this.cartshow = !this.cartshow;
         },

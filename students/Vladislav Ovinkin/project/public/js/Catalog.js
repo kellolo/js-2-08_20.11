@@ -24,7 +24,7 @@ Vue.component ('catalog', {
         },
     },
     mounted () {
-        this.getProducts (this.catalogUrl)
+        this.getProducts ('/api/catalog')
             .finally (() => this.filter ());
     },
     template: `

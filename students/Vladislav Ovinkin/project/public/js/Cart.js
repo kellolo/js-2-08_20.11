@@ -16,26 +16,32 @@ Vue.component ('cart', {
     methods: {
         addProduct (product) {
             this.$root.$refs.error.clearErrorData ();
-            this.$parent.getJSON (this.addUrl)
-                .then (answer => {return answer.result})
-                .then (result => {
-                    if (result == 1) {
-                        const find = this.items.find (element => element.product_id === product.product_id);
-                        if (!find) {
+            const find = this.items.find (element => element.product_id === product.product_id);
+    
+            if (!find) {
+                this.$parent.postJSON (this.addUrl)
+                    .then (answer => { 
+                        if (answer.result) {
                             let newItem = Object.assign ({}, product, {quantity: 1});
                             delete newItem.img;
                             this.items.push (newItem);
-                        } else {
-                            find.quantity++;
                         }
-                        this.calcTotalSum();
-                        this.$root.setCartItemsCount ();
-                    } else {
-                        // throw new Error ('Server error adding item!');
-                        this.$root.$refs.error.setErrorData (345, "товар не может быть добавлен в корзину");
-                    }
-                }); 
+                    })
+            } else {
+                this.$parent.putJSON (this.addUrl)
+                    .then (answer => { 
+                        if (answer.result) {
+                            // find.quantity++;
+                        }
+                })
+            }
+            this.calcTotalSum();
+            this.$root.setCartItemsCount ();
         },
+        
+//                 // throw new Error ('Server error adding item!');
+//                 this.$root.$refs.error.setErrorData (345, "товар не может быть добавлен в корзину");
+        
         removeProduct (product) {
             this.$root.$refs.error.clearErrorData ();
             this.$parent.getJSON (this.delUrl)
@@ -56,8 +62,8 @@ Vue.component ('cart', {
                     }
             });
         },
-        getCart () {
-            return this.$parent.getJSON (this.cartUrl)
+        getCart (url) {
+            return this.$parent.getJSON (url)
                 .then (data => this.items = data.contents);
         },
         calcTotalSum () {
@@ -72,7 +78,7 @@ Vue.component ('cart', {
         },
     },
     mounted () {
-        this.getCart (this.cartUrl)
+        this.getCart ('/api/cart')
             .finally (() => {
                 this.calcTotalSum ();
                 this.$root.setCartItemsCount ();

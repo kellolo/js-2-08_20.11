@@ -3,7 +3,7 @@
 Vue.component ('server-error', {
     data () {
         return {
-            eNumber: 0,
+            eNumber: 1,
             eText: "",
         }
     },
@@ -13,11 +13,11 @@ Vue.component ('server-error', {
             this.eText = msg;
         },
         clearErrorData () {
-            this.eNumber = 0;
+            this.eNumber = 1;
             this.eText = "";
         },
     },
     template: `
-        <div class="eMessage" v-if="eNumber">Ошибка сервера {{ eNumber }}: {{ eText }}.</div>
+        <div class="eMessage" v-if="eNumber != 1">Ошибка сервера {{ eNumber }}: {{ eText }}.</div>
     `,
 })

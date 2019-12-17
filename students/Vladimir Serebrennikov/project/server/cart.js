@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 let add = (cart, req) => {
 
   let product = req.body
@@ -42,6 +44,21 @@ function getTotoalSum(cart) {
   }
 }
 
+
+let writeStats = (method, req) => {
+
+  let file = 'server/db/statsCartUsers.json'
+  
+  let text = `${method} id: ${req.body.id_product}, name:  ${req.body.product_name}, date: ${new Date()}\n`;
+
+  fs.appendFile(file, text, (err) => {
+    if(err) {
+      console.log("don't write stats")
+    }
+  })
+}
+
+
 module.exports = {
-  add, remove
+  add, remove, writeStats
 }

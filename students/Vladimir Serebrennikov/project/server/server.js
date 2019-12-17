@@ -17,6 +17,7 @@ app.get('/api/catalog',(req, res) => {
     })
 })
 
+
 app.get('/api/cart',(req, res) => {
     fs.readFile('server/db/userCart.json', 'utf-8',(err, data) => {
         if(err) {
@@ -31,17 +32,23 @@ app.get('/api/cart',(req, res) => {
 const cartCore = require('./cart')
 
 app.post('/api/cart', (req, res) => {
+
     let file = 'server/db/userCart.json'
+
     fs.readFile(file, 'utf-8', (err, data) => {
         if(err) {
             res.sendStatus(404, JSON.stringify({result: 0}))
         } else {
+
             let oldCart = JSON.parse(data)
             let newCartJSON = cartCore.add(oldCart, req)
+
             fs.writeFile(file, newCartJSON,(err) => {
                 if(err) {
                     res.sendStatus(500, JSON.stringify({result: 0}))
                 } else {
+
+                    cartCore.writeStats("add", req)
                     res.send(newCartJSON)
                 }
             })
@@ -50,17 +57,23 @@ app.post('/api/cart', (req, res) => {
 })
 
 app.delete('/api/cart', (req, res) => {
+
     let file = 'server/db/userCart.json'
+
     fs.readFile(file, 'utf-8', (err, data) => {
         if(err) {
             res.sendStatus(404, JSON.stringify({result: 0}))
         } else {
+
             let oldCart = JSON.parse(data)
             let newCartJSON = cartCore.remove(oldCart, req)
+
             fs.writeFile(file, newCartJSON,(err) => {
                 if(err) {
                     res.sendStatus(500, JSON.stringify({result: 0}))
                 } else {
+
+                    cartCore.writeStats("delete", req)
                     res.send(newCartJSON)
                 }
             })

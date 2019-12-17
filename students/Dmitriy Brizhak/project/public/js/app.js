@@ -38,7 +38,7 @@ let app = new Vue ({
             this.errorMessage = text
         },
         addProduct (product) {
-            this.getJSON(this.API_URL + '/addToBasket.json')
+            this.getJSON('/api/cart')
                 .then(d => {
                     if (d.result) {
                         let find = this.userCart.find (element => element.id_product === product.id_product)
@@ -72,7 +72,7 @@ let app = new Vue ({
         // полностью реактивны
     },
     mounted () {      
-        this.getJSON (this.API_URL + '/catalogData.json')
+        this.getJSON ('/api/catalog')
             .then(d => this.saveNewProducts(d))
             .catch(e => this.showMessage ('Ошибка получения данных'))
             .finally(() => this.filterProduct ())

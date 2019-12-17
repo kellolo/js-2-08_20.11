@@ -1,0 +1,30 @@
+{
+    "amount": 44390,
+    "countGoods": 8,
+    "contents": [
+        {
+            "id": 1,
+            "title": "Yokohama",
+            "price": 6740,
+            "quantity": 4
+        },
+        {
+            "id": 2,
+            "title": "TOYO",
+            "price": 7570,
+            "quantity": 4
+        },
+        {
+            "id": 3,
+            "title": "Triangle",
+            "price": 4150,
+            "quantity": 4
+        },
+        {
+            "id": 7,
+            "title": "Nokian",
+            "price": 4470,
+            "quantity": 3
+        }
+    ]
+}

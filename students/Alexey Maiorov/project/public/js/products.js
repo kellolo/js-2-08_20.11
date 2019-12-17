@@ -4,7 +4,6 @@ Vue.component('products', {
                 </div>`,
     data() {
         return {
-            catalogURL:'https://raw.githubusercontent.com/alexmaiorov/for_json/master/catalogData.json',
             image: 'https://placehold.it/200x150',
             products: [],
             finds: []
@@ -17,7 +16,7 @@ Vue.component('products', {
         }
     },
     mounted () {
-        this.$parent.getJSON(this.catalogURL)
+        this.$parent.getJSON('/api/catalog')
             .then(data => this.products = data)
             .then(data => this.finds = data)
     }

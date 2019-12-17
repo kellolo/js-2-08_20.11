@@ -33,12 +33,12 @@ button:focus{
 .btn-cart, .logo{
     align-self: center;
 }
-/*.products {
-display: flex;
-justify-content: space-between;
-flex-wrap: wrap;
-padding: 40px 80px;
-}*/
+/*.products {*/
+/*display: flex;*/
+/*justify-content: space-between;*/
+/*flex-wrap: wrap;*/
+/*padding: 40px 80px;*/
+/*}*/
 .products{
     column-gap: 30px;
     display: grid;
@@ -79,7 +79,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    width: 340px;
 }
 
 .invisible{
@@ -168,4 +168,7 @@ img {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #fafafa;
+}
+.error_message {
+    color: red;
 }

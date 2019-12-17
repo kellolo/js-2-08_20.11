@@ -3,7 +3,67 @@ const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
 
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const FAKEAPI = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/master/students/Anna%20Puchkova/other%20works/lesson3';
+const FAKEAPI = 'https://raw.githubusercontent.com/annapuchkova/js-2-08_20.11/master/students/Anna%20Puchkova/other%20works/lesson3/catalogData.json';
+
+//import catalog from './catalog.js'
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        catalogURL: FAKEAPI,
+        products: null,
+        cart: null,
+        cartImage: 'https://placehold.it/100x80',
+        image: 'https://placehold.it/200x150',
+        cartVisible: false,
+        catalogVisible: false,
+        total: null,
+        error: '',
+        filteredProducts: null,
+        searchLine: ''
+
+    },
+    mounted () {
+        this.getJSON(this.catalogURL)
+        .then(d => this.products = d)
+    },
+    methods: {
+        cartShown() {
+            this.cartVisible = !this.cartVisible;
+        },
+        getJSON(url) {
+            return fetch(url)
+            .then(result => result.json())
+        },
+        addItem(event) {
+            let item = this.products.find((el) => el.id_product == event.target.dataset["id"]);
+            item.quantity = typeof(item.quantity) === 'undefined' ? 1 : ++item.quantity;
+            this.cart = this.products.filter(el => typeof(el.quantity) != 'undefined' && el.quantity > 0);
+        },
+        removeItem(event) {
+            let item = this.products.find((el) => el.id_product == event.target.dataset["id"]);
+            item.quantity--;
+            this.cart = this.products.filter(el => typeof(el.quantity) != 'undefined' && el.quantity > 0);
+        },
+        counter() {
+            this.total = this.cart.reduce((sum, elem) => sum + elem.price * elem.quantity, 0);
+        }
+       filterProd() {   
+            if (this.products != null)
+                this.filteredProducts = this.products.filter(el => el.name.toUpperCase() == (this.searchStr == "" ? el.name.toUpperCase() : this.searchStr.toUpperCase()))
+        },
+        showMessage (text) {
+            this.catalogVisible = true;
+            this.error = text;
+        },
+    }
+  /*  components: {
+        'catalog': catalog
+    }*/
+});
+
+
+/*
 
 class List { //спиток
     // суперкласс для каталога и корзины
@@ -144,7 +204,7 @@ document.querySelector('.products').addEventListener ('click', (evt) => {
     if (evt.target.classList.contains ('buy-btn')) {
         addProduct (evt.target);
     }
-})
+})*/
 // поле поиска
 document.querySelector('.btn-search').addEventListener('click', (e) => {
     const value = searchInput.value;

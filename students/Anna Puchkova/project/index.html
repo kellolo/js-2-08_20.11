@@ -7,26 +7,42 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">E-shop</div>
-        <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field">
-                <button class="btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <div id="app">
+            <header>
+                <div class="logo">E-shop</div>
+                <div class="cart">
+                    <search-form></search-form>
+                    <cart :items="cart"/>
+                </div>
+            </header>
+        </header>
+        <div v-if="catalogVisible">
+            <catalog :items="products"/>
         </div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
-
-
-
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="script/src/main.js"></script>
+        <error v-else :text="error"></error>
+         <!--   <main>
+                <div class="products" v-if="products != null">
+                    <div class="product-item" v-for="item in products">
+                        <img :src="image" alt="Some img">
+                        <div class="desc">
+                            <h3>{{item.product_name}}</h3>
+                            <p>{{item.price}} $</p>
+                            <button class="buy-btn" :data-id="item.id_product" @Click="addItem">Купить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="products" v-else>No items</div>
+            </main>-->
+        </div>
+        <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="script/src/components/cartItem.js"></script>
+        <script src="script/src/components/cart.js"></script> 
+        <script src="script/src/components/catalogItem.js"></script>
+        <script src="script/src/components/catalog.js"></script> 
+        <script src="script/src/components/error.js"></script>
+        <script src="script/src/components/search.js"></script>
+        <script src="script/src/main.js"></script>
 </body>
 </html>

@@ -1,6 +1,18 @@
 body{
     font-family: 'SF Pro Display', sans-serif;
 }
+.allert {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    border-radius: 1em;
+    padding: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
 header{
     display: flex;
     background-color: #2f2a2d;
@@ -57,6 +69,9 @@ p {
     border-radius: 5px;
     overflow: hidden;
     margin: 20px 0;
+}
+.product-wait{
+    position: absolute;
 }
 img {
     max-width: 100%;
@@ -152,10 +167,12 @@ img {
     bottom: 5px;
     right: 0;
 }
+.inline {
+    display: inline-block;
+}
 .search-form{
     position: relative;
     margin-right: 50px;
-    display: inline-block;
 }
 .search-field:focus{
     outline: none;

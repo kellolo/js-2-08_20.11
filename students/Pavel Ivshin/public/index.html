@@ -10,28 +10,23 @@
     <div id="app">
     <header>
         <div class="logo">E-shop</div>
-        <div >
-            <search />
-        </div>
-        <cart ref="cart"/>
+            <div>
+                <filtercomp />
+            </div>
+            <cart ref="cartcomp" />
     </header>
     <main>
-        <div v-if="idProductsVisible">
-            <catalog />
-        </div>
-        <div v-else>
-            <failed-request />
-        </div>
+        <catalog ref="catalog"/>
     </main>
 </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/FailedRequest.js"></script>
-    <script src="js/CatalogItem.js"></script>
-    <script src="js/Catalog.js"></script>
-    <script src="js/Cart.js"></script>
+    <script src="js/Filter.js"></script>
     <script src="js/CartItem.js"></script>
-    <script src="js/Search.js"></script>
+    <script src="js/CatalogItem.js"></script>
+    <script src="js/Cart.js"></script>
+    <script src="js/Catalog.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

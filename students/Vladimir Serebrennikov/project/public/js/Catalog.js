@@ -1,4 +1,4 @@
-import {makeGETRequest} from './connectLib.js'
+import {HTTPRequest} from './connectLib.js'
 
 export default Vue.component('catalog', {
   data() {
@@ -8,13 +8,10 @@ export default Vue.component('catalog', {
     }
   },
   mounted() {
-    makeGETRequest(this.catalogUrl)
+    HTTPRequest(this.catalogUrl)
     .then((data) => {
       this.products = JSON.parse(data)
     })
-    .catch((err) => {
-        console.log(err)
-    });
   },
   template: `
     <div class="products">

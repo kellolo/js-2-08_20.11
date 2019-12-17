@@ -1,4 +1,4 @@
-function makeGETRequest(URI, METHOD = 'GET', bodyJSON = null) {
+function HTTPRequest(URI, METHOD = 'GET', bodyJSON = null) {
     return new Promise((resolve, reject) => {
         
         let xhr;
@@ -25,4 +25,4 @@ function makeGETRequest(URI, METHOD = 'GET', bodyJSON = null) {
     });
 }
 
-export { makeGETRequest }
+export { HTTPRequest }

@@ -17,7 +17,7 @@ export default Vue.component('cart-item', {
       </div>
       <div class="right-block">
           <p class="product-price">{{ el.quantity * el.price }}</p>
-          <button class="del-btn" @click="removeProduct(el)">&times;</button>
+          <button class="del-btn" @click="$parent.removeProduct(el)">&times;</button>
       </div>
     </div>
   `,

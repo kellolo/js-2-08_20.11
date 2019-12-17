@@ -27,29 +27,47 @@ app.get('/api/cart',(req, res) => {
     })
 })
 
+
 const cartCore = require('./cart')
 
 app.post('/api/cart', (req, res) => {
     let file = 'server/db/userCart.json'
-    console.log(req.body)
     fs.readFile(file, 'utf-8', (err, data) => {
         if(err) {
             res.sendStatus(404, JSON.stringify({result: 0}))
         } else {
             let oldCart = JSON.parse(data)
-            // console.log(oldCart)
-            let newCart = cartCore.add(oldCart, req)
-            fs.writeFile(file, newCart,(err) => {
+            let newCartJSON = cartCore.add(oldCart, req)
+            fs.writeFile(file, newCartJSON,(err) => {
                 if(err) {
                     res.sendStatus(500, JSON.stringify({result: 0}))
                 } else {
-                    res.send(JSON.stringify(newCart))
+                    res.send(newCartJSON)
                 }
             })
         }
     })
-}) 
+})
 
-app.listen(8080,() => {
+app.delete('/api/cart', (req, res) => {
+    let file = 'server/db/userCart.json'
+    fs.readFile(file, 'utf-8', (err, data) => {
+        if(err) {
+            res.sendStatus(404, JSON.stringify({result: 0}))
+        } else {
+            let oldCart = JSON.parse(data)
+            let newCartJSON = cartCore.remove(oldCart, req)
+            fs.writeFile(file, newCartJSON,(err) => {
+                if(err) {
+                    res.sendStatus(500, JSON.stringify({result: 0}))
+                } else {
+                    res.send(newCartJSON)
+                }
+            })
+        }
+    })
+})
+
+app.listen(8080, () => {
     console.log('server is listening at port 8080')
 })

@@ -1,16 +1,10 @@
-import {makeGETRequest} from './connectLib.js'
-
 export default Vue.component('catalog-item', {
   data() {
     return {
-      imgDefault: 'https://placehold.it/200x150',
-      cartUrl: '/api/cart',
+      imgDefault: 'https://placehold.it/200x150'
     }
   },
   props: ['el'],
-  methods: {
-
-  },
   template: `
     <div class="product-item">
       <img :src="el.img || imgDefault" alt="Some img">

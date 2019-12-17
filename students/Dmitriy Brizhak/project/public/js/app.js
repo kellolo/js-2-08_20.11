@@ -5,7 +5,6 @@ let app = new Vue ({
         cartImage: 'https://placehold.it/100x80',
         newProducts: [],
         showProducts: [],
-        userCart: [],
         API_URL: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses',
         searchLine: '',
         isVisibleProducts: true,
@@ -16,6 +15,22 @@ let app = new Vue ({
         getJSON (url) {
             return fetch (url)
                 .then (d => d.json ())
+        },
+        postJSON (url, obj) {
+            return fetch (url, {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify (obj)
+            })
+                .then (d => d.json())
+        },
+        putJSON (url, obj) {
+            return fetch (url, {
+                method: 'PUT',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify (obj)
+            })
+                .then (d => d.json())
         },
         saveNewProducts (data) {
             this.newProducts = data
@@ -37,35 +52,6 @@ let app = new Vue ({
             this.isVisibleProducts = true
             this.errorMessage = text
         },
-        addProduct (product) {
-            this.getJSON('/api/cart')
-                .then(d => {
-                    if (d.result) {
-                        let find = this.userCart.find (element => element.id_product === product.id_product)
-                        if (!find) {  
-                            const newProduct = Object.assign({quantity: 1}, product)
-                            this.userCart.push (newProduct)  
-                        }  else {
-                            find.quantity++        
-                        }
-                    }
-                    return d
-                })  
-        },
-        removeProduct (product) {
-            this.getJSON(this.API_URL + '/deleteFromBasket.json')
-                .then(d => {
-                    if (d.result) {
-                        let findID =  this.userCart.findIndex(element => element.id_product === product.id_product)
-                        if (this.userCart[findID] && this.userCart[findID].quantity > 1) {
-                            this.userCart[findID].quantity--
-                        } else if (this.userCart[findID]) {
-                            this.userCart.splice(findID, 1)          
-                        }
-                    }
-                    return d
-                })        
-        },
     },
     computed: {
         // Вью смотрит на методы как на данные
@@ -76,8 +62,5 @@ let app = new Vue ({
             .then(d => this.saveNewProducts(d))
             .catch(e => this.showMessage ('Ошибка получения данных'))
             .finally(() => this.filterProduct ())
-        this.getJSON (this.API_URL + '/getBasket.json')
-            .then(d => this.saveUserCart (d))
-            .catch(e => this.showMessage ('Ошибка получения данных'))
     }
 })

@@ -12,7 +12,7 @@
             <div class="logo">E-shop</div>
             <div class="cart">
                 <search-form></search-form>
-                <cart :items="userCart"/>
+                <cart ref="cartcomp"/>
             </div>
         </header>
         <div v-if="isVisibleProducts">

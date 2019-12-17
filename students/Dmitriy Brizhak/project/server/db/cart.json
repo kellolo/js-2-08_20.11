@@ -1,0 +1,18 @@
+{
+    "amount": 1010,
+    "countGoods": 2,
+    "contents": [
+        {
+            "quantity": 1,
+            "id_product": 2,
+            "product_name": "Display",
+            "price": 2000
+        },
+        {
+            "quantity": 2,
+            "id_product": 5,
+            "product_name": "Phones",
+            "price": 5000
+        }
+    ]
+}

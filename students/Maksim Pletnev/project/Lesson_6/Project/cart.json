@@ -1,0 +1,18 @@
+[
+	{
+		"image": "https://placehold.it/100x80",
+		"cartImage": "https://placehold.it/100x80",
+		"title": "Notebook",
+		"price": 1000,
+		"id": 1,
+		"quantity": 1
+	},
+	{
+		"image": "https://placehold.it/100x80",
+		"cartImage": "https://placehold.it/100x80",
+		"title": "Display",
+		"price": 200,
+		"id": 2,
+		"quantity": 1
+	}
+]

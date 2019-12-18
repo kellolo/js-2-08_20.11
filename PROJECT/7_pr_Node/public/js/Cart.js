@@ -13,16 +13,15 @@ Vue.component('cart', {
         addProduct (product) {
             let find = this.items.find (item => item.id_product === product.id_product)
             if (find) {
-                // this.$parent.putJSON (this.addApproveUrl)
-                // .then (answer => {
-                //     if (answer.result) {
-                //         find.quantity++
-                //     }
-                // })
-                console.log ('Либо сами, либо ждем вторника')
+                this.$parent.putJSON (`/cart/${find.id_product}`, 1)
+                .then (answer => {
+                    if (answer.result) {
+                        find.quantity++
+                    }
+                })
             } else {
                 let pr = Object.assign ({}, product, {quantity: 1})
-                this.$parent.postJSON ('/api/cart', pr)
+                this.$parent.postJSON ('/cart', pr)
                 .then (answer => {
                     if (answer.result) {
                         this.items.push (pr)
@@ -32,14 +31,14 @@ Vue.component('cart', {
         },
         delProduct (product) {
             if (product.quantity > 1) {
-                this.$parent.getJSON (this.delApproveUrl)
+                this.$parent.putJSON (`/cart/${product.id_product}`, -1)
                 .then (answer => {
                     if (answer.result) {
-                        find.quantity--
+                        product.quantity--
                     }
                 })
             } else {
-                this.$parent.getJSON (this.delApproveUrl)
+                this.$parent.deleteJSON (`/cart/${product.id_product}`)
                 .then (answer => {
                     if (answer.result) {
                         this.items.splice (this.items.indexOf (product), 1)
@@ -49,7 +48,7 @@ Vue.component('cart', {
         }
     },
     mounted () {
-        this.$parent.getJSON ('/api/cart')
+        this.$parent.getJSON ('/cart')
             .then (data => this.items = data.contents)
     },
     template: `

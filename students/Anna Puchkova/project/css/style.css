@@ -79,7 +79,7 @@ img {
     background-color: white;
     padding: 20px;
     color: black;
-    width: 300px;
+    width: 340px;
 }
 
 .invisible{
@@ -168,4 +168,7 @@ img {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #fafafa;
+}
+.error_message {
+    color: red;
 }

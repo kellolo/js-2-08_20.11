@@ -1,6 +1,5 @@
 const express = require ('express') // doc Express
 const fs = require ('fs') //doc Node
-const morgan = require('morgan')
 const cartModule = require ('./cart')
 let cartDB = new cartModule.CartDB()
 cartDB.cartInit()
@@ -8,7 +7,6 @@ cartDB.cartInit()
 const app = express ()
 
 app.use (express.json ())
-app.use (morgan('dev'))
 app.use ('/', express.static ('public'))
 
 app.get ('/api/catalog', (req, res) => {

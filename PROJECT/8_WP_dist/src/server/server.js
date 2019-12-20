@@ -9,7 +9,7 @@ app.use ('/', express.static ('public'))
 app.use ('/cart', cartRouter)
 
 app.get ('/catalog', (req, res) => {
-    fs.readFile ('server/db/catalog.json', 'utf-8', (err, data) => {
+    fs.readFile ('dist/server/db/catalog.json', 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))
         } else {

@@ -1,5 +1,5 @@
-//import catalogItem from './CatalogItem'
-Vue.component('catalog', {
+import catalogItem from './CatalogItem'
+let catalog = {
     data () {
         return {
             items: [],
@@ -21,9 +21,9 @@ Vue.component('catalog', {
         <catalog-item v-for="product of items" :img="imgCatalog" :el="product" :key="product.id_product"/>
     </div>
     `,
-    // components: {
-    //     'catalog-item': catalogItem
-    // }
-})
+    components: {
+        'catalog-item': catalogItem
+    }
+}
 
-//export default catalog
+export default catalog

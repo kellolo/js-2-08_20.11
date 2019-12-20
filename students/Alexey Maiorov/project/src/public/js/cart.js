@@ -1,4 +1,5 @@
-Vue.component('cart', {
+import cartItem from './cartItem'
+let cart = {
     template: ` <div class="wrapper">
                 <button class="btn-cart" type="button" v-on:click = "showCart">Корзина</button>
                     <div class="cart-block" v-if = "!cartInvisible">
@@ -29,7 +30,7 @@ Vue.component('cart', {
                     }
                 })
             } else {
-                this.$parent.putJSON ('/api/cart/', find)
+                this.$parent.putJSON (`/api/cart/${find.id}`, 1)
                 .then (answer => {
                     if (answer.result) {
                         find.quantity++
@@ -38,20 +39,30 @@ Vue.component('cart', {
             }
         },
         removeProduct (product){
-            this.$parent.deleteJSON ('/api/cart/', product)
-            .then (answer => {
-                if (answer.result) {
-                    if (product.quantity > 1) {
-                        product.quantity--;
-                    } else {
-                        this.cart.splice(this.cart.indexOf(product), 1);
+            if (product.quantity > 1) {
+                this.$parent.putJSON (`/api/cart/${product.id}`, -1)
+                .then (answer => {
+                    if (answer.result) {
+                        product.quantity--
                     }
-                }
-            })
+                })
+            } else {
+                this.$parent.deleteJSON (`/api/cart/${product.id}`)
+                .then (answer => {
+                    if (answer.result) {
+                        console.log(product)
+                        this.cart.splice (this.cart.indexOf (product), 1)
+                    }
+                })
+            }
         }
     },
     mounted() {
         this.$parent.getJSON('/api/cart')
             .then(data => this.cart = data.contents)
+    },
+    component: {
+        'cartItem': cartItem
     }
-})
+}
+export default cart

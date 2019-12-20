@@ -1,11 +1,11 @@
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const FAKEAPI = 'https://raw.githubusercontent.com/alexmaiorov/for_json/master/catalogData.json'
+import products from './products'
+import cart from './cart'
 
-let app = new Vue ({
+let app = {
     el: '#app',
     data: {
-        dataURL: FAKEAPI,
         products: [],
         cart: [],
         img: image,
@@ -25,21 +25,26 @@ let app = new Vue ({
             })
             .then (d => d.json ())
         },
-        putJSON (url, obj) {
+        putJSON (url, data) {
             return fetch (url, {
                 method: 'PUT',
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify (obj)
+                body: JSON.stringify ({op: data})
             })
             .then (d => d.json ())
         },
-        deleteJSON (url, obj) {
+        deleteJSON (url) {
             return fetch (url, {
                 method: 'DELETE',
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify (obj)
+                headers: {"Content-Type": "application/json"}
             })
             .then (d => d.json ())
         }
+    },
+    components: {
+        'products': products,
+        'cart': cart
     }
-})
+}
+
+export default app

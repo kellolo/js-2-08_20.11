@@ -1,8 +1,13 @@
 const path = require ('path')
-const minCSS = require ('mini-css-extract-plugin')
 const htmlPl = require ('html-webpack-plugin')
+const TerserJSPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
+    optimization: {
+        minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    },
     entry: {
         //все о входном файле
         main: path.resolve (__dirname, 'public', 'js', 'index.js') //'./src/public/index.js'
@@ -26,13 +31,7 @@ module.exports = {
             {
                 test: /\.css/,
                 use: [
-                    {
-                      loader: minCSS.loader,
-                      options: {
-                        publicPath: '../',
-                        hmr: process.env.NODE_ENV === 'production',
-                      },
-                    },
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                   ],
                 exclude: /node_modules/
@@ -40,9 +39,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new minCSS ({
-            filename: 'css/[name].css',
-            chunkFilename: '[id].css'
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css',
         }),
         new htmlPl ({
             template: path.resolve (__dirname, 'public', 'index.html'),

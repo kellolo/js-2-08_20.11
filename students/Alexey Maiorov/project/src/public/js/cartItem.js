@@ -1,4 +1,4 @@
-Vue.component ('cartItem', {
+let cartItem = {
     props:['img', 'item'],
     template: `<div class="cart-item">
                     <div class="product-bio">
@@ -14,4 +14,6 @@ Vue.component ('cartItem', {
                         <button class="del-btn" v-on:click="$parent.removeProduct(item)">&times;</button>
                     </div>
                 </div>`
-})
+}
+
+export default cartItem

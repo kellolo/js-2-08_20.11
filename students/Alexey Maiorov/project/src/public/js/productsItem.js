@@ -1,4 +1,4 @@
-Vue.component('productItem', {
+let productItem = {
     props: ['img', 'item'],
     template: ` <div class="product-item">
                     <img :src="img" alt="Some img">
@@ -8,4 +8,5 @@ Vue.component('productItem', {
                         <button class="buy-btn" v-on:click="$root.$refs.cart.addProduct(item)">Купить</button>
                     </div>
                 </div>`
-})
+}
+export default productItem

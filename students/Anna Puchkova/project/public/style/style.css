@@ -168,7 +168,11 @@ img {
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #fafafa;
+ 
 }
 .error_message {
     color: red;
+}
+.btn-cart {
+margin: 10px 0 0 0;
 }

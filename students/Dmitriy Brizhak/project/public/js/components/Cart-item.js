@@ -1,4 +1,4 @@
-Vue.component('cart-item', {
+const cartItem = {
     props: ['img', 'el'],
     methods: {
         productPrice (item) {
@@ -17,8 +17,9 @@ Vue.component('cart-item', {
         </div>
         <div class="right-block">
             <p class="product-price">{{productPrice(el)}}</p>
-            <button class="del-btn" @click="$parent.$parent.removeProduct(el)">&times;</button>
+            <button class="del-btn" @click="$parent.removeProduct(el)">&times;</button>
         </div>
     </div>
     `
-})
+}
+export default cartItem

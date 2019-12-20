@@ -1,4 +1,4 @@
-Vue.component('search-form', {
+const searchForm = {
     data () {
         return {
             isVisibleCart: true,
@@ -15,4 +15,6 @@ Vue.component('search-form', {
         </form>
     </div>
     `,
-})
+}
+
+export default searchForm

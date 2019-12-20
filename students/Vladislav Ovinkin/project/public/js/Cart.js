@@ -19,48 +19,46 @@ Vue.component ('cart', {
             const find = this.items.find (element => element.product_id === product.product_id);
     
             if (!find) {
-                this.$parent.postJSON (this.addUrl)
+                let newItem = Object.assign ({}, product, {quantity: 1});
+                delete newItem.img;
+                this.$parent.postJSON ('/cart', newItem)
                     .then (answer => { 
                         if (answer.result) {
-                            let newItem = Object.assign ({}, product, {quantity: 1});
-                            delete newItem.img;
                             this.items.push (newItem);
+                            this.calcSummary ();
                         }
                     })
             } else {
-                this.$parent.putJSON (this.addUrl)
+                this.$parent.putJSON (`./cart/${find.product_id}`, 1)
                     .then (answer => { 
                         if (answer.result) {
-                            // find.quantity++;
+                            find.quantity++;
+                            this.calcSummary ();
+                        }
+                    })
+            }
+        },
+        removeProduct (product) {
+            
+            this.$root.$refs.error.clearErrorData ();
+    
+            if (product.quantity > 1) {
+                this.$parent.putJSON (`./cart/${product.product_id}`, -1)
+                    .then (answer => { 
+                        if (answer.result) {
+                            product.quantity--;
+                            this.calcSummary ();
+                        }
+                    })
+            } else {
+                this.$parent.deleteJSON (`./cart/${product.product_id}`)
+                    .then (answer => { 
+                        if (answer.result) {
+                            this.items.splice (this.items.indexOf (product), 1)
+                            this.calcSummary ();
                         }
                 })
             }
-            this.calcTotalSum();
-            this.$root.setCartItemsCount ();
-        },
-        
-//                 // throw new Error ('Server error adding item!');
-//                 this.$root.$refs.error.setErrorData (345, "товар не может быть добавлен в корзину");
-        
-        removeProduct (product) {
-            this.$root.$refs.error.clearErrorData ();
-            this.$parent.getJSON (this.delUrl)
-                .then (answer => {return answer.result})
-                .then (result => {
-                    if (result == 1) {
-                        const find = this.items.find (element => element.product_id === product.product_id);
-                        if (find.quantity > 1) {
-                            find.quantity--;
-                        } else {
-                            this.items.splice (this.items.indexOf (find), 1);
-                        }
-                        this.calcTotalSum();
-                        this.$root.setCartItemsCount ();
-                    } else {
-                        // throw new Error ('Server error removing item!')
-                        this.$root.$refs.error.setErrorData (348, "товар не может удалён из корзины");
-                    }
-            });
         },
         getCart (url) {
             return this.$parent.getJSON (url)
@@ -76,9 +74,13 @@ Vue.component ('cart', {
         getCartItemsCount: function () {
             return (this.items != null) ? this.items.length : 0
         },
+        calcSummary () {
+            this.calcTotalSum();
+            this.$root.setCartItemsCount ();
+        },
     },
     mounted () {
-        this.getCart ('/api/cart')
+        this.getCart ('/cart')
             .finally (() => {
                 this.calcTotalSum ();
                 this.$root.setCartItemsCount ();

@@ -3,11 +3,11 @@ Vue.component('catalog', {
         return {
             items: [],
             imgCatalog: 'https://placehold.it/200x150',
-            catalogUrl: 'https://raw.githubusercontent.com/Jestric-sys/js-data-item/master/dataCatalog.json'
+            //catalogUrl: 'https://raw.githubusercontent.com/Jestric-sys/js-data-item/master/dataCatalog.json'
         }
     },
     mounted () {
-        this.$parent.getJSON (this.catalogUrl)
+        this.$parent.getJSON ('/api/catalog')
             .then (data => this.items = data)
     },
     template: `

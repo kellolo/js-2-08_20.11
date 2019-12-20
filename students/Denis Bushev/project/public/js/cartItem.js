@@ -11,11 +11,7 @@ Vue.component ('cart-product', {
                      </div>
                          <div class="right-block">
                              <p class="product-price">{{ el.quantity * el.price }}</p>
-                             <button class="del-btn" @click="$parent.removeProduct(item)">&times;</button>
+                             <button class="del-btn" @click="$parent.removeProduct(el)">&times;</button>
                          </div>
-                     </div>
-    `
-    // mounted() {
-    //     console.log(this)
-    // }
+                     </div>`
 })

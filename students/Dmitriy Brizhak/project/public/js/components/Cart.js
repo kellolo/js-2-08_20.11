@@ -1,4 +1,5 @@
-Vue.component('cart', {
+import cartItem from './Cart-item'
+const cart = {
     data () {
         return {
             isVisibleCart: true,
@@ -55,4 +56,9 @@ Vue.component('cart', {
         </div>
     </div>
     `,
-})
+    components: {
+        'cart-item': cartItem
+    }
+}
+
+export default cart

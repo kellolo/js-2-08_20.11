@@ -1,4 +1,4 @@
-Vue.component('cart-item', {
+const cartItem = {
     props: ['img', 'el'],
     methods: {
         productPrice (item) {
@@ -21,4 +21,5 @@ Vue.component('cart-item', {
         </div>
     </div>
     `
-})
+}
+export default cartItem

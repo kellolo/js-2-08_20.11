@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "nodemon server/server.js",
-    "build": "webpack --mode development --config webpack.config.js"
+    "serve": "nodemon dist/server/js/main.js",
+    "build": "webpack --mode production --config webpack.config.js && webpack --mode production --config webpack.config.server.js"
   },
   "nodemonConfig": {
     "ignore": [

@@ -54,7 +54,6 @@ app.post ('/api/cart', (req, res) => {
 
 app.put ('/api/cart', (req, res) => {
     let file = 'server/db/cart.json'
-    console.log(' PUT')
     fs.readFile (file, 'utf-8', (err, data) => {
         if (err) {
             res.status (404).send (JSON.stringify ({result: 0}))

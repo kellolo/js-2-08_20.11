@@ -1,7 +1,6 @@
 Vue.component ('cart', {
 	data () {
 		return {
-			urlListCart: 'https://raw.githubusercontent.com/AnnaTokareva55/js-2-08_20.11/master/students/Anna%20Tokareva/project/cart.json',
         	cart: [],
         	toggleCart: false
 		}
@@ -18,6 +17,24 @@ Vue.component ('cart', {
         addProduct (product) {
             let find = this.cart.find(item => item.id === product.id);
             if (!find) {
+                let addproduct = Object.assign({}, product, {quantity: 1});
+                this.$parent.postJSON('/api/cart', addproduct)
+                    .then(data => {
+                        if (data.result) {
+                            this.cart.push(addproduct);
+                        }
+                    });
+            } else {
+                this.$parent.putJSON(`/api/cart/:${find.id}`, {quantity: 1})
+                    .then(data => {
+                       if (data.result) {
+                            find.quantity++;
+                        }
+                    });
+            }
+            /*
+            let find = this.cart.find(item => item.id === product.id);
+            if (!find) {
                 let addproduct = {
                 title: product.title,
                 id: product.id,
@@ -29,6 +46,7 @@ Vue.component ('cart', {
             } else {
                 find.quantity++;
             };
+            */
         },
         removeProduct (product) {
             let find = this.cart.find(item => item.id === product.id);
@@ -40,7 +58,7 @@ Vue.component ('cart', {
         }
 	},
 	mounted () {
-        this.$parent.getJSON(this.urlListCart)
+        this.$parent.getJSON('/api/cart')
         	.then(data => this.cart = data);
     }
 });

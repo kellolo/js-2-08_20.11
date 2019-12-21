@@ -1,48 +1,14 @@
 'use strict';
 
-let express = require('express');
-let bodyParser = require("body-parser");
-let app = express();
+const express = require('express');
+const bodyParser = require("body-parser");
+const fs = require('fs');
+const cartCore = require('./cartCore/cart')
+
+const app = express();
 app.use(express.static('public'));
 
 //*имитация БД
-const catalogData = [{
-    id_product: 1,
-    product_name: "Ноутбук",
-    price: 45600
-  },
-  {
-    id_product: 2,
-    product_name: "Мышка",
-    price: 1000
-  },
-  {
-    id_product: 3,
-    product_name: "Клавиатура",
-    price: 1500
-  },
-  {
-    id_product: 4,
-    product_name: "Монитор",
-    price: 15000
-  },
-  {
-    id_product: 5,
-    product_name: "Принтер МФУ",
-    price: 25000
-  },
-  {
-    id_product: 6,
-    product_name: "Принтер",
-    price: 5000
-  },
-  {
-    id_product: 7,
-    product_name: "Системный блок",
-    price: 125000
-  }
-]
-
 const basketContents = [{
     id_product: 1,
     product_name: "Ноутбук",
@@ -81,6 +47,15 @@ let basket = new Basket()
 
 //*функция инициализации
 function init() {
+  // let test = {
+  //   id_product: 2,
+  //   product_name: "Мышка",
+  //   price: 1000,
+  //   quantity: 10
+  // }
+  // cartCore.createEvent(test, 0, "DELETE")
+
+  cartCore.aggregate()
   basket.updateBasket(basketContents)
 }
 
@@ -97,13 +72,28 @@ let server = app.listen(80, function() {
 })
 
 app.get('/api/catalogData', function(req, res) {
-  res.send(catalogData).end;
-
+  //res.send(catalogData).end;
+  fs.readFile('db/aggregates/catalogData.json', 'utf-8', (err, data) => {
+    if (err) {
+      res.sendStatus(404, JSON.stringify({ result: 0 }))
+    } else(
+      res.send(data).end
+    )
+  });
 });
 
 app.get('/api/getBasket', function(req, res) {
-  res.send(basket).end;
+  //res.send(basket).end;
+  fs.readFile('db/aggregates/userCart.json', 'utf-8', (err, data) => {
+    if (err) {
+      res.sendStatus(404, JSON.stringify({ result: 0 })).end
+    } else(
+      res.send(data).end
+    )
+  });
 });
+
+
 
 app.post('/api/updateBasket', function(req, res) {
   //console.log(req.body);
@@ -114,6 +104,31 @@ app.post('/api/updateBasket', function(req, res) {
   console.log("_____________");
   res.send('ok').end
 });
+
+
+
+
+app.get('/api/getCart', function(req, res) {
+  cartCore.get(req, res)
+})
+
+app.get('/api/getHystory', function(req, res) {
+  cartCore.getHystory(req, res)
+})
+
+app.post('/api/createCart', function(req, res) {
+  cartCore.createEvent(req.body, res, "POST")
+})
+
+app.put('/api/addCartItem', function(req, res) {
+  cartCore.createEvent(req.body, res, "PUT")
+})
+
+app.delete('/api/deleteCartItem', function(req, res) {
+  cartCore.createEvent(req.body, res, "DELETE")
+})
+
+
 
 //* инициализация
 init()

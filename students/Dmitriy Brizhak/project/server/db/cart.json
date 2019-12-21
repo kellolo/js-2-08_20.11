@@ -1,0 +1,12 @@
+{
+    "amount": 1010,
+    "countGoods": 2,
+    "contents": [
+        {
+            "quantity": 1,
+            "id_product": 5,
+            "product_name": "Phones",
+            "price": 5000
+        }
+    ]
+}

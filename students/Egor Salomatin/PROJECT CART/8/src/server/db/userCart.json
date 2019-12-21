@@ -1,0 +1,12 @@
+{
+    "amount": 1010,
+    "countGoods": 2,
+    "contents": [
+        {
+            "id_product": 4,
+            "product_name": "Mouse",
+            "price": 4000,
+            "quantity": 3
+        }
+    ]
+}

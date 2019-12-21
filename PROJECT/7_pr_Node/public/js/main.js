@@ -24,11 +24,20 @@ let app = new Vue ({
             })
                 .then (d => d.json())
         },
-        putJSON (url) {
-
+        putJSON (url, data) {
+            return fetch (url, {
+                method: 'PUT',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify ({some: data})
+            })
+                .then (d => d.json())
         },
         deleteJSON (url) {
-            //home work
+            return fetch (url, {
+                method: 'DELETE',
+                headers: {"Content-Type": "application/json"}
+            })
+                .then (d => d.json())
         }
         
     },

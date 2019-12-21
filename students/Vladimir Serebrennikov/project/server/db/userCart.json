@@ -1,0 +1,18 @@
+{
+  "amount": 14000,
+  "countGoods": 2,
+  "contents": [
+    {
+      "id_product": 3,
+      "product_name": "Keyboard",
+      "price": 3000,
+      "quantity": 2
+    },
+    {
+      "id_product": 4,
+      "product_name": "Mouse",
+      "price": 4000,
+      "quantity": 2
+    }
+  ]
+}

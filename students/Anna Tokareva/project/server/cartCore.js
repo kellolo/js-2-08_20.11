@@ -9,6 +9,12 @@ let change = (cart, req) => {
     return JSON.stringify(cart, null, 4);
 };
 
+let del = (cart, req) => {
+    let find = cart.contents.find(item => item.id === +req.params.id);
+    cart.contents.splice(cart.contents.indexOf(find), 1);
+    return JSON.stringify(cart, null, 4);
+};
+
 module.exports = {
     add,
     change

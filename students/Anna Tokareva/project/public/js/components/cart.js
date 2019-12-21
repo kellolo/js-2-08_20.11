@@ -25,35 +25,30 @@ Vue.component ('cart', {
                         }
                     });
             } else {
-                this.$parent.putJSON(`/api/cart/:${find.id}`, {quantity: 1})
+                this.$parent.putJSON(`/api/cart/:${find.id}`, 1)
                     .then(data => {
                        if (data.result) {
                             find.quantity++;
                         }
                     });
             }
-            /*
-            let find = this.cart.find(item => item.id === product.id);
-            if (!find) {
-                let addproduct = {
-                title: product.title,
-                id: product.id,
-                image: product.cartImage,
-                price: product.price,
-                quantity: 1
-            }
-                this.cart.push(addproduct);
-            } else {
-                find.quantity++;
-            };
-            */
         },
         removeProduct (product) {
             let find = this.cart.find(item => item.id === product.id);
             if (find.quantity > 1) {
-                find.quantity--;
+                this.$parent.putJSON(`/api/cart/:${find.id}`, -1)
+                    .then(data => {
+                        if (data.result) {
+                             find.quantity--;
+                        }
+                    });
             } else {
-                this.cart.splice(this.cart.indexOf(find), 1);
+                this.$parent.deleteJSON(`/api/cart/:${find.id}`)
+                    .then(data => {
+                        if (data.result) {
+                             this.cart.splice(this.cart.indexOf(product), 1);
+                        }
+                    });
             }
         }
 	},

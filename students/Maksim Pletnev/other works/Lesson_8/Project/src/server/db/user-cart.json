@@ -1,0 +1,20 @@
+{
+    "amount": 46600,
+    "countGoods": 2,
+    "contents": [
+        {
+            "id_product": 4,
+            "product_name": "Тостер",
+            "price": 55,
+            "img": "img/small/toster.jpg",
+            "quantity": 1
+        },
+        {
+            "id_product": 3,
+            "product_name": "Роутер",
+            "price": 60,
+            "img": "img/small/router.jpg",
+            "quantity": 2
+        }
+    ]
+}

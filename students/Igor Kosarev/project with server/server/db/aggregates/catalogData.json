@@ -1,0 +1,36 @@
+[{
+    "id_product": 1,
+    "product_name": "Ноутбук",
+    "price": 45600
+  },
+  {
+    "id_product": 2,
+    "product_name": "Мышка",
+    "price": 1000
+  },
+  {
+    "id_product": 3,
+    "product_name": "Клавиатура",
+    "price": 1500
+  },
+  {
+    "id_product": 4,
+    "product_name": "Монитор",
+    "price": 15000
+  },
+  {
+    "id_product": 5,
+    "product_name": "Принтер МФУ",
+    "price": 25000
+  },
+  {
+    "id_product": 6,
+    "product_name": "Принтер",
+    "price": 5000
+  },
+  {
+    "id_product": 7,
+    "product_name": "Системный блок",
+    "price": 125000
+  }
+]

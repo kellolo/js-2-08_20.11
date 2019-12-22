@@ -1,0 +1,42 @@
+[
+    {
+      "id": 1,
+      "title": "Notebook",
+      "price": 1000
+    },
+    {
+      "id": 2,
+      "title": "Display",
+      "price": 200
+    },
+    {
+      "id": 3,
+      "title": "Keyboard",
+      "price": 20
+    },
+    {
+      "id": 4,
+      "title": "Mouse",
+      "price": 10
+    },
+    {
+      "id": 5,
+      "title": "Phones",
+      "price": 25
+    },
+    {
+      "id": 6,
+      "title": "Router",
+      "price": 30
+    },
+    {
+      "id": 7,
+      "title": "USB-camera",
+      "price": 18
+    },
+    {
+      "id": 8,
+      "title": "Gamepad",
+      "price": 24
+    }
+  ]

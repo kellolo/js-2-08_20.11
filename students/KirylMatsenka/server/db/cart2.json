@@ -1,0 +1,20 @@
+{
+    "amount": 800,
+    "countGoods": 2,
+    "contents": [
+        {
+            "id": 5,
+            "name": "Phones",
+            "price": 500,
+            "image": "https://placehold.it/200x150",
+            "quantity": 1
+        },
+        {
+            "id": 6,
+            "name": "Router",
+            "price": 300,
+            "image": "https://placehold.it/200x150",
+            "quantity": 2
+        }
+    ]
+}

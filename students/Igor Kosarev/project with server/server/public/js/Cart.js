@@ -7,8 +7,11 @@ Vue.component('cart', {
       countGoods: 0,
       imgCart: 'https://placehold.it/100x80',
       //cartUrl: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/getBasket.json',
-      cartUrl: '/api/getBasket',
-      updateCartUrl: '/api/updateBasket',
+      cartUrl: '/api/getCart',
+      //updateCartUrl: '/api/updateBasket',
+      updateCartUrl: '/api/addCartItem',
+      deleteCartUrl: '/api/deleteCartItem',
+      createCartUrl: '/api/createCart',
       visible: false
     }
   },
@@ -18,24 +21,44 @@ Vue.component('cart', {
     },
     addProduct(product) {
       let productId = +product.id_product;
+      let event = null;
+      let empty = false;
       let find = this.items.find(element => element.id_product === productId);
+      event = {
+        product_name: product.product_name,
+        id_product: product.id_product,
+        price: +product.price,
+        quantity: 1
+      }
       if (!find) {
-        this.items.push({
-          product_name: product.product_name,
-          id_product: product.id_product,
-          price: +product.price,
-          quantity: 1
-        })
+        this.items.push(event)
+        empty = true
       } else {
         find.quantity++
       }
-      this.$parent.sendJSON(this.updateCartUrl, this.items)
-        .catch(err => this.$parent.$children[2].viewError("Ошибка сохранения корзины: " + err))
-      this.updateCounters()
+      console.log(event)
+      if (!empty) {
+        this.$parent.putJSON(this.updateCartUrl, event)
+          .catch(err => this.$parent.$children[2].viewError("Ошибка сохранения корзины: " + err))
+        this.updateCountersOnFront()
+      } else {
+        event = [event]
+        this.$parent.postJSON(this.createCartUrl, event)
+          .catch(err => this.$parent.$children[2].viewError("Ошибка сохранения корзины: " + err))
+        this.updateCountersOnFront()
+      }
+
     },
     removeProduct(product) {
       let productId = +product.id_product;
+      let event = null;
       let find = this.items.find(element => element.id_product === productId);
+      event = {
+        product_name: product.product_name,
+        id_product: product.id_product,
+        price: +product.price,
+        quantity: 1
+      }
       find.quantity--;
       if (find.quantity < 1) {
         let position = +this.items.indexOf(find)
@@ -45,10 +68,10 @@ Vue.component('cart', {
           this.items.splice(0, 1)
         }
       }
-
-      this.$parent.sendJSON(this.updateCartUrl, this.items)
+      // console.log(event)
+      this.$parent.deleteJSON(this.deleteCartUrl, event)
         .catch(err => this.$parent.$children[2].viewError("Ошибка сохранения корзины: " + err))
-      this.updateCounters()
+      this.updateCountersOnFront()
     },
     updateCounters() {
       //*Тут берём расчёт с back-end

@@ -6,7 +6,7 @@ const fs = require('fs');
 const cartCore = require('./cartCore/cart')
 
 const app = express();
-app.use(express.static('public'));
+app.use(express.static('dist/public'));
 
 //* сервер
 app.use(express.json()) // for parsing application/json
@@ -21,7 +21,7 @@ let server = app.listen(80, function() {
 
 app.get('/api/catalogData', function(req, res) {
   //res.send(catalogData).end;
-  fs.readFile('server/db/aggregates/catalogData.json', 'utf-8', (err, data) => {
+  fs.readFile('dist/server/db/aggregates/catalogData.json', 'utf-8', (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 }))
     } else(
@@ -32,7 +32,7 @@ app.get('/api/catalogData', function(req, res) {
 
 app.get('/api/getBasket', function(req, res) {
   //res.send(basket).end;
-  fs.readFile('server/db/aggregates/userCart.json', 'utf-8', (err, data) => {
+  fs.readFile('dist/server/db/aggregates/userCart.json', 'utf-8', (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 })).end
     } else(

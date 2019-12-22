@@ -1,6 +1,6 @@
-Vue.component('cart-item', {
-    props: ['img', 'el'],
-    template: `
+let cartItem = {
+  props: ['img', 'el'],
+  template: `
     <div class="cart-item" v-if="el.quantity>0">
                     <div class="product-bio">
                         <img :src="img" alt="Some image">
@@ -16,5 +16,5 @@ Vue.component('cart-item', {
                     </div>
                 </div>
                 `
-  })
-  //export default catalogItem
+}
+export default cartItem

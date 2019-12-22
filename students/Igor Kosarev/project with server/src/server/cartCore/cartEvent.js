@@ -34,22 +34,6 @@ function addItem(event, array) {
     }
   }
   if (counter == 0) {
-    let item = new cartItem(event.id_product, event.product_name, event.price, 1)
-    array.push(item)
-  }
-  if (item.id_product == event.id_product) {
-    item.quantity++
-  }
-}
-
-function addItem(event, array) {
-  let counter = 0
-  for (item of array) {
-    if (item.id_product == event.id_product) {
-      counter++
-    }
-  }
-  if (counter == 0) {
     let item = new cartItem(event.id_product, event.product_name, event.price, event.quantity)
     array.push(item)
   }
@@ -74,7 +58,7 @@ function rmItem(event, array) {
 
 let createAggregate = () => {
   let promise = new Promise(function(resolve, reject) {
-      fs.readFile('server/db/events/events.json', 'utf-8', (err, data) => {
+      fs.readFile('dist/server/db/events/events.json', 'utf-8', (err, data) => {
         if (err) {
           console.log("EventHandler can not read events")
         } else {
@@ -115,7 +99,7 @@ let createAggregate = () => {
       //     console.log("Агрегат создан")
       //   }
       // })
-      fs.writeFileSync("server/db/aggregates/userCart.json", JSON.stringify(cart))
+      fs.writeFileSync("dist/server/db/aggregates/userCart.json", JSON.stringify(cart))
         // console.log("Агрегат создан:")
         // console.log(cart)
     })

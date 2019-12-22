@@ -40,14 +40,14 @@ let createEvent = (req, res, action) => {
       resolve(event)
     })
     .then(event => {
-      fs.readFile('db/events/events.json', 'utf-8', (err, data) => {
+      fs.readFile('server/db/events/events.json', 'utf-8', (err, data) => {
         if (err) {
           console.log("ComandHandler can not read existing events")
           res.sendStatus(404, JSON.stringify({ result: 0 }))
         } else {
           let events = JSON.parse(data)
           events.push(event)
-          fs.writeFileSync("db/events/events.json", JSON.stringify(events))
+          fs.writeFileSync("server/db/events/events.json", JSON.stringify(events))
         }
       })
     })

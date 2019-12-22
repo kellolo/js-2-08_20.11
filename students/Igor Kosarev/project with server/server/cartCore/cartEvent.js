@@ -74,7 +74,7 @@ function rmItem(event, array) {
 
 let createAggregate = () => {
   let promise = new Promise(function(resolve, reject) {
-      fs.readFile('db/events/events.json', 'utf-8', (err, data) => {
+      fs.readFile('server/db/events/events.json', 'utf-8', (err, data) => {
         if (err) {
           console.log("EventHandler can not read events")
         } else {
@@ -115,7 +115,7 @@ let createAggregate = () => {
       //     console.log("Агрегат создан")
       //   }
       // })
-      fs.writeFileSync("db/aggregates/userCart.json", JSON.stringify(cart))
+      fs.writeFileSync("server/db/aggregates/userCart.json", JSON.stringify(cart))
         // console.log("Агрегат создан:")
         // console.log(cart)
     })

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Валидация формы</title>
+</head>
+<body>
+    <div class="container">
+        <form action="#" class="myForm">
+            <fieldset class="form-group">
+                <caption>
+                    <label for = "form_name">Имя</label>
+                    <input type="text" name="Name" id="form_name" class="form-control" data-reg="^[^\d\s]+$" data-alert="Имя может содержать только буквы"> 
+                </caption>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <caption>
+                    <label for = "form_tel">Телефон</label>
+                    <input type="text" name="Tel" id="form_tel" class="form-control" data-reg="^\+7\(\d{3}\)\d{3}-\d{4}$" data-alert="Пожалуйста введите телефон в формате +7(000)000-0000">
+                </caption>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <caption>
+                    <label for = "form_mail">E-mail</label>
+                    <input type="text" name="E-mail" id="form_mail" class="form-control" data-reg="^[\w'._+-]+\@[\w'._+-]+$" data-alert="Некорректный адрес электронной почты">
+                </caption>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <caption>
+                    <label for = "form_text">Сообщение</label>
+                    <textarea type="text" name="Text" id="form_text" class="form-control" rows="3" data-reg="\S+" data-alert="Отзыв не может быть пустым"></textarea>
+                </caption>
+            </fieldset>
+            <button type="submit" class="btn btn-primary" id="ok">Отправить</button>
+        </form>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

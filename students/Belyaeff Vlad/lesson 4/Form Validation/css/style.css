@@ -1,0 +1,50 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100% - 15px;
+	padding: 15px;
+}
+
+h1 {
+	padding: 15px 0px;
+}
+
+form {
+	width: 450px;
+	padding: 10px;
+	font-size: 20px;
+}
+
+.form-field {
+	width: 100%;
+	padding: 5px;
+}
+
+input, textarea {
+	width: 420px;
+	padding: 5px;
+	font-size: 20px;
+	outline: none;
+
+}
+
+.invalid {
+	border: 2px solid red;
+}
+
+.err-txt {
+	font-size: 15px;
+	color: red;
+	visibility: hidden;
+}
+
+.send-btn {
+	width: 150px;
+	margin: 5px 0 0 0;
+	padding: 5px;
+	font-size: 20px;
+}
+

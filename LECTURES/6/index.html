@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 40%;
+            margin: 0 auto
+        }
+        .post {
+            border-radius: 5px;
+            border: 2px solid grey;
+            padding: 15px;
+            margin-bottom: 10px
+        }
+        .post-footer {
+            text-align: right
+        }
+        .font-it {
+            font-style: italic
+        }
+        .red {
+            color: red
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="limit"> <button @click="reload">Показать</button>
+        <input type="text" v-model="firstPost"><button @click="check">Показать пост номер</button>
+        <div class="container">
+            <post :item="requestedPosts [demoPost]" ref="demo-post"></post>
+            <hr>
+            <post v-for="postObj of requestedPosts" :item="postObj"></post>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="components/post.js"></script>
+    <script src="main.js"> </script>
+</body>
+</html>

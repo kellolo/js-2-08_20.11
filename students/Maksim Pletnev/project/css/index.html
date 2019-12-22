@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id="userform">
+        <h2>Гамбургеры</h2>
+        <fieldset>
+            <caption>
+                <input type="radio" name="Burger" id="burg" value="small"> Маленький (50 рублей, 20 калорий)
+            </caption>
+            <caption>
+                <input type="radio" name="Burger" id="burg" value="big"> Большой (100 рублей, 40 калорий)
+            </caption>
+        </fieldset>
+        <h3>Начинки</h3>
+        <fieldset>
+            <caption>
+                <input type="checkbox" name="toppings" value="ski"> Cыр (+10 рублей, +20 калорий)
+            </caption>
+            <caption>
+                <input type="checkbox" name="toppings" value="read"> Cалат (+20 рублей, +5 калорий)
+            </caption>
+            <caption>
+                <input type="checkbox" name="toppings" value="pc"> Картофель (+15 рублей, +10 калорий)
+            </caption>
+            <caption>
+                <input type="checkbox" name="toppings" value="js"> Приправа (+15 рублей, +0 калорий)
+            </caption>
+            <caption>
+                <input type="checkbox" name="toppings" value="js"> Майонез (+20 рублей, +5 калорий)
+            </caption>
+        </fieldset> 
+    </form>
+    <button id="ok">Добавить пользователя</button>
+
+    <script>
+        let uForm = document.querySelector ('#userform')
+        let btn = document.querySelector ('#ok')
+        let users = []
+        btn.addEventListener ('click', addUser)
+        function addUser () {
+            let newUser = new User ('Name', 'Age', 'Gender', 'Hobbie')
+            users.push (newUser)
+        }
+        class User {
+            constructor (name, age, gender, hobbies) {
+                this.Name = this._input(name)
+                this.Age = this._input(age)
+                this.Gender = this._check (gender)
+                this.Hobbies = this._getHobbies (hobbies)
+            }
+            _input (attrName) {
+                let object = document.querySelector (`input[name=${attrName}]`)
+                return object.value
+            }
+            _check (attrName) {
+                let object = document.querySelector (`input[name=${attrName}]:checked`)
+                return object.value
+            }
+            _getHobbies (attrName) {
+                let hobs = []
+                let arr = [...document.querySelectorAll (`input[name=${attrName}]:checked`)]
+                arr.forEach (el => hobs.push (el.value))
+                return hobs
+            }
+        }
+        // class Parameter {
+        //     constructor (el) {
+        //     }
+        // }
+        // class Human {
+        //     constructor (name, gender) {
+        //         this.Name = name
+        //         this.Gender = this._returnGender (gender)
+        //         this.Married = false
+        //         this.Partner = null
+        //     }
+        //     greet () {
+        //         this.Name ? console.log ('Hi! I am ' + this.Name + '.') : console.log ('Error')
+        //     }
+        //     getMarried (pers) {
+        //         if (!this.Married) {
+        //             this.Married = true
+        //             this.Partner = pers.Name
+        //             pers.getMarried (this)
+        //         } else {
+        //             console.log (`${this.Name} already married with ${this.Partner}`)
+        //         }
+        //     }
+        //     _returnGender (g) {
+        //         return g ? 'male' : 'female'
+        //     }
+        // }
+        // let olya = new Human ('Olga', 0)
+        // let kolya = new Human ('Nikolay', 1)
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "7_pr_Node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

@@ -10,7 +10,7 @@ const logger = (action, name) => {
             let newLog = {
                 user_action: action,
                 name_prod: name,
-                time: moment().format ('DD-MM-YYYY, h:mm:ss')
+                time: moment().format ('DD-MM-YYYY, H:mm:ss')
             }
             d.push (newLog);
             fs.writeFile ('./server/db/logs.json', JSON.stringify (d, null, 4), (err) => {

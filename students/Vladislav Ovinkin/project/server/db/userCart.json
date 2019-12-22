@@ -3,21 +3,15 @@
     "countGoods": 2,
     "contents": [
         {
-            "product_id": 4,
-            "product_name": "Mouse",
-            "price": 10,
-            "quantity": 1
-        },
-        {
             "product_id": 1,
             "product_name": "Notebook",
             "price": 1000,
-            "quantity": 2
+            "quantity": 1
         },
         {
-            "product_id": 8,
-            "product_name": "Gamepad",
-            "price": 24,
+            "product_id": 4,
+            "product_name": "Mouse",
+            "price": 10,
             "quantity": 1
         }
     ]

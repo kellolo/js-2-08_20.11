@@ -14,7 +14,6 @@ let handler = (req, res, action, file) => {
             res.sendStatus (404, JSON.stringify ({ result: 0 }));
         } else {
             let oldCart = JSON.parse (data);
-            console.log (oldCart);
             let { newCart, name } = actions [action] (oldCart, req);
             fs.writeFile (file, newCart, (err) => {
                 if (err) {

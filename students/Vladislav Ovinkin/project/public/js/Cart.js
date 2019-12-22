@@ -62,7 +62,11 @@ Vue.component ('cart', {
         },
         getCart (url) {
             return this.$parent.getJSON (url)
-                .then (data => this.items = data.contents);
+                .then (data => {
+                    this.items = data.contents;
+                    this.totalSum = data.amount;
+                    this.$parent.cartItemsCount = data.countGoods;
+                });
         },
         calcTotalSum () {
             let totalSum = 0;
@@ -80,11 +84,7 @@ Vue.component ('cart', {
         },
     },
     mounted () {
-        this.getCart ('/cart')
-            .finally (() => {
-                this.calcTotalSum ();
-                this.$root.setCartItemsCount ();
-            });
+        this.getCart ('/cart');
     },
     template: `
         <div class="cart-block" v-if="$parent.cartshow">

@@ -1,0 +1,20 @@
+{
+    "amount": 800,
+    "countGoods": 2,
+    "contents": [
+        {
+            "id": 3,
+            "name": "Keyboard",
+            "price": 700,
+            "image": "https://placehold.it/200x150",
+            "quantity": 1
+        },
+        {
+            "id": 4,
+            "name": "Mouse",
+            "price": 600,
+            "image": "https://placehold.it/200x150",
+            "quantity": 1
+        }
+    ]
+}

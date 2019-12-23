@@ -1,0 +1,37 @@
+[
+    {
+      "id": 1,
+      "title": "Yokohama",
+      "price": 6740
+    },
+    {
+      "id": 2,
+      "title": "TOYO",
+      "price": 7570
+    },
+    {
+      "id": 3,
+      "title": "Triangle",
+      "price": 4150
+    },
+    {
+      "id": 4,
+      "title": "Continental",
+      "price": 9650
+    },
+    {
+      "id": 5,
+      "title": "Pirelli",
+      "price": 8410
+    },
+    {
+      "id": 6,
+      "title": "Michelin",
+      "price": 10350
+    },
+    {
+      "id": 7,
+      "title": "Nokian",
+      "price": 4470
+    }
+]

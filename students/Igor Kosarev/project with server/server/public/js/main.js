@@ -15,7 +15,7 @@ let app = new Vue({
       return fetch(url)
         .then(d => d.json())
     },
-    sendJSON(url, data) {
+    postJSON(url, data) {
       return fetch(url, {
           method: 'POST',
           mode: 'cors',
@@ -33,6 +33,46 @@ let app = new Vue({
         //   console.log(response)
         // })
     },
+
+    putJSON(url, data) {
+      return fetch(url, {
+          method: 'PUT',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrer: 'no-referrer', // no-referrer, *client
+          keepalive: false,
+          body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
+        })
+        // .then((response) => {
+        //   console.log(response)
+        // })
+    },
+
+    deleteJSON(url, data) {
+      return fetch(url, {
+          method: 'DELETE',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrer: 'no-referrer', // no-referrer, *client
+          keepalive: false,
+          body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
+        })
+        // .then((response) => {
+        //   console.log(response)
+        // })
+    },
+
+
     showCart() {
       this.$children[0].show()
     }

@@ -1,0 +1,32 @@
+{
+  "name": "7_pr_Node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon server/server.js",
+    "build": "webpack --config frontend.config.js",
+    "build-server": "webpack --config server.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.2",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "style-loader": "^1.0.2",
+    "terser-webpack-plugin": "^2.3.1",
+    "webpack": "^4.41.3",
+    "webpack-cli": "^3.3.10"
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <Search></Search>
+                <button class="btn-cart" type="button" @click="showCart">Корзина</button>
+                <cart ref="cartcomp" v-show="isVisibleCart"></cart>
+            </div>
+        </header>
+        <main>
+            <catalog :products="filteredProducts"></catalog>
+        </main>
+    </div>
+        <script type="application/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script defer type="application/javascript" src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+        <script type="application/javascript" src="js/CartItem.js"></script>
+        <script type="application/javascript" src="js/Cart.js"></script>
+		<script type="application/javascript" src="js/CatalogItem.js"></script>
+		<script type="application/javascript" src="js/Catalog.js"></script>
+		<script type="application/javascript" src="js/Search.js"></script>
+		<script type="application/javascript" src="js/main.js"></script>
+</body>
+</html>

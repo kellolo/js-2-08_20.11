@@ -1,4 +1,6 @@
-Vue.component('cart', {
+import cartItem from './cartItem'
+
+let cart = {
     data() {
         return {
             cart: [],
@@ -10,7 +12,7 @@ Vue.component('cart', {
         }
     },
     mounted() {
-        this.$parent.getJSON('/api/cart')
+        this.$parent.getJSON('/cart')
             .then(data => this.cart = data.contents)
     },
     template: `
@@ -26,23 +28,17 @@ Vue.component('cart', {
             this.hidenCart = !this.hidenCart
         },
         addProduct(product) {
-            let find = this.cart.find(item => item.id === product.id)
+            let find = this.cart.find(item => item.id_product === product.id_product)
             if(find) {
-
-                // this.$parent.putJSON(this.addCart)
-                // .then(answer => {
-                //     if(answer.result) {
-                //         find.quantity++
-                //     }
-                // })
-                console.log('Попробуй, или во вторник')
-                this.$parent.putJSON('/api/cart/}', {quantity: 1})
-                    .then(data => {
+                this.$parent.putJSON(`/cart/${find.id_product}`, 1)
+                .then(answer => {
+                    if(answer.result) {
                         find.quantity++
-                    })
+                    }
+                })
             } else {
                 let pr = Object.assign({}, product, {quantity: 1})
-                this.$parent.postJSON('/api/cart', pr)
+                this.$parent.postJSON('/cart', pr)
                 .then(answer => {
                     if(answer.result) {
                         this.cart.push(pr)
@@ -51,16 +47,15 @@ Vue.component('cart', {
             }
         },
         removeProduct(product) {
-            let find = this.cart.find(item => item.id === product.id)
             if(product.quantity > 1) {
-                this.$parent.getJSON(this.delCart)
+                this.$parent.putJSON(`/cart/${find.id_product}`, -1)
                 .then(answer => {
                     if(answer.result) {
                         find.quantity--
                     }
                 })
             } else {
-                this.$parent.getJSON(this.delCart)
+                this.$parent.deleteJSON(`/cart/${product.id_product}`)
                 .then(answer => {
                     if(answer.result) {
                         this.cart.splice(this.cart.indexOf (product), 1)
@@ -69,4 +64,4 @@ Vue.component('cart', {
             }
         }
     }
-})
+}

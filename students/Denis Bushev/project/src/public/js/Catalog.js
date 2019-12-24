@@ -1,4 +1,5 @@
-Vue.component('catalog', {
+import catalogItem from './CatalogItem'
+let catalog = {
     data () {
         return {
             items: [],
@@ -6,8 +7,13 @@ Vue.component('catalog', {
             //catalogUrl: 'https://raw.githubusercontent.com/Jestric-sys/js-data-item/master/dataCatalog.json'
         }
     },
+    methods: {
+        addProduct(product) {
+            console.log(product.product_name)
+        }
+    },
     mounted () {
-        this.$parent.getJSON ('/api/catalog')
+        this.$parent.getJSON ('/catalog')
             .then (data => this.items = data)
     },
     template: `
@@ -15,7 +21,4 @@ Vue.component('catalog', {
         <catalog-item v-for="product of items" :img="imgCatalog" :el="product" :key="product.id"/>
     </div>
     `
-    // mounted() {
-    //     console.log(this)
-    // }
-})
+}

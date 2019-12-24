@@ -1,4 +1,4 @@
-const cartFile = 'server/db/cart2.json'
+const cartFile = './dist/server/db/cart2.json'
 
 let add = (cart, req) => {
     cart.contents.push (req.body.product)

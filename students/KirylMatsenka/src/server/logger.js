@@ -1,5 +1,5 @@
 const fs = require ('fs')
-const logfile = 'server/db/stats.json'
+const logfile = './dist/server/db/stats.json'
 const moment = require ('moment')
 
 let writeJsonFile = (file, result) => {

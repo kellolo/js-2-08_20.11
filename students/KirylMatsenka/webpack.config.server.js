@@ -30,7 +30,7 @@ module.exports = {
         new cop ([
             {
                 from: path.resolve (__dirname, 'src', 'server', 'db'),
-                to: 'server/db/[name].[ext]',
+                to: 'db/[name].[ext]',
                 toType: 'template'
             }
         ])

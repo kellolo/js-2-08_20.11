@@ -2,9 +2,9 @@
   "name": "Kiryl",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
+  "main": "./dist/server/js/main.js",
   "scripts": {
-    "serve": "nodemon server/server.js",
+    "serve": "nodemon ./dist/server/js/main.js",
     "build": "webpack --mode production --config webpack.config.js && webpack --mode production --config webpack.config.server.js"
   },
   "nodemonConfig": {

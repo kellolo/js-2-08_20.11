@@ -5,7 +5,7 @@ const express = require ('express')
 const router = express.Router ()
 
 router.get ('/', (req, res) => {
-    fs.readFile ('server/db/cart2.json', 'utf-8', (err, data) => {
+    fs.readFile ('./dist/server/db/cart2.json', 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({result: 0}))
         } else {

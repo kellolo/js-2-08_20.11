@@ -1,16 +1,13 @@
 'use strict';
 
-// import catalogItem from './CatalogItem';
+import cartItem from './CartItem';
 
-Vue.component ('cart', {
+let cart = {
     data () {
         return {
             items: [],
             totalSum: 0,
             cartImage: 'https://placehold.it/100x80',
-            cartUrl: 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json/getBasket.json',
-            addUrl: 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json/addToBasket.json',
-            delUrl: 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json/deleteFromBasket.json',
         }
     },
     methods: {
@@ -93,9 +90,10 @@ Vue.component ('cart', {
             <div v-show="getCartItemsCount() == 0">Корзине скучно без товаров :(</div>
         </div>
     `,
-    // components: {
-    //     'catalog-item': catalogItem,
-    // },
-})
+    components: {
+        'cart-item': cartItem,
+        'cart': cart,
+    },
+}
 
-// export default catalog;
+export default cart;

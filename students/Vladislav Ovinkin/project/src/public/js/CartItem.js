@@ -1,6 +1,6 @@
 'use strict';
 
-Vue.component ('cart-item', {
+let cartItem = {
     props: ['el', 'img'],
     methods: {
         
@@ -22,4 +22,5 @@ Vue.component ('cart-item', {
             </div>
         </div>
     `,
-})
+}
+export default cartItem;

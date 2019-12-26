@@ -1,0 +1,42 @@
+[
+    {
+        "user_action": "change",
+        "name_prod": "Notebook",
+        "time": "22-12-2019, 15:29:00"
+    },
+    {
+        "user_action": "change",
+        "name_prod": "Notebook",
+        "time": "22-12-2019, 15:29:22"
+    },
+    {
+        "user_action": "add",
+        "name_prod": "USB-camera",
+        "time": "22-12-2019, 15:43:06"
+    },
+    {
+        "user_action": "add",
+        "name_prod": "Router",
+        "time": "22-12-2019, 15:43:07"
+    },
+    {
+        "user_action": "del",
+        "name_prod": "Router",
+        "time": "22-12-2019, 15:43:55"
+    },
+    {
+        "user_action": "add",
+        "name_prod": "Router",
+        "time": "22-12-2019, 15:43:56"
+    },
+    {
+        "user_action": "del",
+        "name_prod": "Router",
+        "time": "22-12-2019, 15:44:07"
+    },
+    {
+        "user_action": "del",
+        "name_prod": "USB-camera",
+        "time": "22-12-2019, 15:44:08"
+    }
+]

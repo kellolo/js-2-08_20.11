@@ -1,8 +1,8 @@
 'use strict';
 
-// import catalogItem from './CatalogItem';
+import catalogItem from './CatalogItem';
 
-Vue.component ('catalog', {
+let catalog = {
     data () {
         return {
             items: [],
@@ -33,9 +33,9 @@ Vue.component ('catalog', {
             <catalog-item v-for="product of filtered" :el="product" :key="product.product_id"></catalog-item>
         </div>
     `,
-    // components: {
-    //     'catalog-item': catalogItem,
-    // },
-})
+    components: {
+        'catalog-item': catalogItem,
+    },
+}
 
-// export default catalog;
+export default catalog;

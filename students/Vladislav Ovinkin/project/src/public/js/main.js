@@ -1,8 +1,9 @@
 'use strict';
 
-//import catalog from './Catalog';
+import catalog from './Catalog';
+import cart from './Cart';
 
-const app = new Vue ({
+const app = {
     el: '#app',
     data: {
         cartItemsCount: 0,
@@ -47,7 +48,10 @@ const app = new Vue ({
             this.$root.$refs.catalogComp.filter (this.searchLine);
         }
     },
-    // components: {
-    //     'catalog': catalog,
-    // },
-})
+    components: {
+        'catalog': catalog,
+        'cart': cart,
+    },
+}
+
+export default app;

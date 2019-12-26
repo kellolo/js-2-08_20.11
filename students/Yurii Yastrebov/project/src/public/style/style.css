@@ -75,6 +75,7 @@ img {
     color: black;
     width: 300px;
 }
+
 .invisible{
     display: none;
 }
@@ -89,6 +90,7 @@ img {
     border-right: 10px solid transparent;
     border-bottom: 10px solid white;
 }
+
 .buy-btn, .del-btn{
     margin-top: 5px;
     background-color: #2f2a2d;
@@ -123,7 +125,7 @@ img {
     font-size: 0.5em;
 }
 .product-price{
-    margin-left: 150px;
+    margin-left: 30px;
 }
 .product-desc{
     max-width: 150px;

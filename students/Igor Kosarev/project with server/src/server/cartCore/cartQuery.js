@@ -1,6 +1,6 @@
 const fs = require('fs');
 let get = (req, res) => {
-  fs.readFile('db/aggregates/userCart.json', 'utf-8', (err, data) => {
+  fs.readFile('dist/server/db/aggregates/userCart.json', 'utf-8', (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 })).end
     } else(
@@ -10,7 +10,7 @@ let get = (req, res) => {
 }
 
 let getHystory = (req, res) => {
-  fs.readFile('db/events/events.json', 'utf-8', (err, data) => {
+  fs.readFile('dist/server/db/events/events.json', 'utf-8', (err, data) => {
     if (err) {
       res.sendStatus(404, JSON.stringify({ result: 0 })).end
     } else(

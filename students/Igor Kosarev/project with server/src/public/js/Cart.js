@@ -1,5 +1,5 @@
-//import catalogItem from './CatalogItem'
-Vue.component('cart', {
+import catalogItem from './CartItem'
+let cart = {
   data() {
     return {
       items: [],
@@ -113,9 +113,9 @@ Vue.component('cart', {
         <p>На сумму: {{this.amount}} рублей</p>
     </div>
     `,
-  // components: {
-  //     'catalog-item': catalogItem
-  // }
-})
+  components: {
+    'cart-item': catalogItem
+  }
+}
 
-//export default catalog
+export default cart

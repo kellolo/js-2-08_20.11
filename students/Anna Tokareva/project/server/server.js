@@ -6,6 +6,7 @@ const app = express();
 
 app.use (express.json());
 app.use ('/', express.static('public'));
+
 app.listen (8080, () => {
     console.log ('server is listening at port 8080');
 });
@@ -40,7 +41,7 @@ app.post ('/api/cart', (req, res) => {
                 if (err) {
                     res.sendStatus (500, JSON.stringify({result: 0}));
                 } else {
-                    res.sendStatus(JSON.stringify({result: 1}));
+                    res.send(JSON.stringify({result: 1}));
                 }
             });
         };
@@ -57,7 +58,24 @@ app.put ('/api/cart/:id', (req, res) => {
                 if (err) {
                     res.sendStatus (404, JSON.stringify({result: 0}));
                 } else {
-                    res.sendStatus(JSON.stringify({result: 1}));
+                    res.send(JSON.stringify({result: 1}));
+                }
+            });
+        };
+    });
+});
+
+app.delete ('/api/cart/:id', (req, res) => {
+    fs.readFile('server/db/userCart.json', 'utf-8', (err, data) => {
+        if (err) {
+            res.sendStatus (404, JSON.stringify({result: 0}));
+        } else {
+            let newCart = cartCore.del(JSON.parse(data), req);
+            fs.writeFile('server/db/userCart.json', newCart, (err) => {
+                if (err) {
+                    res.sendStatus (404, JSON.stringify({result: 0}));
+                } else {
+                    res.send(JSON.stringify({result: 1}));
                 }
             });
         };

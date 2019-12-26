@@ -1,5 +1,6 @@
 const fs = require ('fs')
-const logfile = 'server/db/stats.json'
+const logfile = './dist/server/db/stats.json'
+const moment = require ('moment')
 
 let writeJsonFile = (file, result) => {
     fs.readFile (file, 'utf-8', (err, data) => {
@@ -19,7 +20,6 @@ let writeJsonFile = (file, result) => {
 
 let log = (req) => {
     let status
-    let date = new Date ()
 
     switch (req.method) {
         case 'DELETE':
@@ -38,9 +38,8 @@ let log = (req) => {
 
     let result = {
         status: status,
-        date: date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
-         + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(),
-        product: req.body
+        date: moment ().format ('YYYY-MM-DD h:mm:ss'),
+        product: req.body.product
     }
 
     writeJsonFile (logfile, result)

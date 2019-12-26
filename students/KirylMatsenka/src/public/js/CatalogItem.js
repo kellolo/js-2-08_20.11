@@ -1,4 +1,4 @@
-Vue.component ('catalog-item', {
+let catalogItem = {
     props: ['product'],
     template: `<div class="product-item">
                     <img :src="product.image" alt="Some img">
@@ -8,4 +8,5 @@ Vue.component ('catalog-item', {
                         <button class="buy-btn" @click="$root.$refs.cartcomp.addProduct (product)">Купить</button>
                     </div>
                 </div>`
-})
+}
+export default catalogItem

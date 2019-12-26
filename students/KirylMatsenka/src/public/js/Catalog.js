@@ -1,13 +1,10 @@
-Vue.component('catalog', {
+import catalogItem from './CatalogItem'
+let catalog = {
     data () {
         return {
             products: [],
-            catalogUrl: '/api/catalog',
+            catalogUrl: '/catalog',
         }
-    },
-    
-    methods: {
-    
     },
     mounted () {
         this.$parent.getJSON (this.catalogUrl)
@@ -15,5 +12,9 @@ Vue.component('catalog', {
     },
     template: `<div class="products">
                     <catalog-item v-for="product of products" :product="product" :key="product.id"></catalog-item>
-              </div>`
-})
+              </div>`,
+    components: {
+        'catalog-item': catalogItem
+    }
+}
+export default catalog

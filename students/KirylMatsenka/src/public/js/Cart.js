@@ -1,8 +1,9 @@
-Vue.component ('cart', {
+import cartItem from './CartItem'
+let cart = {
     data () {
         return {
             cart: [],
-            cartUrl: '/api/cart',
+            cartUrl: '/cart',
             show: false
         }
     },
@@ -11,7 +12,7 @@ Vue.component ('cart', {
             let find = this.cart.find (element => element.id === product.id)
             if (find) {
                 find.quantity++
-                this.$parent.putJSON (this.cartUrl, find).then (answer => {
+                this.$parent.putJSON (this.cartUrl + `/${find.id}`, find).then (answer => {
                     !answer.ok ? find.quantity-- : null
                 })
             } else {
@@ -28,13 +29,13 @@ Vue.component ('cart', {
         removeProduct (product) {
             let cartItem = this.cart.find (item => item == product)
             if (cartItem.quantity == 1) {
-                this.$parent.deleteJSON (this.cartUrl, cartItem)
+                this.$parent.deleteJSON (this.cartUrl + `/${cartItem.id}`, cartItem)
                 .then (answer => {
                     answer.ok ? this.cart.splice (this.cart.indexOf (cartItem), 1) : null
                 })
             } else {
                 cartItem.quantity--
-                this.$parent.putJSON (this.cartUrl, cartItem)
+                this.$parent.putJSON (this.cartUrl + `/${cartItem.id}`, cartItem)
                 .then (answer => {
                 !answer.ok ? cartItem.quantity++ : null
             })
@@ -57,5 +58,9 @@ Vue.component ('cart', {
                         <cart-item v-for="product of cart" :product="product" :key="product.id"></cart-item> 
                     </div>
                 </div>
-            `
-})
+            `,
+    components: {
+        'cart-item': cartItem
+    }
+}
+export default cart

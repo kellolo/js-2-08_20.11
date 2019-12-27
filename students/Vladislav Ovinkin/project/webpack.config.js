@@ -38,7 +38,7 @@ module.exports = {
         }),
         new htmlPl ({
             template: path.resolve (__dirname, 'src', 'public', 'index.html'),
-            filename: 'index.html'
+            filename: 'index.html' 
         })
     ],
 }

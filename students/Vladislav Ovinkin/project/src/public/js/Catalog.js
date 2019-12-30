@@ -7,7 +7,6 @@ let catalog = {
         return {
             items: [],
             filtered: [],
-            catalogUrl: 'https://raw.githubusercontent.com/vladovinkin/js-2-08_20.11/master/students/Vladislav%20Ovinkin/project/json/catalogData.json',
         }
     },
     methods: {

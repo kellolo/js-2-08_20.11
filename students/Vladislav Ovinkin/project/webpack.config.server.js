@@ -29,7 +29,7 @@ module.exports = {
     plugins: [
         new cop ([{
             from: 'src/server/db',
-            to: 'server/db/[name].[ext]',
+            to: 'db/[name].[ext]',
             toType: 'template'
         }])        
     ],

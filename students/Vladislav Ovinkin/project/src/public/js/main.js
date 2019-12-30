@@ -1,5 +1,3 @@
-'use strict';
-
 import catalog from './Catalog';
 import cart from './Cart';
 

@@ -3,11 +3,12 @@ const minCSS = require ('mini-css-extract-plugin');
 const htmlPl = require ('html-webpack-plugin');
 const optimizeCSS = require ('optimize-css-assets-webpack-plugin');
 const terserJSPl = require ('terser-webpack-plugin');
+const webpack = require ('webpack');
 
 module.exports = {
-    entry: { // всё о входном файле
-        main: path.resolve (__dirname, 'src', 'index.js')
-    },
+    entry: [ "babel-polyfill", 'whatwg-fetch',  // всё о входном файле
+        path.resolve (__dirname, 'src', 'index.js')
+    ],
     output: { // всё о собранном
         path: path.join (__dirname, 'dist', 'public'),
         publicPath: "",
@@ -22,16 +23,23 @@ module.exports = {
             { // es6 => es5
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
+                use : {
+                    loader: 'babel-loader'
+                }
             },
             {
                 test: /\.css$/,
+                exclude: /node_modules/,
                 use: [minCSS.loader, 'css-loader'],
-                exclude: /node_modules/
             }
         ],
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin (),
+        new webpack.ProvidePlugin ({
+            'Promise': 'exports-loader?global.Promise!es6-promise',
+            'fetch': 'exports-loader?self.fetch!whatwg-fetch'
+        }),
         new minCSS ({
             filename: 'css/[name].css',
             chunkFilename: '[id].css'

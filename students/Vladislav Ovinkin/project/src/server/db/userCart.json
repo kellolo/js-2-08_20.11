@@ -1,17 +1,11 @@
 {
-    "amount": 1010,
-    "countGoods": 2,
+    "amount": 20,
+    "countGoods": 1,
     "contents": [
         {
-            "product_id": 1,
-            "product_name": "Notebook",
-            "price": 1000,
-            "quantity": 1
-        },
-        {
-            "product_id": 4,
-            "product_name": "Mouse",
-            "price": 10,
+            "product_id": 3,
+            "product_name": "Keyboard",
+            "price": 20,
             "quantity": 1
         }
     ]

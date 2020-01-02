@@ -18,13 +18,13 @@
     },
     methods: {
         addProduct (product) {
-            this.$root.$refs.error.clearErrorData ();
+            this.$root.$children[0].$refs.error.clearErrorData ();
             const find = this.items.find (element => element.product_id === product.product_id);
 
             if (!find) {
                 let newItem = Object.assign ({}, product, {quantity: 1});
                 delete newItem.img;
-                this.$parent.postJSON ('/cart', newItem)
+                this.$parent.postJSON ('./api/cart', newItem)
                     .then (answer => { 
                         if (answer.result) {
                             this.items.push (newItem);
@@ -32,7 +32,7 @@
                         }
                     })
             } else {
-                this.$parent.putJSON (`./cart/${find.product_id}`, 1)
+                this.$parent.putJSON (`./api/cart/${find.product_id}`, 1)
                     .then (answer => { 
                         if (answer.result) {
                             find.quantity++;
@@ -43,10 +43,10 @@
         },
         removeProduct (product) {
             
-            this.$root.$refs.error.clearErrorData ();
+            this.$root.$children[0].$refs.error.clearErrorData ();
 
             if (product.quantity > 1) {
-                this.$parent.putJSON (`./cart/${product.product_id}`, -1)
+                this.$parent.putJSON (`./api/cart/${product.product_id}`, -1)
                     .then (answer => { 
                         if (answer.result) {
                             product.quantity--;
@@ -54,7 +54,7 @@
                         }
                     })
             } else {
-                this.$parent.deleteJSON (`./cart/${product.product_id}`)
+                this.$parent.deleteJSON (`./api/cart/${product.product_id}`)
                     .then (answer => { 
                         if (answer.result) {
                             this.items.splice (this.items.indexOf (product), 1)
@@ -83,7 +83,7 @@
         },
         calcSummary () {
             this.calcTotalSum();
-            this.$root.setCartItemsCount ();
+            this.$root.$children[0].setCartItemsCount ();
         },
     },
     components: {

@@ -18,6 +18,11 @@
 
 <script>
 export default {
-    props: ['el', 'img']
+    props: ['el', 'img'],
+    data: function () {
+        return {
+
+        }
+    }
 }
 </script>

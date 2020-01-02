@@ -24,9 +24,11 @@
 </template>
 
 <script>
+
 import catalog from './components/catalog'
 import cart from './components/cart'
 import serverError from './components/serverError'
+
 export default {
     name: 'app',
     data: function () {
@@ -46,7 +48,7 @@ export default {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify (obj),
-            })  
+            })
                 .then (d => d.json());
         },
         putJSON (url, data) {
@@ -68,15 +70,15 @@ export default {
             this.cartshow = !this.cartshow;
         },
         setCartItemsCount () {
-            this.cartItemsCount = this.$root.$refs.cartComp.getCartItemsCount ();
+            this.cartItemsCount = this.$root.$children[0].$refs.cartComp.getCartItemsCount ();
         },
         filterCatalog () {
-            this.$root.$refs.catalogComp.filter (this.searchLine);
+            this.$root.$children[0].$refs.catalogComp.filter (this.searchLine);
         }
     },
     components: {
-        'catalog': catalog,
-        'cart': cart,
+        catalog,
+        cart,
         'server-error': serverError
     }
 }

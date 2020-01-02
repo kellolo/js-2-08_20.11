@@ -2,7 +2,7 @@ const fs = require ('fs');
 const moment = require ('moment');
 
 const logger = (action, name) => {
-    fs.readFile ('./dist/server/db/logs.json', 'utf-8', (err, data) => {
+    fs.readFile ('./src/server/db/logs.json', 'utf-8', (err, data) => {
         if (err) {
             console.log ('Cannot read logs...');
         } else {
@@ -13,7 +13,7 @@ const logger = (action, name) => {
                 time: moment().format ('DD-MM-YYYY, H:mm:ss')
             }
             d.push (newLog);
-            fs.writeFile ('./dist/server/db/logs.json', JSON.stringify (d, null, 4), (err) => {
+            fs.writeFile ('./src/server/db/logs.json', JSON.stringify (d, null, 4), (err) => {
                 if (err) {
                     console.log ('Cannot write logs...');
                 }
@@ -21,6 +21,5 @@ const logger = (action, name) => {
         }
     });
 }
-
 
 module.exports = logger;

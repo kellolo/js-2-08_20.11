@@ -5,11 +5,11 @@ const handler = require ('./handler')
 const app = express ();
 
 app.use (express.json ());
-app.use ('/', express.static ('public'));
+// app.use ('/', express.static ('./dist/public'));
 app.use ('/cart', cartRouter);
 
 app.get ('/catalog', (req, res) => {
-    fs.readFile ('server/db/catalog.json', 'utf-8', (err, data) => {
+    fs.readFile ('./src/server/db/catalog.json', 'utf-8', (err, data) => {
         if (err) {
             res.sendStatus (404, JSON.stringify ({ result: 0 }));
         } else {
@@ -18,6 +18,6 @@ app.get ('/catalog', (req, res) => {
     })
 });
 
-app.listen (8080, () => {
-    console.log ('server is listening at port 8080');
+app.listen (5000, () => {
+    console.log ('server is listening at port 5000');
 });

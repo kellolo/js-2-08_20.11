@@ -20,7 +20,7 @@ let handler = (req, res, action, file) => {
                     res.sendStatus (500, JSON.stringify ({ result: 0 }));
                 } else {
                     res.send (JSON.stringify ({ result: 1 }));
-                    //logger (action, name);
+                    logger (action, name);
                 }
             })
         }

@@ -1,0 +1,12 @@
+{
+    "amount": 20,
+    "countGoods": 1,
+    "contents": [
+        {
+            "product_id": 3,
+            "product_name": "Keyboard",
+            "price": 20,
+            "quantity": 1
+        }
+    ]
+}

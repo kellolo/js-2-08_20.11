@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "terser-webpack-plugin": "^2.3.1",
     "whatwg-fetch": "^3.0.0"
